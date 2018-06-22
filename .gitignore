@@ -3,3 +3,8 @@
 *.suo
 *.csproj
 *.cd
+Business/Properties/*
+Business/SIGEEventHandler.cs
+Business/Sector.cs
+Business/bin/*
+Business/obj/*
