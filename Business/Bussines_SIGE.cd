@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Lucky.Business.Common.Application.Aplicacion" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\Aplicacion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Business.Common.Application.AplicacionWeb" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\AplicacionWeb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Business.Common.Application.Canales" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\Canales.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Business.Common.Application.Company" Collapsed="true">
+    <Position X="12.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\Company.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Business.Common.Application.EMPop">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\EMPop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Business.Common.Application.Enviomail">
+    <Position X="13.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\Enviomail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Business.Common.Application.Productos" Collapsed="true">
+    <Position X="13.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\Productos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Business.Common.Application.PuntosDV">
+    <Position X="14.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\PuntosDV.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Business.Common.Application.Tablas">
+    <Position X="11.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\Tablas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Business.Common.Application.Usuario">
+    <Position X="3" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABQgAAAAAAAAAAIEAAACEAgAAQ=</HashCode>
+      <FileName>Common\Application\Usuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Business.Common.Application.Control.MensajeriaError" Collapsed="true">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Control\MensajeriaError.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Business.Common.Security.UsuarioAcceso" Collapsed="true">
+    <Position X="8" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAEAAAABAA=</HashCode>
+      <FileName>Common\Security\UsuarioAcceso.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Delegate Name="Lucky.Business.SIGEEventHandler" Collapsed="true">
+    <Position X="3" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SIGEEventHandler.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="Lucky.Business.SIGEEventHandlerMessage" Collapsed="true">
+    <Position X="8.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SIGEEventHandler.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Microsoft Sans Serif" Size="8.25" />
+</ClassDiagram>

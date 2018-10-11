@@ -1,5 +1,3 @@
-*~
-*.cd
 Business/SIGEEventHandler.cs
 Business/Sector.cs
 Business/bin/Release/*
@@ -12,3 +10,4 @@ Entity/bin/Release/*
 Entity/obj/*
 LuckyMer.Contracts/LuckyMer.Contracts/bin/Release/*
 LuckyMer.Contracts/LuckyMer.Contracts/obj/*
+Test/Test/obj/*

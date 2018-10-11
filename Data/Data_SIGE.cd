@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Lucky.Data.Common.Application.Control.DMensajeriaError">
+    <Position X="10.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\Control\DMensajeriaError.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DAplicacion">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAQAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DAplicacion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DBusquedas">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DBusquedas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DCanales" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DCanales.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DCompany" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DCompany.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DEMPop">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DEMPop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DEnviomail">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DEnviomail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.Destrategy">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\Destrategy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DModulo">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DModulo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DPlanning">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DPlanning.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DProductos" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DProductos.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DProfiles">
+    <Position X="7.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DProfiles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DReports">
+    <Position X="11.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DReports.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DReportsStrategit">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DReportsStrategit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DRoles">
+    <Position X="5.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAQAAAABAAAAACAAAAAAA=</HashCode>
+      <FileName>Common\Application\DRoles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DStrategitPoints">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DStrategitPoints.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DTablas">
+    <Position X="8" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DTablas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.DUsuario">
+    <Position X="10.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAABAAQIAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\DUsuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Security.DUsuarioAcceso">
+    <Position X="14.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Application\Security\DUsuarioAcceso.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Common.Application.Messenger.DMail" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Messenger\DMail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.Conexion">
+    <Position X="6.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAKgEAAAAAAAAASAAAAAACAAAAAIAAAAIQCABEACAE=</HashCode>
+      <FileName>Conexion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.UserInterface">
+    <Position X="1" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAkAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>UserInterface.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lucky.Data.WebUserInterface">
+    <Position X="3.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserInterface.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft Sans Serif" Size="8.25" />
+</ClassDiagram>
