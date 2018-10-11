@@ -11,7 +11,9 @@ CFG/obj/*
 Data/bin/Debug/*
 Data/bin/Release/*
 Data/obj/*
-Entity/bin/Debug/*
+Entity/bin/Debug/Lucky.CFG.dll
+Entity/bin/Debug/Lucky.Entity.dll
+Entity/bin/Debug/Lucky.Entity.pdb
 Entity/bin/Release/*
 Entity/obj/*
 LuckyMer.Contracts/LuckyMer.Contracts/bin/Debug/*
