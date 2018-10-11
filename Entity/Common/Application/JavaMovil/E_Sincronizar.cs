@@ -6,19 +6,59 @@ using Newtonsoft.Json;
 
 namespace Lucky.Entity.Common.Application.JavaMovil
 {
+    /// <summary>
+    /// Sincronización para la App Mobile
+    /// Developed by:
+    /// - Pablo Salas Alvarez (PSA)
+    /// Changes:
+    /// - 2018-10-11 (PSA) Add methods Getter and Setter.
+    /// </summary>
     public class E_Sincronizar
     {
         [JsonProperty("a")]
         public List<E_Estado> listaEstado { get; set; }
 
+        public List<E_Estado> getListaEstado() {
+            return listaEstado;
+        }
+
+        public void setListaEstado(List<E_Estado> listaEstado) {
+            this.listaEstado = listaEstado;
+        }
+
         [JsonProperty("b")]
         public List<E_Motivo> listaMotivo { get; set; }
+
+        public List<E_Motivo> getListaMotivo() {
+            return listaMotivo;
+        }
+
+        public void getListaMotivo(List<E_Motivo> listaMotivo) {
+            this.listaMotivo = listaMotivo;
+        }
 
         [JsonProperty("c")]
         public List<E_NoVisita> listaNoVisita { get; set; }
 
+        public List<E_NoVisita> getListaNoVisita() {
+            return listaNoVisita;
+        }
+
+        public void getListaNoVisita(List<E_NoVisita> listaNoVisita) {
+            this.listaNoVisita = listaNoVisita;
+        }
+
         [JsonProperty("d")]
         public List<E_Reporte> ListaReporte { get; set; }
+
+        public List<E_Reporte> getListaReporte() {
+            return ListaReporte;
+        }
+
+        public void setListaReporte(List<E_Reporte> ListaReporte)
+        {
+            this.ListaReporte = ListaReporte;
+        }
 
         [JsonProperty("e")]
         public List<E_Opc_Reporte> ListaOpcionReporte { get; set; }

@@ -7,17 +7,35 @@ using Lucky.Entity.Common.Application.JavaMovil;
 
 namespace Lucky.Data.Common.JavaMovil
 {
+    /// <summary>
+    /// Class: D_Sincronizar.cs
+    /// Developed by: 
+    /// - Pablo Salas Alvarez (PSA)
+    /// Changes:
+    /// - 2018-10-11 (PSA) Add comments.
+    /// </summary>
     public class D_Sincronizar
     {
+        // Declara Clase Conexión
         private Conexion oConn;
+
+        // Constructor
         public D_Sincronizar()
         {
             oConn = new Conexion(3);
         }
 
-        public E_Sincronizar Sincronizar_Mov(string person_id, int cliente, string equipo)
+        /// <summary>
+        /// Retorna la información que se utilizará como Base de Datos para el App Mobile.
+        /// </summary>
+        /// <param name="person_id"> Identificador de Persona </param>
+        /// <param name="cliente_id"> Identificador de Cliente </param>
+        /// <param name="equipo_id"> Identificador de Equipo(Planning) </param>
+        /// <returns>E_Sincronizar</returns>  Un Objecto E_Sincronizar que contiene toda la información q
+        /// que necesita el App Mobile para funcionar.
+        public E_Sincronizar Sincronizar_Mov(string person_id, int cliente_id, string equipo_id)
         {
-            SqlDataReader readerSinc = oConn.ejecutarDataReader("SP_GES_CAM_SINCRONIZAR", equipo, cliente, person_id);
+            SqlDataReader readerSinc = oConn.ejecutarDataReader("SP_GES_CAM_SINCRONIZAR", equipo_id, cliente_id, person_id);
 
             //Listas Generales para todas las cuentas
             List<E_Estado> listaEstado = new List<E_Estado>();

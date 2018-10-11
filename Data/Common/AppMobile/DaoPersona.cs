@@ -7,7 +7,7 @@ namespace Lucky.Data.Common.AppMobile
 {
     interface DaoPersona
     {
-        public List<Object[]> personaQry();
-        public List<Object[]> personaQry(Int16 idPersona);
+        List<Object[]> personaQry();
+        List<Object[]> personaQry(Int16 idPersona);
     }
 }

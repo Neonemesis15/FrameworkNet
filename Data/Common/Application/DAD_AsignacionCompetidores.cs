@@ -4,8 +4,6 @@ using System.Data;
 using System.Text;
 using Lucky.Entity.Common.Application;
 
-using System.Text;
-
 namespace Lucky.Data.Common.Application
 {
     /// <summary>
@@ -32,16 +30,16 @@ namespace Lucky.Data.Common.Application
    public EAD_AsignacionCompetidores RegistrarAsignacionCompetidores(int iCompany_id, int iCompay_idCompe, bool bAA_Status, string sCreateBy,
     DateTime dDateBy, string sModiBy, DateTime dDateModiBy)
      {
-                   DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_AD_REGISTRAR_ASIGNACIONCOMPETIDORES", iCompany_id, iCompay_idCompe, bAA_Status,
-                            sCreateBy, dDateBy, sModiBy, dDateModiBy);
-                   EAD_AsignacionCompetidores oEAD_AsignacionCompetidores = new EAD_AsignacionCompetidores();
+        DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_AD_REGISTRAR_ASIGNACIONCOMPETIDORES", iCompany_id, iCompay_idCompe, bAA_Status,
+                sCreateBy, dDateBy, sModiBy, dDateModiBy);
+        EAD_AsignacionCompetidores oEAD_AsignacionCompetidores = new EAD_AsignacionCompetidores();
 
-                   oEAD_AsignacionCompetidores.AA_idAsignacionCompe = Convert.ToInt32(dt.Rows[0]["AA_idAsignacionCompe"].ToString());
-                   oEAD_AsignacionCompetidores.AA_Status = bAA_Status;
-                   oEAD_AsignacionCompetidores.Company_id = iCompany_id;
-                   oEAD_AsignacionCompetidores.Compay_idCompe = iCompay_idCompe;
+        oEAD_AsignacionCompetidores.AA_idAsignacionCompe = Convert.ToInt32(dt.Rows[0]["AA_idAsignacionCompe"].ToString());
+        oEAD_AsignacionCompetidores.AA_Status = bAA_Status;
+        oEAD_AsignacionCompetidores.Company_id = iCompany_id;
+        oEAD_AsignacionCompetidores.Compay_idCompe = iCompay_idCompe;
 
-                   return oEAD_AsignacionCompetidores;
+        return oEAD_AsignacionCompetidores;
 
       }
 

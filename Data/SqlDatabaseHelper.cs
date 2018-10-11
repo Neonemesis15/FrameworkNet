@@ -9,10 +9,15 @@ using System.Data;
 namespace Lucky.Data
 {
     /// <summary>
-    /// Create By: Pablo Salas Alvarez
-    /// Email: pablo.salas.alvarez88@gmail.com
-    /// Fecha: 22 Junio 2018
-    /// Descripcion: Conecta con una base de Datos Mysql y Retorna Listas (Para hacer la interconexión con Servicios Rest)
+    /// Conecta con una base de Datos Mysql y 
+    /// retorna Listas (Para hacer la interconexión con Servicios Rest)
+    /// Developed by:
+    /// - Pablo Salas Alvarez (PSA)
+    /// Email: 
+    /// - pablo.salas.alvarez88@gmail.com
+    /// Changes: 
+    /// - 2018-06-22 (PSA) Create Class 
+    /// Descripcion: 
     /// </summary>
     /// <returns></returns>
     class SqlDatabaseHelper
