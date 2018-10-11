@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{967C6F83-C755-4128-AF9E-D4D3EB23890A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lucky.Data</RootNamespace>
+    <AssemblyName>Lucky.Data</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Lucky.CFG, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CFG\bin\Debug\Lucky.CFG.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data">
+      <HintPath>..\..\..\Mi Carpeta Personal\Fuentes Lucky\Framework_Lucky 1.0\Framework_Lucky 1.0\Lucky FrameWork\Data\bin\Debug\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.3.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Archivos de programa\MySQL\MySQL Connector Net 6.3.5\Assemblies\v2.0\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Application\DAD_AsignacionCompetidores.cs" />
+    <Compile Include="Common\Application\DAD_Category_Company.cs" />
+    <Compile Include="Common\Application\DAD_Corporacion.cs" />
+    <Compile Include="Common\Application\DAD_Distribuidora.cs" />
+    <Compile Include="Common\Application\DAD_GestionProductosXReporte.cs" />
+    <Compile Include="Common\Application\DAD_Oficina.cs" />
+    <Compile Include="Common\Application\DAD_ProductosAncla.cs" />
+    <Compile Include="Common\Application\DAD_ReportOficina.cs" />
+    <Compile Include="Common\Application\DAD_Subchannel.cs" />
+    <Compile Include="Common\Application\DAlmacenDetalle_Planning.cs" />
+    <Compile Include="Common\Application\DAplicacion.cs" />
+    <Compile Include="Common\Application\DBarrio.cs" />
+    <Compile Include="Common\Application\DBrand.cs" />
+    <Compile Include="Common\Application\DBusquedas.cs" />
+    <Compile Include="Common\Application\DCadenas.cs" />
+    <Compile Include="Common\Application\DCampos.cs" />
+    <Compile Include="Common\Application\DCanales.cs" />
+    <Compile Include="Common\Application\DCanalTipo.cs" />
+    <Compile Include="Common\Application\DCity.cs" />
+    <Compile Include="Common\Application\DCity_UserReport.cs" />
+    <Compile Include="Common\Application\DCliente.cs" />
+    <Compile Include="Common\Application\DCompany.cs" />
+    <Compile Include="Common\Application\DCompetition_Information.cs" />
+    <Compile Include="Common\Application\DCountry.cs" />
+    <Compile Include="Common\Application\DDepartamento.cs" />
+    <Compile Include="Common\Application\DDistrito.cs" />
+    <Compile Include="Common\Application\DEMPop.cs" />
+    <Compile Include="Common\Application\DEnviomail.cs" />
+    <Compile Include="Common\Application\DEstrategy.cs" />
+    <Compile Include="Common\Application\DIndicadores.cs" />
+    <Compile Include="Common\Application\DInfoaUsuario.cs" />
+    <Compile Include="Common\Application\Dinfo_Planning.cs" />
+    <Compile Include="Common\Application\DInfo_Planning_City.cs" />
+    <Compile Include="Common\Application\DItemsPoint.cs" />
+    <Compile Include="Common\Application\DMalla.cs" />
+    <Compile Include="Common\Application\DMenuDetalle.cs" />
+    <Compile Include="Common\Application\DModulo.cs" />
+    <Compile Include="Common\Application\DNodeComercial.cs" />
+    <Compile Include="Common\Application\DOPE_DigFORMATOAGCOCINA.cs" />
+    <Compile Include="Common\Application\DOPE_DigFORMATOFINALESDG.cs" />
+    <Compile Include="Common\Application\DOPE_DigFORMATOFINALESPRECIOS.cs" />
+    <Compile Include="Common\Application\DOPE_DigFORMATOFINALSOD.cs" />
+    <Compile Include="Common\Application\DOPE_REPORTE_COMPETENCIA.cs" />
+    <Compile Include="Common\Application\DOPE_REPORTE_EXHB_IMPULSO.cs" />
+    <Compile Include="Common\Application\DOPE_Reporte_Fotografico.cs" />
+    <Compile Include="Common\Application\DOPE_REPORTE_MATERIAL_POP.cs" />
+    <Compile Include="Common\Application\DOPE_REPORTE_PRECIO.cs" />
+    <Compile Include="Common\Application\DOPE_REPORTE_PUBLICACION.cs" />
+    <Compile Include="Common\Application\DOPE_Reporte_SOD.cs" />
+    <Compile Include="Common\Application\DOPE_Reporte_Stock.cs" />
+    <Compile Include="Common\Application\DOPE_Tipo_Reporte.cs" />
+    <Compile Include="Common\Application\DPersonLevel.cs" />
+    <Compile Include="Common\Application\DPerson_Asign_Ejec_Direct.cs" />
+    <Compile Include="Common\Application\DPhotographs_Service.cs" />
+    <Compile Include="Common\Application\DPlanning.cs" />
+    <Compile Include="Common\Application\DPLA_ProductosAncla.cs" />
+    <Compile Include="Common\Application\DPLA_Supe_Objetivos_Sod_May.cs" />
+    <Compile Include="Common\Application\DPLA_VersionAppMovil.cs" />
+    <Compile Include="Common\Application\DPointOfSale_PlanningOper.cs" />
+    <Compile Include="Common\Application\DProductos.cs" />
+    <Compile Include="Common\Application\DProductPacking.cs" />
+    <Compile Include="Common\Application\DProducts_PlanningOpe.cs" />
+    <Compile Include="Common\Application\DProduct_Family.cs" />
+    <Compile Include="Common\Application\DProduct_Presentations.cs" />
+    <Compile Include="Common\Application\DProduct_SubFamily.cs" />
+    <Compile Include="Common\Application\DProduct_Tipo.cs" />
+    <Compile Include="Common\Application\DProduct_Type.cs" />
+    <Compile Include="Common\Application\DProfiles.cs" />
+    <Compile Include="Common\Application\DPuntosDV.cs" />
+    <Compile Include="Common\Application\DReportChannel.cs" />
+    <Compile Include="Common\Application\DReports.cs" />
+    <Compile Include="Common\Application\DReportsStrategit.cs" />
+    <Compile Include="Common\Application\DReports_Planning.cs" />
+    <Compile Include="Common\Application\DRoles.cs" />
+    <Compile Include="Common\Application\DSector.cs" />
+    <Compile Include="Common\Application\DSegments.cs" />
+    <Compile Include="Common\Application\DSegments_Type.cs" />
+    <Compile Include="Common\Application\DSesion_Users.cs" />
+    <Compile Include="Common\Application\DStaff_Planning.cs" />
+    <Compile Include="Common\Application\DStrategit_Points.cs" />
+    <Compile Include="Common\Application\DSubBrand.cs" />
+    <Compile Include="Common\Application\DSubCategoria.cs" />
+    <Compile Include="Common\Application\DTablas.cs" />
+    <Compile Include="Common\Application\DTypeReports1.cs" />
+    <Compile Include="Common\Application\DUsuario.cs" />
+    <Compile Include="Common\Application\DNodeType.cs" />
+    <Compile Include="Common\Application\DOPE_Reporte_Presencia.cs" />
+    <Compile Include="Common\Application\D_PointOfSale_GIS.cs" />
+    <Compile Include="Common\Application\D_TipoProfiles.cs" />
+    <Compile Include="Common\AppMobile\DaoPersona.cs" />
+    <Compile Include="Common\AppMobile\DaoPersonaImpl.cs" />
+    <Compile Include="Common\AppMobile\DaoUsuario.cs" />
+    <Compile Include="Common\EAPro\D_EAPro_Service.cs" />
+    <Compile Include="Common\JavaMovil\DSincronizar.cs" />
+    <Compile Include="Common\JavaMovil\DUsuario.cs" />
+    <Compile Include="Common\JavaMovil\D_AppMovil.cs" />
+    <Compile Include="Common\JavaMovil\D_Marcacion.cs" />
+    <Compile Include="Common\JavaMovil\D_Producto.cs" />
+    <Compile Include="Common\JavaMovil\D_Registrar_Motivo.cs" />
+    <Compile Include="Common\JavaMovil\D_ReporteSanFernando_AAVV.cs" />
+    <Compile Include="Common\JavaMovil\D_ReporteSanFernando_Moderno.cs" />
+    <Compile Include="Common\JavaMovil\D_ReporteSanFernando_Tradicional.cs" />
+    <Compile Include="Common\JavaMovil\D_ReportesColgate_Bodega.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Android.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Capacitacion.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Codigo_ITT.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Competencia.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Credito_Competencia.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Disponibilidad.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Exhibicion.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Fotografico.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Fotografico_Auditoria.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_ImplementarBodega.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Impulso.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Incidencia.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_LayOut.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Mandil.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Marcaje_Precio.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_MatAdicional.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Mat_Apoyo.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Observacion.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Pop.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Precio.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Presencia.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Promociones.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Quiebre.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_RegistroPDV.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_SOD.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Stock.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Visibilidad.cs" />
+    <Compile Include="Common\JavaMovil\D_Reporte_Visibilidad_Competencia.cs" />
+    <Compile Include="Common\JavaMovil\D_Sincronizar.cs" />
+    <Compile Include="Common\JavaMovil\D_Sincronizar_Bodega.cs" />
+    <Compile Include="Common\JavaMovil\D_Usuario.cs" />
+    <Compile Include="Common\JavaMovil\D_Visita.cs" />
+    <Compile Include="Common\Maestros\Cliente\DAO_Canal.cs" />
+    <Compile Include="Common\Maestros\Lote\DAO_Lote.cs" />
+    <Compile Include="Common\Maestros\Lote\DAO_Lote_Contador.cs" />
+    <Compile Include="Common\Maestros\Lote\DAO_Lote_Det.cs" />
+    <Compile Include="Common\Maestros\Producto\DAO_Categoria.cs" />
+    <Compile Include="Common\Maestros\Producto\DAO_Familia.cs" />
+    <Compile Include="Common\Maestros\Producto\DAO_Formato.cs" />
+    <Compile Include="Common\Maestros\Producto\DAO_Marca.cs" />
+    <Compile Include="Common\Maestros\Producto\DAO_Producto.cs" />
+    <Compile Include="Common\Maestros\Producto\DAO_SubCategoria.cs" />
+    <Compile Include="Common\Maestros\Producto\DAO_Tipo.cs" />
+    <Compile Include="Common\Servicio\D_GES_Campania.cs" />
+    <Compile Include="Common\Servicio\D_Ges_ClienteService.cs" />
+    <Compile Include="Common\Servicio\D_GES_MapsService.cs" />
+    <Compile Include="Common\Servicio\D_GES_Operativa.cs" />
+    <Compile Include="Common\Servicio\D_GES_ReportesCliente.cs" />
+    <Compile Include="Conexion.cs" />
+    <Compile Include="Common\Application\Control\DMensajeriaError.cs" />
+    <Compile Include="Common\Messenger\DMail.cs" />
+    <Compile Include="Common\Application\Security\DUsuarioAcceso.cs" />
+    <Compile Include="Conexion_EasyWin.cs" />
+    <Compile Include="DataBase.cs" />
+    <Compile Include="Desechable.cs" />
+    <Compile Include="Common\JavaMovil\D_ReportesColgate_May.cs" />
+    <Compile Include="LuckyWs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlDatabaseHelper.cs" />
+    <Compile Include="UserInterface.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data_SIGE.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Xplora_Fuentes\Facade_Planning\Facade_Planning.csproj">
+      <Project>{6FA6F7FD-EC02-4C9B-A733-1138156A5BF4}</Project>
+      <Name>Facade_Planning</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CFG\CFG.csproj">
+      <Project>{DB9627F9-9525-493E-9751-A7E93078BDA7}</Project>
+      <Name>CFG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{98AAE6AC-12E2-46B7-976C-9A643DC0E77B}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\Maestros\Item\" />
+    <Folder Include="Common\Maestros\Perfil\" />
+    <Folder Include="Common\Maestros\Periodo\" />
+    <Folder Include="Common\Maestros\PtoVenta\" />
+    <Folder Include="Common\Maestros\Ubigeo\" />
+    <Folder Include="Common\Maestros\Usuario\" />
+    <Folder Include="Common\Maestros\Visita\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{98AAE6AC-12E2-46B7-976C-9A643DC0E77B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Lucky.Entity</RootNamespace>
+    <AssemblyName>Lucky.Entity</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Lucky.CFG, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Mi Carpeta Personal\Fuentes Lucky\Framework_Lucky 1.0\Framework_Lucky 1.0\Lucky FrameWork\Entity\bin\Debug\Lucky.CFG.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\Mi Carpeta Personal\Fuentes Lucky\Framework_Lucky 1.0\Framework_Lucky 1.0\Lucky FrameWork\Entity\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Application\EAdditionalItems_ Management.cs" />
+    <Compile Include="Common\Application\EAD_AsignacionCompetidores.cs" />
+    <Compile Include="Common\Application\EAD_Category_Company.cs" />
+    <Compile Include="Common\Application\EAD_Corporacion.cs" />
+    <Compile Include="Common\Application\EAD_Distribuidora.cs" />
+    <Compile Include="Common\Application\EAD_GestionProductosXReporte.cs" />
+    <Compile Include="Common\Application\EAD_Oficina.cs" />
+    <Compile Include="Common\Application\EAD_PointOfSale_GIS.cs" />
+    <Compile Include="Common\Application\EAD_ProductosAncla.cs" />
+    <Compile Include="Common\Application\EAD_Subchannel.cs" />
+    <Compile Include="Common\Application\EAlmacenDetalle_Planning.cs" />
+    <Compile Include="Common\Application\EAssignment _Presentations.cs" />
+    <Compile Include="Common\Application\ECanalTipo.cs" />
+    <Compile Include="Common\Application\ECity_Principal_Service.cs" />
+    <Compile Include="Common\Application\ECity_UserReport.cs" />
+    <Compile Include="Common\Application\ECompetition_ Information.cs" />
+    <Compile Include="Common\Application\EContenedoraFormatos.cs" />
+    <Compile Include="Common\Application\EInfoaUsaurio.cs" />
+    <Compile Include="Common\Application\Einfo_Planning.cs" />
+    <Compile Include="Common\Application\EInfo_Planning_City.cs" />
+    <Compile Include="Common\Application\EMalla.cs" />
+    <Compile Include="Common\Application\EMenuDetalle.cs" />
+    <Compile Include="Common\Application\EMetaDataCaculation.cs" />
+    <Compile Include="Common\Application\EMetadataCoverage_Planning.cs" />
+    <Compile Include="Common\Application\EMetadataPrices_Planning.cs" />
+    <Compile Include="Common\Application\EMetadataSales_Planning.cs" />
+    <Compile Include="Common\Application\EMetadataSpaceMeasurement_Planning.cs" />
+    <Compile Include="Common\Application\EOperating_ Supervisor_ Assignment.cs" />
+    <Compile Include="Common\Application\EOPE_DigFORMATOAGCOCINA.cs" />
+    <Compile Include="Common\Application\EOPE_DigFORMATOFINALESDG.cs" />
+    <Compile Include="Common\Application\EOPE_DigFORMATOFINALESPRECIOS.cs" />
+    <Compile Include="Common\Application\EOPE_DigFORMATOFINALSOD.cs" />
+    <Compile Include="Common\Application\EOPE_REPORTE_COMPETENCIA.cs" />
+    <Compile Include="Common\Application\EOPE_REPORTE_EXHB_IMPULSO.cs" />
+    <Compile Include="Common\Application\EOPE_Reporte_Fotografico.cs" />
+    <Compile Include="Common\Application\EOPE_REPORTE_MATERIAL_POP.cs" />
+    <Compile Include="Common\Application\EOPE_REPORTE_PRECIO.cs" />
+    <Compile Include="Common\Application\EOPE_Reporte_Presencia.cs" />
+    <Compile Include="Common\Application\EOPE_REPORTE_PUBLICACION.cs" />
+    <Compile Include="Common\Application\EOPE_Reporte_SOD.cs" />
+    <Compile Include="Common\Application\EOPE_Reporte_Stock.cs" />
+    <Compile Include="Common\Application\EPersonLevel.cs" />
+    <Compile Include="Common\Application\EPhotographs_Service.cs" />
+    <Compile Include="Common\Application\EPlaning_History.cs" />
+    <Compile Include="Common\Application\EAplicacion.cs" />
+    <Compile Include="Common\Application\EAplicacionWeb.cs" />
+    <Compile Include="Common\Application\EBarrio.cs" />
+    <Compile Include="Common\Application\EBrand.cs" />
+    <Compile Include="Common\Application\ECadenas.cs" />
+    <Compile Include="Common\Application\ECanales.cs" />
+    <Compile Include="Common\Application\ECity.cs" />
+    <Compile Include="Common\Application\ECityPlanning.cs" />
+    <Compile Include="Common\Application\ECommentsPlanning.cs" />
+    <Compile Include="Common\Application\ECompany.cs" />
+    <Compile Include="Common\Application\ECountry.cs" />
+    <Compile Include="Common\Application\EDepartamento.cs" />
+    <Compile Include="Common\Application\EDistrito.cs" />
+    <Compile Include="Common\Application\EEnviomail.cs" />
+    <Compile Include="Common\Application\EEstrategy.cs" />
+    <Compile Include="Common\Application\EIndicadores.cs" />
+    <Compile Include="Common\Application\EItemsPoint.cs" />
+    <Compile Include="Common\Application\EItem_Point_Detalle.cs" />
+    <Compile Include="Common\Application\EMandatoryPlanning.cs" />
+    <Compile Include="Common\Application\EMechanicalActivity.cs" />
+    <Compile Include="Common\Application\EModulo.cs" />
+    <Compile Include="Common\Application\EMPointOfPurchase_Planning.cs" />
+    <Compile Include="Common\Application\EMPop.cs" />
+    <Compile Include="Common\Application\ENodeComercial.cs" />
+    <Compile Include="Common\Application\EObservationPlanning.cs" />
+    <Compile Include="Common\Application\EPLA_Brand_Planning.cs" />
+    <Compile Include="Common\Application\EPLA_Family_Planning.cs" />
+    <Compile Include="Common\Application\EPLA_Panel_Planning.cs" />
+    <Compile Include="Common\Application\EPLA_ProductosAncla.cs" />
+    <Compile Include="Common\Application\EPLA_Supe_Objetivos_Sod_May.cs" />
+    <Compile Include="Common\Application\EPLA_VersionAppMovil.cs" />
+    <Compile Include="Common\Application\EPointOfSale_Planning.cs" />
+    <Compile Include="Common\Application\EPointOfSale_PlanningOper.cs" />
+    <Compile Include="Common\Application\EProductos.cs" />
+    <Compile Include="Common\Application\EProductPacking.cs" />
+    <Compile Include="Common\Application\EProducts_Planning.cs" />
+    <Compile Include="Common\Application\EProducts_PlanningOpe.cs" />
+    <Compile Include="Common\Application\EProduct_Compe.cs" />
+    <Compile Include="Common\Application\EProduct_Family.cs" />
+    <Compile Include="Common\Application\EProduct_Presentations.cs" />
+    <Compile Include="Common\Application\EProduct_SubFamily.cs" />
+    <Compile Include="Common\Application\EProduct_Tipo.cs" />
+    <Compile Include="Common\Application\EProduct_Type.cs" />
+    <Compile Include="Common\Application\EProfiles.cs" />
+    <Compile Include="Common\Application\EPuntosDV.cs" />
+    <Compile Include="Common\Application\EQuestions_Strategy.cs" />
+    <Compile Include="Common\Application\EReportChannel.cs" />
+    <Compile Include="Common\Application\EReports.cs" />
+    <Compile Include="Common\Application\EReportsStrategit.cs" />
+    <Compile Include="Common\Application\EReports_Planning.cs" />
+    <Compile Include="Common\Application\ERoles.cs" />
+    <Compile Include="Common\Application\ESales_Plan.cs" />
+    <Compile Include="Common\Application\ESector.cs" />
+    <Compile Include="Common\Application\ESegments.cs" />
+    <Compile Include="Common\Application\ESegments_Type.cs" />
+    <Compile Include="Common\Application\ESesion_Users.cs" />
+    <Compile Include="Common\Application\EStaff_Planning.cs" />
+    <Compile Include="Common\Application\EStrategit_Points.cs" />
+    <Compile Include="Common\Application\ESubBrand.cs" />
+    <Compile Include="Common\Application\ESubCategoria.cs" />
+    <Compile Include="Common\Application\ESuggetionPlanning.cs" />
+    <Compile Include="Common\Application\ETypeReports1.cs" />
+    <Compile Include="Common\Application\EUsuario.cs" />
+    <Compile Include="Common\Application\Control\EMensajeriaError.cs" />
+    <Compile Include="Common\Application\E_Filtros.cs" />
+    <Compile Include="Common\Application\E_TipoProfiles.cs" />
+    <Compile Include="Common\Application\Interfaces\EIntEasywin_SIGE.cs" />
+    <Compile Include="Common\Application\Interfaces\EPresupuesto.cs" />
+    <Compile Include="Common\Application\JavaMovil\ECanal.cs" />
+    <Compile Include="Common\Application\JavaMovil\ECliente.cs" />
+    <Compile Include="Common\Application\JavaMovil\EPuntoVentaAuditoria.cs" />
+    <Compile Include="Common\Application\JavaMovil\EReporteAuditoria.cs" />
+    <Compile Include="Common\Application\JavaMovil\ESincronizarAuditoria.cs" />
+    <Compile Include="Common\Application\JavaMovil\ECategoria.cs" />
+    <Compile Include="Common\Application\JavaMovil\EEstado.cs" />
+    <Compile Include="Common\Application\JavaMovil\EGrupo.cs" />
+    <Compile Include="Common\Application\JavaMovil\EFamilia.cs" />
+    <Compile Include="Common\Application\JavaMovil\EMarca.cs" />
+    <Compile Include="Common\Application\JavaMovil\EMotivo.cs" />
+    <Compile Include="Common\Application\JavaMovil\EParametro.cs" />
+    <Compile Include="Common\Application\JavaMovil\EProducto.cs" />
+    <Compile Include="Common\Application\JavaMovil\EPuntoVenta.cs" />
+    <Compile Include="Common\Application\JavaMovil\ESincronizar.cs" />
+    <Compile Include="Common\Application\JavaMovil\ESubParametro.cs" />
+    <Compile Include="Common\Application\JavaMovil\EUsuario.cs" />
+    <Compile Include="Common\Application\JavaMovil\EReporte.cs" />
+    <Compile Include="Common\Application\JavaMovil\EUsuarioAuditoria.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Actividad.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_AppMovil_Sincronizar.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Bodega.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Canal_x_Cliente.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_CantReg_X_CodSubReporte.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Capacitacion.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Categoria.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Cluster.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Competidora.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Cond_Exhib.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Credito.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Datos_Presencia.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Departamento.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Departamento_x_Canal.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Distribuidora.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_DistribuidoraEncuesta.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Distribuidora_PtoVenta.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Distrito.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Empresa.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Estado.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Exhibicion.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Familia.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Fase.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_FotoAndroid.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Grupo_Objetivo.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Incidencia.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Marca.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Marcacion.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Marcaje_Precio.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Material_Apoyo.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Material_POP.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Motivo.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Motivo_Observacion.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Motivo_Reporte.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_MOV_GES_CAM_Equipo_Distribuidora.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_MOV_UBI_Distribuidora.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_NoVisita.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Obj_Marca.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Observacion.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Opcion.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Opc_Pedido.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Opc_Reporte.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Pais.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_ParametroBodega.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Perfil.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Posicion.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Pregunta.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Presencia.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Presentacion.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Producto.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Promocion.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Promocion_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Provincia.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Provincia_x_Canal.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_PuntoVenta.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Registro_MotivoFase.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reportes_Colgate_Bodega_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reportes_Colgate_Farmacia_DT_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reportes_Colgate_Farmacia_IT_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reportes_Colgate_Mayoristas_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reportes_Colgate_Minorista_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Base_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Capacitacion_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Codigo_ITT.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Codigo_ITT_Detalle.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Codigo_ITT_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Competencia.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Competencia_Detalle.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Competencia_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Credito_Competencia_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Disponibilidad.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Disponibilidad_Detalle.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Encuesta.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Exhibicion.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Exhibicion_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Fotografico.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Fotografico_Auditoria.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Fotografico_General.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Fotografico_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_ImplementarBodega.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Impulso_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Incidencia_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_LayOut.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_LayOut_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Mandil_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Marcaje_Precio_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_MatAdicional_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Mat_Apoyo_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Observacion_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Pop_General.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Pop_General_Detalle.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Precio.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Precio_Detalle.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Precio_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Presencia.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Presencia_Detalle.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Presencia_General.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Presencia_General_Detalle.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Presencia_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Promocion_General.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Promocion_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Quiebre.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Quiebre_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_RegistroPDV.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_RegistroPDV_Detalle.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_RegistroPDV_Detalle_Opcion.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_RegistroPDV_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_SOD.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_SOD_Detalle.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_SOD_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Stock.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Stock_Detalle.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Stock_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_VisCompentencia_Mov.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Visibilidad.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Visibilidad_Competencia.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Visibilidad_Competencia_Detalle.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Reporte_Visibilidad_Detalle.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Segmento.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Servicio.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Sincronizar.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_SincronizarPreDatos.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Sincronizar_Bodega.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Status.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_SubCategoria.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_SubFamilia.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_SubMarca.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Tipo_Material_POP.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_TPerfil.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Ubicacion.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Usuario.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Visita.cs" />
+    <Compile Include="Common\Application\JavaMovil\E_Visita_Mov.cs" />
+    <Compile Include="Common\Application\PointOfSaleMarker.cs" />
+    <Compile Include="Common\Application\Reports\Reporte_Alicorp_Mayor_Precio.cs" />
+    <Compile Include="Common\Application\Security\EEntrySeccion.cs" />
+    <Compile Include="Common\Application\ENodeType.cs" />
+    <Compile Include="Common\Application\Security\EUsuarioAcceso.cs" />
+    <Compile Include="Common\Application\EPlaning.cs" />
+    <Compile Include="Common\Application\EObjetivesPlanning.cs" />
+    <Compile Include="Common\Application\ELearnningPlanning.cs" />
+    <Compile Include="Common\Application\EPerson_Asign_Ejec_Direct.cs" />
+    <Compile Include="Common\AppMobile\Usuario.cs" />
+    <Compile Include="Common\Contratos\Ges_CampaniaServiceContract.cs" />
+    <Compile Include="Common\Contratos\Ges_MapsServiceContract.cs" />
+    <Compile Include="Common\Contratos\Ges_OperativaServiceContract.cs" />
+    <Compile Include="Common\Contratos\Ges_ReportesClienteContract.cs" />
+    <Compile Include="Common\EAPro\EAPRO_Usuario.cs" />
+    <Compile Include="Common\EAPro\E_CentroCosto.cs" />
+    <Compile Include="Common\EAPro\E_Sala.cs" />
+    <Compile Include="Common\EAPro\E_SalasSeparadas.cs" />
+    <Compile Include="Common\Maestros\Chanchito\MA_Canal.cs" />
+    <Compile Include="Common\Maestros\Chanchito\MA_Cliente.cs" />
+    <Compile Include="Common\Maestros\Chanchito\MA_Planning.cs" />
+    <Compile Include="Common\Maestros\Item\MA_Item.cs" />
+    <Compile Include="Common\Maestros\Item\MA_ItemRelevar_Visita.cs" />
+    <Compile Include="Common\Maestros\Item\MA_Item_Visita.cs" />
+    <Compile Include="Common\Maestros\Item\MA_Tip_Item.cs" />
+    <Compile Include="Common\Maestros\Chanchito\MA_Modulo.cs" />
+    <Compile Include="Common\Maestros\Lote\INT_Lote.cs" />
+    <Compile Include="Common\Maestros\Lote\INT_Lote_Contador.cs" />
+    <Compile Include="Common\Maestros\Lote\INT_Lote_Det.cs" />
+    <Compile Include="Common\Maestros\Perfil\MA_Modulo_Perfil.cs" />
+    <Compile Include="Common\Maestros\Perfil\MA_Perfil.cs" />
+    <Compile Include="Common\Maestros\Periodo\MA_Periodo.cs" />
+    <Compile Include="Common\Maestros\Producto\MA_Categoria.cs" />
+    <Compile Include="Common\Maestros\Producto\MA_Familia.cs" />
+    <Compile Include="Common\Maestros\Producto\MA_Formato.cs" />
+    <Compile Include="Common\Maestros\Producto\MA_Marca.cs" />
+    <Compile Include="Common\Maestros\Producto\MA_Producto.cs" />
+    <Compile Include="Common\Maestros\Producto\MA_SubCategoria.cs" />
+    <Compile Include="Common\Maestros\Producto\MA_Tipo.cs" />
+    <Compile Include="Common\Maestros\Producto\SR_Producto.cs" />
+    <Compile Include="Common\Maestros\PtoVenta\MA_Punto_Venta.cs" />
+    <Compile Include="Common\Maestros\PtoVenta\MA_Tip_Pdv.cs" />
+    <Compile Include="Common\Maestros\Ubigeo\MA_Tipo_Ubigeo.cs" />
+    <Compile Include="Common\Maestros\Ubigeo\MA_Ubigeo.cs" />
+    <Compile Include="Common\Maestros\Usuario\MA_Pdv_Trabajador.cs" />
+    <Compile Include="Common\Maestros\Usuario\MA_Persona.cs" />
+    <Compile Include="Common\Maestros\Usuario\MA_Tipo_Documento.cs" />
+    <Compile Include="Common\Maestros\Usuario\MA_Trabajador.cs" />
+    <Compile Include="Common\Maestros\Usuario\MA_Usuario.cs" />
+    <Compile Include="Common\Maestros\Visita\MA_Visita.cs" />
+    <Compile Include="Common\Servicio\E_Anio.cs" />
+    <Compile Include="Common\Servicio\E_Budget.cs" />
+    <Compile Include="Common\Servicio\E_Cadena.cs" />
+    <Compile Include="Common\Servicio\E_Campania.cs" />
+    <Compile Include="Common\Servicio\E_Canal.cs" />
+    <Compile Include="Common\Servicio\E_Categoria.cs" />
+    <Compile Include="Common\Servicio\E_Ciudad.cs" />
+    <Compile Include="Common\Servicio\E_ClusterZonaDistrito.cs" />
+    <Compile Include="Common\Servicio\E_Cobertura.cs" />
+    <Compile Include="Common\Servicio\E_Consulta_Reporte_Exhibicion.cs" />
+    <Compile Include="Common\Servicio\E_Consulta_Reporte_LayOut.cs" />
+    <Compile Include="Common\Servicio\E_Consulta_Reporte_Precio.cs" />
+    <Compile Include="Common\Servicio\E_Consulta_Reporte_Presencia.cs" />
+    <Compile Include="Common\Servicio\E_ContentStringDataSet.cs" />
+    <Compile Include="Common\Servicio\E_Correlativo.cs" />
+    <Compile Include="Common\Servicio\E_DatosFiltros.cs" />
+    <Compile Include="Common\Servicio\E_ExportExcel.cs" />
+    <Compile Include="Common\Servicio\E_Foto.cs" />
+    <Compile Include="Common\Servicio\E_GraXplNew.cs" />
+    <Compile Include="Common\Servicio\E_Informes.cs" />
+    <Compile Include="Common\Servicio\E_InformesCanje.cs" />
+    <Compile Include="Common\Servicio\E_Informesv2.cs" />
+    <Compile Include="Common\Servicio\E_MenuDatamercaderista.cs" />
+    <Compile Include="Common\Servicio\E_NodeComercial_Type.cs" />
+    <Compile Include="Common\Servicio\E_OrdenCompra.cs" />
+    <Compile Include="Common\Servicio\E_Parametros.cs" />
+    <Compile Include="Common\Servicio\E_Presencia_ElementoVisibilidad.cs" />
+    <Compile Include="Common\Servicio\E_Presencia_Producto.cs" />
+    <Compile Include="Common\Servicio\E_Proveedor.cs" />
+    <Compile Include="Common\Servicio\E_PuntodeVentaPlanning.cs" />
+    <Compile Include="Common\Servicio\E_PuntodeVentaPlanningRuta.cs" />
+    <Compile Include="Common\Servicio\E_Region.cs" />
+    <Compile Include="Common\Servicio\E_Reporte_Bodegas.cs" />
+    <Compile Include="Common\Servicio\E_Planning.cs" />
+    <Compile Include="Common\Servicio\E_Resumen.cs" />
+    <Compile Include="Common\Servicio\E_Seguimiento.cs" />
+    <Compile Include="Common\Servicio\E_Seguimiento_Ruta.cs" />
+    <Compile Include="Common\Servicio\E_Status_EQF.cs" />
+    <Compile Include="Common\Servicio\E_Sub_Reporte.cs" />
+    <Compile Include="Common\Servicio\E_Consulta_Reporte_Quiebre.cs" />
+    <Compile Include="Common\Servicio\E_Consulta_Reporte_SOD.cs" />
+    <Compile Include="Common\Servicio\E_Consulta_Reporte_Stock.cs" />
+    <Compile Include="Common\Servicio\E_Departamento.cs" />
+    <Compile Include="Common\Servicio\E_Distrito.cs" />
+    <Compile Include="Common\Servicio\E_ElemVisibilidadZonaDistrito.cs" />
+    <Compile Include="Common\Servicio\E_ElemVisibilidad_PDV.cs" />
+    <Compile Include="Common\Servicio\E_Filtros_Llenar_Reporte_General.cs" />
+    <Compile Include="Common\Servicio\E_Filtros_XplMap_Colgate.cs" />
+    <Compile Include="Common\Servicio\E_Foto_PDV.cs" />
+    <Compile Include="Common\Servicio\E_Grafico_Tendencia.cs" />
+    <Compile Include="Common\Servicio\E_Grafico_Variacion.cs" />
+    <Compile Include="Common\Servicio\E_HistorialFoto_PDV.cs" />
+    <Compile Include="Common\Servicio\E_Marca.cs" />
+    <Compile Include="Common\Servicio\E_Menu.cs" />
+    <Compile Include="Common\Servicio\E_Mes.cs" />
+    <Compile Include="Common\Servicio\E_NodeComercial.cs" />
+    <Compile Include="Common\Servicio\E_Oficina.cs" />
+    <Compile Include="Common\Servicio\E_Periodo.cs" />
+    <Compile Include="Common\Servicio\E_Persona.cs" />
+    <Compile Include="Common\Servicio\E_PresenciaPDV.cs" />
+    <Compile Include="Common\Servicio\E_PresenciaZonaDistrito.cs" />
+    <Compile Include="Common\Servicio\E_PresenciaZonaDistritoMap.cs" />
+    <Compile Include="Common\Servicio\E_PresenciaZonaDistrito_Detalle.cs" />
+    <Compile Include="Common\Servicio\E_Presencia_PDV.cs" />
+    <Compile Include="Common\Servicio\E_Producto.cs" />
+    <Compile Include="Common\Servicio\E_Provincia.cs" />
+    <Compile Include="Common\Servicio\E_PuntoDeVenta.cs" />
+    <Compile Include="Common\Servicio\E_PuntoVentaDatosMapa.cs" />
+    <Compile Include="Common\Servicio\E_PuntoVentaMapa.cs" />
+    <Compile Include="Common\Servicio\E_PuntoVentaMapaVentas.cs" />
+    <Compile Include="Common\Servicio\E_Reporte.cs" />
+    <Compile Include="Common\Servicio\E_ReporteCliente_Stock_Validacion.cs" />
+    <Compile Include="Common\Servicio\E_Reporte_Data_Validada.cs" />
+    <Compile Include="Common\Servicio\E_Reporte_General.cs" />
+    <Compile Include="Common\Servicio\E_Reporte_Relevo.cs" />
+    <Compile Include="Common\Servicio\E_Reporte_Stock_Alicorp.cs" />
+    <Compile Include="Common\Servicio\E_Representatividad.cs" />
+    <Compile Include="Common\Servicio\E_Representatividad_Group.cs" />
+    <Compile Include="Common\Servicio\E_Sector.cs" />
+    <Compile Include="Common\Servicio\E_SubCategoria.cs" />
+    <Compile Include="Common\Servicio\E_Tickets.cs" />
+    <Compile Include="Common\Servicio\E_TipoCluster.cs" />
+    <Compile Include="Common\Servicio\E_Usuario_Digitacion.cs" />
+    <Compile Include="Common\Servicio\E_Validar_Reporte.cs" />
+    <Compile Include="Common\Servicio\E_VentasZonaDistrito.cs" />
+    <Compile Include="Common\Servicio\E_VentasZonaDistrito_Detalle.cs" />
+    <Compile Include="Common\Servicio\E_Ventas_PDV.cs" />
+    <Compile Include="Common\Servicio\E_XPL_UBI_Distribuidora.cs" />
+    <Compile Include="Common\Servicio\E_PuntoVentaCluster.cs" />
+    <Compile Include="EAD_Report_Oficina.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Common\Application\Control\Data_SIGE.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\Maestros\Cliente\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
