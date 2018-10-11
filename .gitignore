@@ -1,5 +1,3 @@
-Business/SIGEEventHandler.cs
-Business/Sector.cs
 Business/bin/Release/*
 Business/obj/*
 CFG/bin/Release/*
