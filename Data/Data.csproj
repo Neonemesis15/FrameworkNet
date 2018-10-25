@@ -60,8 +60,11 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lucky.CFG, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Business\bin\Debug\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucky.CFG">
       <HintPath>..\CFG\bin\Debug\Lucky.CFG.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data">
@@ -283,10 +286,6 @@
       <Project>{6FA6F7FD-EC02-4C9B-A733-1138156A5BF4}</Project>
       <Name>Facade_Planning</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CFG\CFG.csproj">
-      <Project>{DB9627F9-9525-493E-9751-A7E93078BDA7}</Project>
-      <Name>CFG</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entity\Entity.csproj">
       <Project>{98AAE6AC-12E2-46B7-976C-9A643DC0E77B}</Project>
       <Name>Entity</Name>
@@ -300,7 +299,6 @@
     <Folder Include="Common\Maestros\Ubigeo\" />
     <Folder Include="Common\Maestros\Usuario\" />
     <Folder Include="Common\Maestros\Visita\" />
-    <Folder Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

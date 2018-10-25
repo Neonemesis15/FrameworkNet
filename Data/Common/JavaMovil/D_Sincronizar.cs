@@ -33,9 +33,9 @@ namespace Lucky.Data.Common.JavaMovil
         /// <param name="equipo_id"> Identificador de Equipo(Planning) </param>
         /// <returns>E_Sincronizar</returns>  Un Objecto E_Sincronizar que contiene toda la información q
         /// que necesita el App Mobile para funcionar.
-        public E_Sincronizar Sincronizar_Mov(string person_id, int cliente_id, string equipo_id)
+        public E_Sincronizar Sincronizar_Mov(string person_id, int cliente, string equipo)
         {
-            SqlDataReader readerSinc = oConn.ejecutarDataReader("SP_GES_CAM_SINCRONIZAR", equipo_id, cliente_id, person_id);
+            SqlDataReader readerSinc = oConn.ejecutarDataReader("SP_GES_CAM_SINCRONIZAR", equipo, cliente, person_id);
 
             //Listas Generales para todas las cuentas
             List<E_Estado> listaEstado = new List<E_Estado>();

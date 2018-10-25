@@ -5,11 +5,15 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Text;
 using Microsoft.ApplicationBlocks.Data;
+using log4net;
 
 namespace Lucky.Data
 {
     public class Conexion
     {
+
+        private static readonly ILog log = LogManager.GetLogger(typeof(Conexion));
+        private static readonly bool isDebugEnabled = log.IsDebugEnabled;
 
         /// <summary>
         /// Clase: Conexion
@@ -19,7 +23,6 @@ namespace Lucky.Data
         //con la base de datos, tanto en modo conectado
         //como en desconectado
         /// </summary>
-
         String oSqlConnIN;
         private SqlTransaction oSqlTransaction = null;
         public Conexion()
@@ -29,6 +32,7 @@ namespace Lucky.Data
             ConnectionStringSettings settingconection;
             settingconection = ConfigurationManager.ConnectionStrings["ConectaDBLucky"];
             oSqlConnIN = settingconection.ConnectionString;
+            log.Debug("[Conexion][Constructor-Prueba-Borrar]:");
         }
 
         /// <summary>
@@ -82,6 +86,9 @@ namespace Lucky.Data
                 }
             }
         }
+
+
+
         public SqlConnection GetConnection()
         {
             SqlConnection cn = new SqlConnection(oSqlConnIN);

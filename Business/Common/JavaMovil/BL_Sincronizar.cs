@@ -6,7 +6,6 @@ using log4net;
 using Lucky.Business.Common.Exceptions;
 using Lucky.Entity.Common.Application.JavaMovil;
 using Lucky.Data.Common.JavaMovil;
-using Lucky.Data.Common.JavaMovil.Impl;
 
 namespace Lucky.Business.Common.JavaMovil
 {

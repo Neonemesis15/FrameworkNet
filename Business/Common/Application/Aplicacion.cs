@@ -19,7 +19,8 @@ namespace Lucky.Business.Common.Application
         }
         public EAplicacion obtener(string sCountry,string smodul)
         {
-            Lucky.Data.Common.Application.DAplicacion odAplicacion = new Lucky.Data.Common.Application.DAplicacion();
+            Lucky.Data.Common.Application.DAplicacion odAplicacion = 
+                new Lucky.Data.Common.Application.DAplicacion();
             EAplicacion oeAplicacion = odAplicacion.obtenerPK(sCountry, smodul);
             odAplicacion = null;
             return oeAplicacion;

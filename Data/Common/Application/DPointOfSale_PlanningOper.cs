@@ -13,7 +13,6 @@ namespace Lucky.Data.Common.Application
     /// Requerimiento No 
     /// Descripción : Clase Data encargada de definir todos los metodos transaccionales para operar PointOfSale_PlanningOper
     /// </summary>
-
     public class DPointOfSale_PlanningOper
     {
 
@@ -23,6 +22,23 @@ namespace Lucky.Data.Common.Application
             UserInterface oUserInterface = new UserInterface();
             oConn = new Conexion();
             oUserInterface = null;
+        }
+
+        // Variable para almacenar los Mensajes de Error de la Aplicación
+        public String message;
+
+        // Variable para almacenar el Resultado de las consultas a la Base de Datos por Store Procedure
+        public DataTable dt;
+
+        // Variable para almacenar en un Objeto el resultado de la consulta.
+        EPointOfSale_PlanningOper oerPointOfSale_PlanningOper;
+
+        /// <summary>
+        /// Retorna los Mensajes de Error, si es vacio quiere decir que todo esta Ok
+        /// </summary>
+        /// <returns></returns>
+        public String getMessage() {
+            return message;
         }
 
         /// <summary>
@@ -43,28 +59,58 @@ namespace Lucky.Data.Common.Application
         /// <param name="sPOSPlanningOpe_ModiBy"></param>
         /// <param name="tPOSPlanningOpe_DateModiBy"></param>
         /// <returns>oerPointOfSale_PlanningOper</returns>
+        public EPointOfSale_PlanningOper RegistrarAsignPDVaOperativo(
+            int iid_MPOSPlanning, 
+            string sid_Planning,
+            int iPerson_id, 
+            DateTime tPOSPlanningOpe_Fechainicio, 
+            DateTime tPOSPlanningOpe_Fechafin, 
+            int ifrecuencia, 
+            bool bPOSPlanningOpe_Status, 
+            string sPOSPlanningOpe_CreateBy, 
+            DateTime tPOSPlanningOpe_DateBy, 
+            string sPOSPlanningOpe_ModiBy,
+            DateTime tPOSPlanningOpe_DateModiBy){
 
-        public EPointOfSale_PlanningOper RegistrarAsignPDVaOperativo(int iid_MPOSPlanning, string sid_Planning,
-            int iPerson_id, DateTime tPOSPlanningOpe_Fechainicio, DateTime tPOSPlanningOpe_Fechafin,int ifrecuencia, bool bPOSPlanningOpe_Status, string sPOSPlanningOpe_CreateBy, DateTime tPOSPlanningOpe_DateBy, string sPOSPlanningOpe_ModiBy,
-            DateTime tPOSPlanningOpe_DateModiBy)
-        {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBSIGE_SUPERVISOR_ASIGNARPDVAOPERATIVO_tmp", iid_MPOSPlanning, sid_Planning,
-            iPerson_id, tPOSPlanningOpe_Fechainicio, tPOSPlanningOpe_Fechafin,ifrecuencia, bPOSPlanningOpe_Status, sPOSPlanningOpe_CreateBy, tPOSPlanningOpe_DateBy, sPOSPlanningOpe_ModiBy,
-             tPOSPlanningOpe_DateModiBy);
+                // Ejecuta Procedimiento
+                try{
+                    dt = oConn.ejecutarDataTable(
+                        "UP_WEBSIGE_SUPERVISOR_ASIGNARPDVAOPERATIVO_tmp",
+                        iid_MPOSPlanning,
+                        sid_Planning,
+                        iPerson_id,
+                        tPOSPlanningOpe_Fechainicio,
+                        tPOSPlanningOpe_Fechafin,
+                        ifrecuencia,
+                        bPOSPlanningOpe_Status,
+                        sPOSPlanningOpe_CreateBy,
+                        tPOSPlanningOpe_DateBy,
+                        sPOSPlanningOpe_ModiBy,
+                        tPOSPlanningOpe_DateModiBy);
+                }catch (Exception ex) {
+                    message = "Ocurrió un Error: " + ex.ToString();
+                }
 
-            EPointOfSale_PlanningOper oerPointOfSale_PlanningOper = new EPointOfSale_PlanningOper();
+                // Valida si el resultado devuelve registros
+                if (dt.Rows.Count > 0 ){
 
-            oerPointOfSale_PlanningOper.id_MPOSPlanning = iid_MPOSPlanning;
-            oerPointOfSale_PlanningOper.id_Planning = sid_Planning;
-            oerPointOfSale_PlanningOper.Person_id = iPerson_id;
-            oerPointOfSale_PlanningOper.POSPlanningOpe_Fechainicio = tPOSPlanningOpe_Fechainicio;
-            oerPointOfSale_PlanningOper.POSPlanningOpe_Fechafin = tPOSPlanningOpe_Fechafin;
-            oerPointOfSale_PlanningOper.Frecuencia = ifrecuencia;
-            oerPointOfSale_PlanningOper.POSPlanningOpe_Status = bPOSPlanningOpe_Status;
-            oerPointOfSale_PlanningOper.POSPlanningOpe_CreateBy = sPOSPlanningOpe_CreateBy;
-            oerPointOfSale_PlanningOper.POSPlanningOpe_DateBy = tPOSPlanningOpe_DateBy;
-            oerPointOfSale_PlanningOper.POSPlanningOpe_ModiBy = sPOSPlanningOpe_ModiBy;
-            oerPointOfSale_PlanningOper.POSPlanningOpe_DateModiBy = tPOSPlanningOpe_DateModiBy;
+                    oerPointOfSale_PlanningOper = new EPointOfSale_PlanningOper();
+                    oerPointOfSale_PlanningOper.id_MPOSPlanning = iid_MPOSPlanning;
+                    oerPointOfSale_PlanningOper.id_Planning = sid_Planning;
+                    oerPointOfSale_PlanningOper.Person_id = iPerson_id;
+                    oerPointOfSale_PlanningOper.POSPlanningOpe_Fechainicio = tPOSPlanningOpe_Fechainicio;
+                    oerPointOfSale_PlanningOper.POSPlanningOpe_Fechafin = tPOSPlanningOpe_Fechafin;
+                    oerPointOfSale_PlanningOper.Frecuencia = ifrecuencia;
+                    oerPointOfSale_PlanningOper.POSPlanningOpe_Status = bPOSPlanningOpe_Status;
+                    oerPointOfSale_PlanningOper.POSPlanningOpe_CreateBy = sPOSPlanningOpe_CreateBy;
+                    oerPointOfSale_PlanningOper.POSPlanningOpe_DateBy = tPOSPlanningOpe_DateBy;
+                    oerPointOfSale_PlanningOper.POSPlanningOpe_ModiBy = sPOSPlanningOpe_ModiBy;
+                    oerPointOfSale_PlanningOper.POSPlanningOpe_DateModiBy = tPOSPlanningOpe_DateModiBy;
+
+                }
+                else {
+                    message = "No se Encontraron Puntos de Venta Asignados a Mercaderistas, ¡Por favor verifique!";
+                }
 
             return oerPointOfSale_PlanningOper;
         }

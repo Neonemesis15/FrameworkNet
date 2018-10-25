@@ -15,13 +15,38 @@ namespace Lucky.Business.Common.Application
     /// Descripcion: Define los metodos del negocio para la clase PointOfSale_PlanningOper
     /// Requerimiento No <>
     /// </summary>
-
     public class PointOfSale_PlanningOper
     {
+
+        // Instancia al Data Entity
+        EPointOfSale_PlanningOper oerPointOfSale_PlanningOper;
+
+        // Instanciar al Access Data
+        DPointOfSale_PlanningOper odrPointOfSale_PlanningOper;
+
+        // Variable para almacenar los Mensajes de Error de la Aplicación
+        public String message;
+
+        /// <summary>
+        /// Retorna los Mensajes de Error, si es vacio quiere decir que todo esta Ok
+        /// </summary>
+        /// <returns></returns>
+        public String getMessage()
+        {
+            return message;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public PointOfSale_PlanningOper()
         {
+            // Inicializar el Data Access
+            odrPointOfSale_PlanningOper = new DPointOfSale_PlanningOper();
+
             //Se define el constructor por defecto
         }
+
 
         /// <summary>
         /// Metodo para registrar asignación de puntos de venta a operativos
@@ -41,15 +66,43 @@ namespace Lucky.Business.Common.Application
         /// <param name="sPOSPlanningOpe_ModiBy"></param>
         /// <param name="tPOSPlanningOpe_DateModiBy"></param>
         /// <returns oerPointOfSale_PlanningOper></returns>
-        public EPointOfSale_PlanningOper RegistrarAsignPDVaOperativo(int iid_MPOSPlanning, string sid_Planning,
-            int iPerson_id, DateTime tPOSPlanningOpe_Fechainicio, DateTime tPOSPlanningOpe_Fechafin, int ifrecuencia, bool bPOSPlanningOpe_Status, string sPOSPlanningOpe_CreateBy, DateTime tPOSPlanningOpe_DateBy, string sPOSPlanningOpe_ModiBy,
+        public EPointOfSale_PlanningOper RegistrarAsignPDVaOperativo(
+            int iid_MPOSPlanning, 
+            string sid_Planning,
+            int iPerson_id, 
+            DateTime tPOSPlanningOpe_Fechainicio, 
+            DateTime tPOSPlanningOpe_Fechafin, 
+            int ifrecuencia, 
+            bool bPOSPlanningOpe_Status, 
+            string sPOSPlanningOpe_CreateBy, 
+            DateTime tPOSPlanningOpe_DateBy, 
+            string sPOSPlanningOpe_ModiBy,
             DateTime tPOSPlanningOpe_DateModiBy)
         {
-            DPointOfSale_PlanningOper odrPointOfSale_PlanningOper = new DPointOfSale_PlanningOper();
-            EPointOfSale_PlanningOper oerPointOfSale_PlanningOper = odrPointOfSale_PlanningOper.RegistrarAsignPDVaOperativo(iid_MPOSPlanning, sid_Planning,
-             iPerson_id, tPOSPlanningOpe_Fechainicio, tPOSPlanningOpe_Fechafin,ifrecuencia, bPOSPlanningOpe_Status, sPOSPlanningOpe_CreateBy, tPOSPlanningOpe_DateBy, sPOSPlanningOpe_ModiBy,
-             tPOSPlanningOpe_DateModiBy);
-            odrPointOfSale_PlanningOper = null;
+            try{
+                // Instanciar al Objeto Acceso a Datos
+                oerPointOfSale_PlanningOper =
+                    odrPointOfSale_PlanningOper.RegistrarAsignPDVaOperativo(
+                    iid_MPOSPlanning,
+                    sid_Planning,
+                    iPerson_id,
+                    tPOSPlanningOpe_Fechainicio,
+                    tPOSPlanningOpe_Fechafin,
+                    ifrecuencia,
+                    bPOSPlanningOpe_Status,
+                    sPOSPlanningOpe_CreateBy,
+                    tPOSPlanningOpe_DateBy,
+                    sPOSPlanningOpe_ModiBy,
+                    tPOSPlanningOpe_DateModiBy);
+            }catch (Exception ex) {
+                message = "Error: " + ex.ToString().Substring(0,50) + " ...";
+            }
+
+            // Validar que el mensaje de respuesta de Data Access sea Null (Cuando es Null es Correcto)
+            if (odrPointOfSale_PlanningOper.getMessage() != null) {
+                message = odrPointOfSale_PlanningOper.getMessage();
+            }
+
             return oerPointOfSale_PlanningOper;
         }
 

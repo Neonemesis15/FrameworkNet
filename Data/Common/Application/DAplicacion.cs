@@ -8,52 +8,79 @@ using Lucky.Entity.Common.Application.Interfaces;
 namespace Lucky.Data.Common.Application
 { 
     /// <summary>
-    /// Clase: Aplicacion
-    /// Creada Por: Ing. Carlos Alberto Hernandez R.
-    /// Fecha de Creaciòn: 29/04/2009
-    /// Descripcion: Ddefine metodos transaccionales para Aplicacion
-    /// Requerimiento No: <>
-    /// 
+    /// Ddefine metodos transaccionales para Aplicacion
+    /// Developed by: 
+    /// - Ing. Carlos Alberto Hernandez R. (CAHR)
+    /// Changes:
+    /// - 2009-04-29 Carlos Alberto Hernandez R. (CAHR) Creación de la Clase
+    /// - 2018-10-15 Pablo Salas Alvarez (PSA) Refactoring.
     /// </summary>
     public class DAplicacion
     {
+        // Variable para la Conexion
         private Conexion oConn;
+
+        // Variable para almacenar los Mensajes de Error de la Aplicación
+        public String message = "";
+
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public DAplicacion()
         {
+            // Inicializa UserInterface, para definir que tipo de Aplicación se va a usar
+            // Destok o Web y Además Validar que las Session sUser y sPwd
             UserInterface oUserInterface = new UserInterface();
+            
+            
+            // Establece conexión con la base de datos Principal
             oConn = new Conexion(1);
-            oUserInterface = null;
+            // oUserInterface = null;
         }
+
+        /// <summary>
+        /// Obtener Información del AppLucky
+        /// </summary>
+        /// <param name="sCountry">id del Pais</param>
+        /// <param name="smodul">id Módulo</param>
+        /// <returns></returns>
         public EAplicacion obtenerPK(String sCountry, String smodul)
         {
-            DataSet ds = oConn.ejecutarDataSet("UP_GEN_OBTENER_DATOS_SISTEMA", sCountry, smodul);
-            if (ds.Tables[0] != null)
-            {
-                if (ds.Tables[0].Rows.Count > 0)
-                {
-                    EAplicacion oeAplicacion = new EAplicacion();
-                    oeAplicacion.codapplucky = ds.Tables[0].Rows[0]["cod_applucky"].ToString().Trim();
-                    oeAplicacion.nameapp = ds.Tables[0].Rows[0]["name_app"].ToString().Trim();
-                    oeAplicacion.verapp = ds.Tables[0].Rows[0]["ver_app"].ToString().Trim();
-                    oeAplicacion.abrapp = ds.Tables[0].Rows[0]["abr_app"].ToString().Trim();
-                    oeAplicacion.appStatus = Convert.ToBoolean(ds.Tables[0].Rows[0]["app_Status"].ToString().Trim());
-                    oeAplicacion.appurl = ds.Tables[0].Rows[0]["app_url"].ToString().Trim();
-                    oeAplicacion.appCreateBy = ds.Tables[0].Rows[0]["app_CreateBy"].ToString().Trim();
-                    oeAplicacion.appDateBy = ds.Tables[0].Rows[0]["app_DateBy"].ToString().Trim();
-                    oeAplicacion.appModiBy = ds.Tables[0].Rows[0]["app_ModiBy"].ToString().Trim();
-                    oeAplicacion.appDateModiBy = ds.Tables[0].Rows[0]["app_DateModiBy"].ToString().Trim();
+            // Creamos una Entidad EAplicacion para guardar la información
+            EAplicacion oeAplicacion = new EAplicacion();
 
-                    return oeAplicacion;
+            try{
+                // Obtener la información del Sistema por Country y smodul 
+                DataSet ds = oConn.ejecutarDataSet("UP_GEN_OBTENER_DATOS_SISTEMA", sCountry, smodul);
+                
+                // Si el resultado es diferente de Null
+                if (ds.Tables[0] != null){
+                    // Si el resultado tiene 1 o más registros
+                    if (ds.Tables[0].Rows.Count > 0){
+                        oeAplicacion.codapplucky = ds.Tables[0].Rows[0]["cod_applucky"].ToString().Trim();
+                        oeAplicacion.nameapp = ds.Tables[0].Rows[0]["name_app"].ToString().Trim();
+                        oeAplicacion.verapp = ds.Tables[0].Rows[0]["ver_app"].ToString().Trim();
+                        oeAplicacion.abrapp = ds.Tables[0].Rows[0]["abr_app"].ToString().Trim();
+                        oeAplicacion.appStatus = Convert.ToBoolean(ds.Tables[0].Rows[0]["app_Status"].ToString().Trim());
+                        oeAplicacion.appurl = ds.Tables[0].Rows[0]["app_url"].ToString().Trim();
+                        oeAplicacion.appCreateBy = ds.Tables[0].Rows[0]["app_CreateBy"].ToString().Trim();
+                        oeAplicacion.appDateBy = ds.Tables[0].Rows[0]["app_DateBy"].ToString().Trim();
+                        oeAplicacion.appModiBy = ds.Tables[0].Rows[0]["app_ModiBy"].ToString().Trim();
+                        oeAplicacion.appDateModiBy = ds.Tables[0].Rows[0]["app_DateModiBy"].ToString().Trim();
+                    }else{
+                        message = "Error: El resultado de la Busqueda en el AppLucky no tiene registros... ,"
+                            + "¡por favor verique!";
+                    }
+                }else{
+                    message = "Error: El resultado de la Busqueda en el AppLucky es Nula..." 
+                        + " , ¡por favor verique!";
                 }
-                else
-                {
-                    return null;
-                }
+            }catch (Exception ex) {
+                message = "Ocurrio un Error: " + ex.ToString().Substring(0, 100) + "...";
             }
-            else
-            {
-                return null;
-            }
+
+            return oeAplicacion;
         }
 
 
@@ -71,7 +98,6 @@ namespace Lucky.Data.Common.Application
             DataTable dt = null;
 
             //Este switch-case Establece la secuencia de Busqueda
-
             switch (sTabla)
             {
                 ///Add 03/09/2012 PSalas
@@ -1392,13 +1418,6 @@ namespace Lucky.Data.Common.Application
 
             //destruyye el dt si no encuentra nada para liberar recuersos 
             return dt = null;
-
-
-
-
-
-
-
         }
 
         /// <summary>
@@ -4626,6 +4645,16 @@ namespace Lucky.Data.Common.Application
         //            break;
         //    }
         //}
+
+        /// <summary>
+        /// Obtiene el Mensaje de Error en caso se haya presentado
+        /// Si es vacio quiere decir que todo esta ok.
+        /// </summary>
+        /// <returns></returns>
+        public String getMessage()
+        {
+            return message;
+        }
     }
 }
         

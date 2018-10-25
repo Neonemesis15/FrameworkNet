@@ -37,15 +37,26 @@ namespace Lucky.Data.Common.Application
         /// <param name="sMachine"></param>
         /// <param name="tDateby"></param>
         /// <returns>oerSesion_Users</returns>
-        public ESesion_Users Registrar_Auditoria(string sname_user, int iCompany_id, string sMachine, DateTime tDateby)
-        {
-            DataTable dtRegistrar = oConn.ejecutarDataTable("UP_WEBXPLORA_GEN_AUDITORIAINGRESO", sname_user, iCompany_id, sMachine, tDateby);
+        public ESesion_Users Registrar_Auditoria(
+            string sname_user, 
+            int iCompany_id, 
+            string sMachine, 
+            DateTime tDateby){
+
+            DataTable dtRegistrar = 
+                oConn.ejecutarDataTable("UP_WEBXPLORA_GEN_AUDITORIAINGRESO", 
+                sname_user, 
+                iCompany_id, 
+                sMachine, 
+                tDateby);
 
             ESesion_Users oerSesion_Users = new ESesion_Users();
+            
             oerSesion_Users.name_user = sname_user;
             oerSesion_Users.Company_id = iCompany_id;
             oerSesion_Users.Machine = sMachine;
             oerSesion_Users.Dateby = tDateby;
+
             return oerSesion_Users;
         }
 

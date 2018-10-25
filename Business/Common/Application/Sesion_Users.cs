@@ -32,10 +32,15 @@ namespace Lucky.Business.Common.Application
         /// <param name="iCompany_id"></param>        
         /// <param name="tDateby"></param>
         /// <returns></returns>
-        public ESesion_Users Registrar_Auditoria(string sname_user, int iCompany_id, string sMachine, DateTime tDateby)
+        public ESesion_Users Registrar_Auditoria(
+            string sname_user, 
+            int iCompany_id, 
+            string sMachine, 
+            DateTime tDateby)
         {
             DSesion_Users odrSesion_Users = new DSesion_Users();
-            ESesion_Users oeSesion_Users = odrSesion_Users.Registrar_Auditoria(sname_user, iCompany_id, sMachine, tDateby);
+            ESesion_Users oeSesion_Users = 
+                odrSesion_Users.Registrar_Auditoria(sname_user, iCompany_id, sMachine, tDateby);
 
             odrSesion_Users = null;
             return oeSesion_Users;
