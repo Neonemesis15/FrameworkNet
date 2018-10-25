@@ -8,4 +8,4 @@ Entity/bin/Release/*
 Entity/obj/*
 LuckyMer.Contracts/LuckyMer.Contracts/bin/Release/*
 LuckyMer.Contracts/LuckyMer.Contracts/obj/*
-Test/Test/obj/*
+Test/obj/*
