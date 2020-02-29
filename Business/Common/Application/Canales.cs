@@ -17,11 +17,23 @@ namespace Lucky.Business.Common.Application
 
     public class Canales
     {
+        // Variable para guardar los mensajes de Error
+        String messages = "";
+
+        DCanales odseCanales = new DCanales();
         public Canales()
         {
             //
             // TODO: agregar aquí la lógica del constructor
             //
+        }
+
+        /// <summary>
+        /// Metodo para retornar los mensajes de Error
+        /// </summary>
+        /// <returns></returns>
+        public String getMessages() {
+            return messages;
         }
 
         //----Metodo que permite registrar Canales
@@ -58,11 +70,58 @@ namespace Lucky.Business.Common.Application
         //---Metodo de Consulta de Canales
         public DataTable BuscarCanales(string scodchannel, string sChannelName)
         {
-            DCanales odseCanales = new DCanales();
             ECanales oeCanales = new ECanales();
             DataTable dtCanales = odseCanales.ObtenerCanales(scodchannel,sChannelName);
             odseCanales = null;
             return dtCanales;
+        }
+
+        /// <summary>
+        /// Obtener Canales por IdCountry and IdCompany
+        /// </summary>
+        /// <param name="idCountry"></param>
+        /// <param name="idCompany"></param>
+        /// <returns></returns>
+        public DataTable getCanalesByIdCountryAndIdCompany(
+        String idCountry, String idCompany) {
+            
+            DataTable dt = new DataTable();
+
+            try{
+                dt = odseCanales.getCanalesByIdCountryAndIdCompany(
+                    idCountry == null ? "0" : idCountry,
+                    idCompany == null ? "0" : idCompany);
+                if (!odseCanales.getMessages().Equals("")) {
+                    messages = odseCanales.getMessages();
+                }
+            }catch (Exception ex) {
+                messages = "Error al Obtener Canales: " + 
+                    ex.Message.ToString();
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// Dummy para Obtener Canales por IdCountry and IdCompany
+        /// </summary>
+        /// <param name="idCountry"></param>
+        /// <param name="idCompany"></param>
+        /// <returns></returns>
+        public DataTable getCanalesByIdCountryAndIdCompanyDummy(
+        String idCountry, String idCompany) {
+            // Crear el Objeto DataTable
+            DataTable dt = new DataTable();
+
+            // Definir las Columnas
+            dt.Columns.Add("cod_channel", typeof(int));
+            dt.Columns.Add("channel_name", typeof(string));
+
+            //Llenar información
+            dt.Rows.Add(1000,"Mayoristas");
+            dt.Rows.Add(1001, "Minoristas");
+            dt.Rows.Add(1002, "Autoservicios");
+
+            return dt;
         }
     }
 }

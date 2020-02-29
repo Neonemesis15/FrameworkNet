@@ -10,10 +10,22 @@ using Lucky.Business.Common.Application;
 
 namespace Lucky.Business.Common.Security
 {
-    /// Permite manipular los Accesos a los diferentes sistemas y usuarios.
+    /// Permite manipular los Accesos a los diferentes sistemas 
+    /// y usuarios.
     /// </summary>
     public class UsuarioAcceso
     {
+        // Accediendo a la Capa de Acceso a Datos
+        DUsuarioAcceso odUsuarioAcceso = new DUsuarioAcceso();
+        // Variable para almacenar los Errores
+        String messages = "";
+        /// <summary>
+        /// Retorna vacio si no hay errores, en caso de tener errores
+        /// se debe mostrar.
+        /// </summary>
+        /// <returns></returns>
+        public String getMessages(){
+        return messages;}
         /// <summary>
         /// Constructor por defecto. No realiza ninguna accion
         /// </summary>
@@ -49,9 +61,14 @@ namespace Lucky.Business.Common.Security
         /// <returns></returns>
         public EUsuarioAcceso obtenerAleatorioxUsuario(string sUser, string sPassw)
         {
-            DUsuarioAcceso odUsuarioAcceso = new DUsuarioAcceso();
-            EUsuarioAcceso oeUsuarioAcceso = odUsuarioAcceso.UsuarioAcceso(sUser,sPassw);
-            odUsuarioAcceso = null;
+            EUsuarioAcceso oeUsuarioAcceso = new EUsuarioAcceso();
+            try{
+                oeUsuarioAcceso = 
+                    odUsuarioAcceso.UsuarioAcceso(sUser, sPassw);
+            }
+            catch (Exception ex) {
+                messages = "Ocurrio un Error: " + ex.Message.ToString();
+            }
             return oeUsuarioAcceso;
         }
        

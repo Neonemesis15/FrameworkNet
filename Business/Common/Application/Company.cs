@@ -24,6 +24,48 @@ namespace Lucky.Business.Common.Application
             //Se define el constructor por defecto
         }
 
+        public String message = "";
+
+        public String getMessage() {
+            return message;
+        }
+
+        public DataTable getCompanyCompetition() {
+            Lucky.Data.Common.Application.DCompany odCompany = 
+                new Lucky.Data.Common.Application.DCompany();
+
+            DataTable dt = odCompany.getCompanyCompetition();
+            
+            if (!odCompany.getMessage().Equals("")) {
+                message = odCompany.getMessage();
+            }
+
+            return dt;
+        }
+
+        public DataTable getCompanyCompetitionDummy() {
+            // Crear el DataTable
+            DataTable dt = new DataTable();
+            try
+            {
+                // Crear las Columnas del DataTable
+                dt.Columns.Add("company_id", typeof(int));
+                dt.Columns.Add("company_name", typeof(string));
+                //Llenar información
+                dt.Rows.Add(1, "Competidora 01 S.A.C.");
+                dt.Rows.Add(2, "Competidora 02 S.A.C.");
+                dt.Rows.Add(3, "Competidora 03 S.A.C.");
+                dt.Rows.Add(4, "Competidora 04 S.A.C.");
+                dt.Rows.Add(5, "Competidora 05 S.A.C.");
+            }
+            catch (Exception ex)
+            {
+                message = "Ocurrio un Error: "
+                    + ex.Message.ToString();
+            }
+
+            return dt;
+        }
 
         /// <summary>
         ///Nombre Metodo: Register_Company
@@ -43,7 +85,7 @@ namespace Lucky.Business.Common.Application
         }
 
         public DataTable Register_ClienteTMP(string sCompany_id, string sid_typeDocument, string sCompany_nd, string sCompany_Name, string sCompany_Addres,
-   string scod_Country, string sCompany_Status)
+        string scod_Country, string sCompany_Status)
         {
             DCompany oDCompany = new DCompany();
             DataTable dt = oDCompany.Register_ClienteTMP(sCompany_id, sid_typeDocument, sCompany_nd, sCompany_Name, sCompany_Addres,
@@ -128,6 +170,8 @@ namespace Lucky.Business.Common.Application
             odaCompany = null;
             return oeCompany;
         }
+    
+        
     }
 }
 

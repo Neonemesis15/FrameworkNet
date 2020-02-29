@@ -6,6 +6,7 @@ using Lucky.Entity.Common.Application;
 using Lucky.Business;
 using Lucky.Entity.Common.Security;
 using Lucky.Entity.Common.Application.Security;
+using Lucky.Entity.Common.Application.Response;
 
 
 namespace Lucky.Business.Common.Application
@@ -15,37 +16,62 @@ namespace Lucky.Business.Common.Application
     /// Create By: Ing Carlos Alberto Hernández Rincon
     /// Fecha de Creación: 28/04/2009:9:50 am
     /// Requerimiento<>:
-    /// Descripcion: Define los metodos del Negocio para registrar, actualizar, y autenticar Usuarios
+    /// Descripcion: Define los metodos del Negocio para registrar, 
+    /// actualizar, y autenticar Usuarios
+    /// Changes:
+    /// - 02-01-2018 - Pablo Salas Alvarez (PSA) - Se adiciona la clase fncLogin(String userName, String userPassword)
     /// </summary>
     public class Usuario
     {
+        // Invocando a la Clase Acceso a Datos.
+        DUsuario odUsuario = new DUsuario();
+
+        // Variable para guardar los mensajes de Error
+        String messages = "";
+
+        /// <summary>
+        /// Metodo que si devuelve vacion ("") no se presentaron errores,
+        /// Caso contrario muestra el mensaje de Error.
+        /// </summary>
+        /// <returns></returns>
+        public String getMessages() {
+            return messages;
+        }
 
         //public event SIGEEventHandler PrimerAcceso;
-
-
         public Usuario()
         {
             //
             // TODO: agregar aquí la lógica del constructor
             //
         }
+        
         /// <summary>
-        /// Permite obtener información de un usuario determinado
+        /// Permite obtener información de un usuario determinado.
+        /// Este metodo permite consultar usuarios registrados 
+        /// en la aplicacion.
         /// </summary>
         /// <param name="sName">Código de usuario</param>
         /// <param name="oConn">Objeto Conexión</param>
         /// <returns></returns>
-        /////Este metodo permite consultar usuarios registrados en la aplicacion 
-
         public EUsuario obtener(string sUser, string sPassw)
         {
-            Lucky.Data.Common.Application.DUsuario odUsuario = new Lucky.Data.Common.Application.DUsuario();
-            EUsuario oeUsuario = odUsuario.obtenerPK(sUser, sPassw);
-            odUsuario = null;
+            EUsuario oeUsuario = new EUsuario();
+            //Lucky.Data.Common.Application.DUsuario odUsuario = 
+            //    new Lucky.Data.Common.Application.DUsuario();
+            try{
+                oeUsuario = odUsuario.obtenerPK(sUser, sPassw);
+                if (!odUsuario.getMessages().Equals("")) {
+                    messages = "Ocurrio un Error: " + 
+                        odUsuario.getMessages();
+                }
+            }
+            catch (Exception ex) {
+                messages = "Error: " + ex.Message.ToString();
+            }
+            //odUsuario = null;
             return oeUsuario;
         }
-
-  
 
         /// <summary>
         /// Permite autenticar a un usuario. Desatando determinados eventos si el usuario no cuenta con permisos
@@ -54,9 +80,16 @@ namespace Lucky.Business.Common.Application
         /// <param name="oConn">Origen</param>
         /// <returns></returns>
         /// //Metodo que permite realizar el registro de Usuarios en SIGE
-        public EUsuario Registrar(string sidtypeDocument, string sPersonnd, string sPersonFirtsname, string sPersonLastName, string sPersonSurname, string sPersonSeconName,
-            string sPersonEmail, string sPersonPhone, string sPersonAddres, string sCountryid,
-         string snameuser, string sUserPassword, string iPerfilid, string sModuloid, string suserrecall, int icompanyid, bool bPersonStatus, string sPersonCreateBy, DateTime tPersonDateBy, string sPersonModiBy, DateTime tPersonDateModiBy)
+        public EUsuario Registrar(string sidtypeDocument, string sPersonnd, 
+            string sPersonFirtsname, string sPersonLastName, 
+            string sPersonSurname, string sPersonSeconName,
+            string sPersonEmail, string sPersonPhone, 
+            string sPersonAddres, string sCountryid,
+            string snameuser, string sUserPassword, string iPerfilid, 
+            string sModuloid, string suserrecall, int icompanyid, 
+            bool bPersonStatus, string sPersonCreateBy, 
+            DateTime tPersonDateBy, string sPersonModiBy, 
+            DateTime tPersonDateModiBy)
         {
             Lucky.Data.Common.Application.DUsuario odrUsuario = new Lucky.Data.Common.Application.DUsuario();
             EUsuario oerUsuario = odrUsuario.RegistrarPK(sidtypeDocument, sPersonnd, sPersonFirtsname, sPersonLastName, sPersonSurname, sPersonSeconName,
@@ -66,9 +99,17 @@ namespace Lucky.Business.Common.Application
         }
 
         //Permite realizar registro de usuario seleccionando mercaderista, perfil 001
-        public EUsuario RegistrarMovil(string sidtypeDocument, string sPersonnd, string sPersonFirtsname, string sPersonLastName, string sPersonSurname, string sPersonSeconName,
-            string sPersonEmail, string sPersonPhone, string sPersonAddres, string sCountryid,
-         string snameuser, string sUserPassword, string iPerfilid, string sModuloid, string suserrecall, int icompanyid, bool bPersonStatus, string sPersonCreateBy, DateTime tPersonDateBy, string sPersonModiBy, DateTime tPersonDateModiBy)
+        public EUsuario RegistrarMovil(
+            string sidtypeDocument, string sPersonnd, 
+            string sPersonFirtsname, string sPersonLastName, 
+            string sPersonSurname, string sPersonSeconName,
+            string sPersonEmail, string sPersonPhone, 
+            string sPersonAddres, string sCountryid,
+            string snameuser, string sUserPassword, string iPerfilid, 
+            string sModuloid, string suserrecall, int icompanyid, 
+            bool bPersonStatus, string sPersonCreateBy, 
+            DateTime tPersonDateBy, string sPersonModiBy, 
+            DateTime tPersonDateModiBy)
         {
             Lucky.Data.Common.Application.DUsuario odrUsuario = new Lucky.Data.Common.Application.DUsuario();
             EUsuario oerUsuario = odrUsuario.RegistrarUsuarioMovil(sidtypeDocument, sPersonnd, sPersonFirtsname, sPersonLastName, sPersonSurname, sPersonSeconName,
@@ -76,6 +117,7 @@ namespace Lucky.Business.Common.Application
             odrUsuario = null;
             return oerUsuario;
         }
+        
         /// <summary>
         /// Registra usuarios en la tambla Person de la BD DB_LUCKY_TMP
         /// 12/01/2011 Magaly Jiménez
@@ -102,9 +144,17 @@ namespace Lucky.Business.Common.Application
         /// <param name="sPersonModiBy"></param>
         /// <param name="tPersonDateModiBy"></param>
         /// <returns></returns>
-        public EUsuario RegistrarMovilTMP(int iperson_id, string sidtypeDocument, string sPersonnd, string sPersonFirtsname, string sPersonLastName, string sPersonSurname, string sPersonSeconName,
-           string sPersonEmail, string sPersonPhone, string sPersonAddres, string sCountryid,
-        string snameuser, string sUserPassword, string iPerfilid, string sModuloid, string suserrecall, int icompanyid, bool bPersonStatus, string sPersonCreateBy, DateTime tPersonDateBy, string sPersonModiBy, DateTime tPersonDateModiBy)
+        public EUsuario RegistrarMovilTMP(
+            int iperson_id, string sidtypeDocument, string sPersonnd, 
+            string sPersonFirtsname, string sPersonLastName, 
+            string sPersonSurname, string sPersonSeconName,
+            string sPersonEmail, string sPersonPhone, 
+            string sPersonAddres, string sCountryid,
+            string snameuser, string sUserPassword, 
+            string iPerfilid, string sModuloid, string suserrecall, 
+            int icompanyid, bool bPersonStatus, string sPersonCreateBy, 
+            DateTime tPersonDateBy, string sPersonModiBy, 
+            DateTime tPersonDateModiBy)
         {
             Lucky.Data.Common.Application.DUsuario odrUsuarioTMP = new Lucky.Data.Common.Application.DUsuario();
             EUsuario oerUsuarioTMP = odrUsuarioTMP.RegistrarUsuarioMovilDBTMP(iperson_id, sidtypeDocument, sPersonnd, sPersonFirtsname, sPersonLastName, sPersonSurname, sPersonSeconName,
@@ -114,9 +164,17 @@ namespace Lucky.Business.Common.Application
         }
 
         //Metodo que permite realizar la Actualizacion de Usuarios en SIGE
-        public EUsuario Actualizar(int iPersonid, string sidtypeDocument, string sPersonnd, string sPersonFirtsname, string sPersonLastName, string sPersonSurname, string sPersonSeconName,
-          string sPersonEmail, string sPersonPhone, string sPersonAddres, string scodCountry,
-       string snameuser, string sUserPassword, string iPerfilid, string sModuloid, string suserrecall, int icompanyid, bool bPersonStatus, string sPersonModiBy, DateTime tPersonDateModiBy)
+        public EUsuario Actualizar(
+            int iPersonid, string sidtypeDocument, string sPersonnd, 
+            string sPersonFirtsname, string sPersonLastName, 
+            string sPersonSurname, string sPersonSeconName,
+            string sPersonEmail, string sPersonPhone, 
+            string sPersonAddres, string scodCountry,
+            string snameuser, string sUserPassword, 
+            string iPerfilid, string sModuloid, 
+            string suserrecall, int icompanyid, 
+            bool bPersonStatus, string sPersonModiBy, 
+            DateTime tPersonDateModiBy)
         {
             Lucky.Data.Common.Application.DUsuario odaUsuario = new Lucky.Data.Common.Application.DUsuario();
             EUsuario oeaUsuario = odaUsuario.ActualizarUser(iPersonid, sidtypeDocument, sPersonnd, sPersonFirtsname, sPersonLastName, sPersonSurname, sPersonSeconName, sPersonEmail, sPersonPhone, sPersonAddres, scodCountry,
@@ -124,6 +182,7 @@ namespace Lucky.Business.Common.Application
             odaUsuario = null;
             return oeaUsuario;
         }
+        
         /// <summary>
         /// Actualiza tabla person en la base de datos DB_LUCKY_TMP
         /// 12/01/2011 Magaly Jiménez
@@ -149,9 +208,16 @@ namespace Lucky.Business.Common.Application
         /// <param name="sPersonModiBy"></param>
         /// <param name="tPersonDateModiBy"></param>
         /// <returns></returns>
-        public EUsuario ActualizarTMP(int iPersonid, string sidtypeDocument, string sPersonnd, string sPersonFirtsname, string sPersonLastName, string sPersonSurname, string sPersonSeconName,
-          string sPersonEmail, string sPersonPhone, string sPersonAddres, string scodCountry,
-       string snameuser, string sUserPassword, string iPerfilid, string sModuloid, string suserrecall, int icompanyid, bool bPersonStatus, string sPersonModiBy, DateTime tPersonDateModiBy)
+        public EUsuario ActualizarTMP(
+            int iPersonid, string sidtypeDocument, 
+            string sPersonnd, string sPersonFirtsname, 
+            string sPersonLastName, string sPersonSurname, 
+            string sPersonSeconName, string sPersonEmail, 
+            string sPersonPhone, string sPersonAddres, 
+            string scodCountry, string snameuser, string sUserPassword, 
+            string iPerfilid, string sModuloid, string suserrecall, 
+            int icompanyid, bool bPersonStatus, string sPersonModiBy, 
+            DateTime tPersonDateModiBy)
         {
             Lucky.Data.Common.Application.DUsuario odaUsuarioTMP = new Lucky.Data.Common.Application.DUsuario();
             EUsuario oeaUsuarioTMP = odaUsuarioTMP.ActualizarUserTMP(iPersonid, sidtypeDocument, sPersonnd, sPersonFirtsname, sPersonLastName, sPersonSurname, sPersonSeconName, sPersonEmail, sPersonPhone, sPersonAddres, scodCountry,
@@ -161,7 +227,8 @@ namespace Lucky.Business.Common.Application
         }
 
         //Metodo que Permite hacer la Busqueda de un Usuario ya existente
-        public DataTable Search(string sPersonnd, string sPersonFirsname, string sNameuser)
+        public DataTable Search(
+            string sPersonnd, string sPersonFirsname, string sNameuser)
         {
 
             Lucky.Data.Common.Application.DBusquedas odsUsuario = new Lucky.Data.Common.Application.DBusquedas();
@@ -174,10 +241,10 @@ namespace Lucky.Business.Common.Application
 
 
         //----Metodo para registrar Roles
-
-
-        public ERoles RegistrarRoles(string sRol_id, string sRolName, string sRolDescription, bool bRolStatus, string sRolCreateBy, string sRolDateBy, string sRolModiBy,
-            string sRolDateModiBy)
+        public ERoles RegistrarRoles(
+            string sRol_id, string sRolName, string sRolDescription, 
+            bool bRolStatus, string sRolCreateBy, string sRolDateBy, 
+            string sRolModiBy, string sRolDateModiBy)
         {
 
             Lucky.Data.Common.Application.DRoles odrroles = new Lucky.Data.Common.Application.DRoles();
@@ -191,7 +258,8 @@ namespace Lucky.Business.Common.Application
 
         public DataTable BuscarRoles(string sRolName)
         {
-            Lucky.Data.Common.Application.DRoles odsroles = new Lucky.Data.Common.Application.DRoles();
+            Lucky.Data.Common.Application.DRoles odsroles = 
+                new Lucky.Data.Common.Application.DRoles();
             ERoles oeroles = new ERoles();
             DataTable dtroles = odsroles.ObtenerRoles(sRolName);
             odsroles = null;
@@ -200,23 +268,24 @@ namespace Lucky.Business.Common.Application
         }
 
         //Metdo para Actualizacion de Roles
-
-        public ERoles ActualizaRol(string sRolid, string sRolName, string sRolDescription, bool bRolStatus, string sRolModiBy, string sRolDateModiBy)
+        public ERoles ActualizaRol(string sRolid, string sRolName, 
+            string sRolDescription, bool bRolStatus, string sRolModiBy, 
+            string sRolDateModiBy)
         {
             Lucky.Data.Common.Application.DRoles odacroles = new Lucky.Data.Common.Application.DRoles();
             ERoles oeroles = odacroles.ActulizarRoles(sRolid, sRolName, sRolDescription, bRolStatus, sRolModiBy, sRolDateModiBy);
             odacroles = null;
             return oeroles;
-
-
-
         }
 
         //----Metodo para registrar Perfiles
-
         public EProfiles RegistrarProfiles(//string sPerfil_id,
-            string sTipoPerfil_id, string sRolid, string sLevel, string sPerfilName, string dModuloId, string sPerfilDescription,int idChannel, bool bPerfilStatus,
-            string sPerfilCreateBy, string sPerfilDateBy, string sPerfilModiBy, string sPerfilDateModiBy)
+            string sTipoPerfil_id, string sRolid, string sLevel, 
+            string sPerfilName, string dModuloId, 
+            string sPerfilDescription,int idChannel, 
+            bool bPerfilStatus, string sPerfilCreateBy, 
+            string sPerfilDateBy, string sPerfilModiBy, 
+            string sPerfilDateModiBy)
         {
             Lucky.Data.Common.Application.DProfiles odrperfiles = new Lucky.Data.Common.Application.DProfiles();
             EProfiles oeperfiles = odrperfiles.registrarPerfilesPK(//sPerfil_id,
@@ -227,21 +296,30 @@ namespace Lucky.Business.Common.Application
         }
 
         //---Metodo de Consulta de Perfiles
-
         public DataTable BuscarPerfiles(
-            string sPerfilName, string sRolid, int idChannel, string sLevel/*, string sTipPerfil*/)
+            string sPerfilName, string sRolid, int idChannel, 
+            string sLevel/*, string sTipPerfil*/)
         {
-            Lucky.Data.Common.Application.DProfiles odsperfiles = new Lucky.Data.Common.Application.DProfiles();
-            EProfiles oePerfiles = new EProfiles();
-            DataTable dtperfiles = odsperfiles.ObtenerPerfiles(sPerfilName, sRolid, idChannel, sLevel/*, sTipPerfil*/);
-            odsperfiles = null;
+            DataTable dtperfiles = null;
+            try
+            {
+                Lucky.Data.Common.Application.DProfiles odsperfiles = new Lucky.Data.Common.Application.DProfiles();
+                dtperfiles = odsperfiles.ObtenerPerfiles(sPerfilName, sRolid, idChannel, sLevel/*, sTipPerfil*/);
+            }
+            catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message.ToString());
+                messages = "Error: " + ex.Message.ToString();
+            }
+            
             return dtperfiles;
         }
+        
         //----Metodo para registrar Perfiles
-
         public EProfiles Actualizar_Perfiles(
-           string sPerfilid, string sTipPerfilid, string sRolid, string sLevel, string sPerfilName, 
-           string dModuloId, string sPerfilDescription, int idChannel, bool bPerfilStatus, string sPerfilModiBy)
+            string sPerfilid, string sTipPerfilid, string sRolid, 
+            string sLevel, string sPerfilName, string dModuloId, 
+            string sPerfilDescription, int idChannel, 
+            bool bPerfilStatus, string sPerfilModiBy)
         {
             Lucky.Data.Common.Application.DProfiles odaperfiles = new Lucky.Data.Common.Application.DProfiles();
             EProfiles oeaperfiles = odaperfiles.Actualizar_Perfiles(
@@ -260,15 +338,15 @@ namespace Lucky.Business.Common.Application
             return oeaperfiles;
         }
 
-
-
         /// <summary>
         /// Cambia el password del usuario 
-
-        public EUsuario cambiarContrasena(string sUser, string sNewPwd, string sModiBy, string sDatemodi)
+        public EUsuario cambiarContrasena(string sUser, 
+            string sNewPwd, string sModiBy, string sDatemodi)
         {
-            Lucky.Data.Common.Application.DUsuario odUsuario = new Lucky.Data.Common.Application.DUsuario();
-            EUsuario oecusuario = odUsuario.cambiarContrasena(sUser, sNewPwd,  sModiBy, sDatemodi);
+            Lucky.Data.Common.Application.DUsuario odUsuario = 
+                new Lucky.Data.Common.Application.DUsuario();
+            EUsuario oecusuario = odUsuario.cambiarContrasena(
+                sUser, sNewPwd,  sModiBy, sDatemodi);
 
             odUsuario = null;
             return oecusuario;
@@ -287,11 +365,12 @@ namespace Lucky.Business.Common.Application
             return dtusuario;
         }
 
-
         //----Metodo para registrar Niveles
-
-        public EPersonLevel RegistrarNiveles(string sid_Level, string sLevel_Description, bool bLevel_status, string sLevel_CreateBy,
-             DateTime tLevel_DateBy, string sLevel_ModiBy, DateTime tLevel_DateModiBy)
+        public EPersonLevel RegistrarNiveles(
+            string sid_Level, string sLevel_Description, 
+            bool bLevel_status, string sLevel_CreateBy,
+            DateTime tLevel_DateBy, string sLevel_ModiBy, 
+            DateTime tLevel_DateModiBy)
         {
             DPersonLevel odrNiveles = new DPersonLevel();
             EPersonLevel oeNiveles = odrNiveles.registrarPersonLevelPK(sid_Level, sLevel_Description, bLevel_status, sLevel_CreateBy,
@@ -313,8 +392,11 @@ namespace Lucky.Business.Common.Application
         /// <param name="sPerson_Modulo_ModiBy"></param>
         /// <param name="tPerson_Modulo_DateModiBy"></param>
         /// <returns></returns>
-        public EPersonLevel RegistrarNivelesModulo(string sid_Level, string sModulo_id, string sModulo_Name, bool bPerson_Modulo_Status, string sPerson_Modulo_CreateBy,
-            DateTime tPerson_Modulo_Dateby, string sPerson_Modulo_ModiBy, DateTime tPerson_Modulo_DateModiBy)
+        public EPersonLevel RegistrarNivelesModulo(
+            string sid_Level, string sModulo_id, string sModulo_Name, 
+            bool bPerson_Modulo_Status, string sPerson_Modulo_CreateBy,
+            DateTime tPerson_Modulo_Dateby, string sPerson_Modulo_ModiBy, 
+            DateTime tPerson_Modulo_DateModiBy)
         {
             DPersonLevel odrNivelesModulo = new DPersonLevel();
             EPersonLevel oeNivelesModulo = odrNivelesModulo.registrarPersonLevelModuloPK(sid_Level, sModulo_id, sModulo_Name, bPerson_Modulo_Status, sPerson_Modulo_CreateBy,
@@ -323,27 +405,33 @@ namespace Lucky.Business.Common.Application
             return oeNivelesModulo;
         }
 
-
-
         //---Metodo de Consulta de Niveles
-
-        public DataTable BuscarNiveles(string sid_Level, string sLevel_Description)
+        public DataTable BuscarNiveles(
+            string sid_Level, string sLevel_Description)
         {
             DPersonLevel odsNiveles = new DPersonLevel();
             EPersonLevel oeNiveles = new EPersonLevel();
-            DataTable dtNiveles = odsNiveles.ObtenerNiveles(sid_Level, sLevel_Description);
+            DataTable dtNiveles = 
+                odsNiveles.ObtenerNiveles(sid_Level, sLevel_Description);
             odsNiveles = null;
             return dtNiveles;
         }
+        
         //----Metodo para Atualizar Niveles
-
-        public EPersonLevel Actualizar_Niveles(string sid_Level, string sLevel_Description, bool bLevel_status, string sLevel_ModiBy, DateTime tLevel_DateModiBy)
+        public EPersonLevel Actualizar_Niveles(
+            string sid_Level, string sLevel_Description, 
+            bool bLevel_status, string sLevel_ModiBy, 
+            DateTime tLevel_DateModiBy)
         {
             DPersonLevel odaNiveles = new DPersonLevel();
-            EPersonLevel oeaNiveles = odaNiveles.Actualizar_Niveles(sid_Level, sLevel_Description, bLevel_status,sLevel_ModiBy,tLevel_DateModiBy);              
+            EPersonLevel oeaNiveles = 
+                odaNiveles.Actualizar_Niveles(
+                sid_Level, sLevel_Description, bLevel_status,
+                sLevel_ModiBy,tLevel_DateModiBy);              
             odaNiveles = null;
             return oeaNiveles;
         }
+        
         /// <summary>
         /// Actualiza estado de modulos de la tabla de AD_Person_Modulos
         /// 04/12/2010  Magaly Jiménez
@@ -353,21 +441,38 @@ namespace Lucky.Business.Common.Application
         /// <param name="sPerson_Modulo_ModiBy"></param>
         /// <param name="tPerson_Modulo_DateModiBy"></param>
         /// <returns></returns>
-        public EPersonLevel Actualizar_NivelesModulos(string sid_Level, string sModulo_id, bool bPerson_Modulo_Status, string sPerson_Modulo_ModiBy, DateTime tPerson_Modulo_DateModiBy)
+        public EPersonLevel Actualizar_NivelesModulos(
+            string sid_Level, string sModulo_id, 
+            bool bPerson_Modulo_Status, string sPerson_Modulo_ModiBy, 
+            DateTime tPerson_Modulo_DateModiBy)
         {
             DPersonLevel odaNivelesModulos = new DPersonLevel();
-            EPersonLevel oeaNivelesModulos = odaNivelesModulos.Actualizar_NivelesModulos(sid_Level, sModulo_id, bPerson_Modulo_Status, sPerson_Modulo_ModiBy, tPerson_Modulo_DateModiBy);
+            EPersonLevel oeaNivelesModulos = 
+                odaNivelesModulos.Actualizar_NivelesModulos(
+                sid_Level, sModulo_id, bPerson_Modulo_Status, 
+                sPerson_Modulo_ModiBy, tPerson_Modulo_DateModiBy);
             odaNivelesModulos = null;
             return oeaNivelesModulos;
         }
 
-        public int registrarClientesxUsuario(int codusuario, int codcliente, bool nodoxcanal_estado, string username)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="codusuario"></param>
+        /// <param name="codcliente"></param>
+        /// <param name="nodoxcanal_estado"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public int registrarClientesxUsuario(
+            int codusuario, int codcliente, bool nodoxcanal_estado,
+            string username)
         {
             DUsuario ouser = new DUsuario();
             int st = 0;
             try
             {
-                st = ouser.registrarClientesxUsuario(codusuario, codcliente, nodoxcanal_estado, username);
+                st = ouser.registrarClientesxUsuario(
+                    codusuario, codcliente, nodoxcanal_estado, username);
             }
             catch (Exception ex) {
 
@@ -378,13 +483,99 @@ namespace Lucky.Business.Common.Application
             return st;
         }
 
-        public DataSet buscarClientesxUsuario(int iPerson_id, int iCompany_id)
+        public DataSet buscarClientesxUsuario(
+            int iPerson_id, int iCompany_id)
         {
             DUsuario ouser = new DUsuario();
             DataSet dsuser = new DataSet();
             dsuser = ouser.buscarClientesxUsuario(iPerson_id, iCompany_id);
             return dsuser;
         }
+
+        /// <summary>
+        /// Metodo retornar que retorna los datos de Usuario y la Url para redireccionar despues del logueo.
+        /// Funciona como orquestador
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="userPassword"></param>
+        public LoginResponse fncLogin(String userName, String userPassword,
+        String idMachine, DateTime dateBy) {
+            LoginResponse oLoginResponse = new LoginResponse();
+            String urlPage = "";
+
+            Lucky.Entity.Common.Application.EUsuario oEUsuario = new EUsuario();
+            DSesion_Users oDSesion_Users = new DSesion_Users();
+            try
+            {
+                String sPassEncriptado = odUsuario.fncEncriptar(userPassword);
+                if (odUsuario.getMessages().Equals(""))
+                {
+                    String sPassBaseDeDatos = odUsuario.fncGetPassword(userName).Rows[0]["User_Password"].ToString();
+                    if (odUsuario.getMessages().Equals(""))
+                    {
+                        //if (sPassEncriptado != sPassBaseDeDatos){
+                        //    if (sPassBaseDeDatos.Length < 15)
+                        //    {
+                        //        odUsuario.fncUpdatePasswordEncriptado(sPassEncriptado, userName);
+                        //    }
+                        //    if (!odUsuario.getMessages().Equals("")){
+                        //        messages = odUsuario.getMessages();
+                        //    }
+                        //}
+
+                        if (sPassEncriptado.Equals(sPassBaseDeDatos))
+                        {
+                            oEUsuario = odUsuario.obtenerPK(userName, userPassword);
+                            if (odUsuario.getMessages().Equals(""))
+                            {
+                                oDSesion_Users.Registrar_Auditoria(
+                                    userName,
+                                    int.Parse(oEUsuario.companyid),
+                                    idMachine,
+                                    dateBy);
+                                if (oDSesion_Users.getMessages().Equals(""))
+                                {
+                                    urlPage = odUsuario.fncVerifyFirstAccess(userName,
+                                        oEUsuario.companyid,
+                                        oEUsuario.Perfilid,
+                                        odUsuario.fncGetDataAplication(
+                                        oEUsuario.codCountry,
+                                        oEUsuario.Moduloid));
+                                }
+                                else
+                                {
+                                    messages = oDSesion_Users.getMessages();
+                                }
+                            }
+                            else
+                            {
+                                messages = odUsuario.getMessages();
+                            }
+                        }
+                        else {
+                            if (sPassBaseDeDatos.Length < 15)
+                            {
+                                odUsuario.fncUpdatePasswordEncriptado(sPassEncriptado, userName);
+                            }
+                            else {
+                                messages = "Error: ¡Usuario / Password Incorrecto!";
+                            }
+                        }
+                    }
+                }
+                else {
+                    messages = odUsuario.getMessages();
+                }
+                oLoginResponse.OEUsuario = oEUsuario;
+                oLoginResponse.UrlPage = urlPage;
+            }
+            catch (Exception ex) {
+                messages = "Error: " + ex.Message.ToString();
+            }
+            return oLoginResponse;
+        }
+        
+
     }
 }
 

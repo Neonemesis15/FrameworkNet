@@ -6,13 +6,25 @@ using Lucky.Entity.Common.Servicio;
 using System.Data;
 using System.Data.SqlClient;
 using Lucky.Entity.Common.Application.JavaMovil;
-
+using Lucky.CFG.Util;
 
 namespace Lucky.Data.Common.Servicio
 {
     public class D_GES_Operativa
     {
+        // Variable de Çonexion
         private Conexion oCoon;
+        
+        // Variable para guardar los Errores
+        private String messages = "";
+
+        /// <summary>
+        /// Función para retornar los mensajes de Error
+        /// </summary>
+        /// <returns></returns>
+        public String getMessages() {
+            return messages;
+        }
 
         public D_GES_Operativa()
         {
@@ -655,63 +667,128 @@ namespace Lucky.Data.Common.Servicio
                 return null;
         }
 
+        /// <summary>
+        /// Función de Logueo para la WebSite.
+        /// </summary>
+        /// <param name="sUser"></param>
+        /// <param name="sPassw"></param>
+        /// <returns></returns>
         public E_Persona Logueo(string sUser, string sPassw)
         {
             E_Persona oE_Persona = new E_Persona();
 
-            DataTable dtc = null;
-            string spasEncriptado = Lucky.CFG.Util.Encriptacion.Codificar(sPassw, "YourUglyRandomKeyLike-lkj54923c478");
-            dtc = oCoon.ejecutarDataTable("UP_WEBXPLORAGEN_PASSUSER", sUser);
-            string sclvr;
-            sclvr = dtc.Rows[0]["User_Password"].ToString();
-            if (spasEncriptado != sclvr)
-            {
-                if (sclvr.Length > 15) { }
+            DataTable dtc = fncGetPassword(sUser);
+            if (getMessages().Equals("")){
+                if (dtc.Rows.Count > 0){
+
+                    string sclvr = dtc.Rows[0]["User_Password"].ToString();
+                    string spasEncriptado = Encriptacion.Codificar(sPassw, "YourUglyRandomKeyLike-lkj54923c478");
+
+                    //sclvr = dtc.Rows[0]["User_Password"].ToString();
+                    if (sclvr != spasEncriptado && sclvr.Length < 15){
+                        //Valida si la Clave no esta Enciptada y la encripta Ing. CarlosH 30/11/2011
+                        //spasEncriptado = Lucky.CFG.Util.Encriptacion.Codificar(sclvr, "YourUglyRandomKeyLike-lkj54923c478");
+                        //Actualiza la Clave encriptada Ing. CarlosH 30/11/2011
+                        //oCoon.ejecutarDataReader("UP_WEBXPLORA_UPDATEPSWENCRIPTA", spasEncriptado, sUser);
+                        fncUpdatePasswordEncriptado(spasEncriptado, sUser);
+                    }
+
+                    Lucky.Data.Common.Application.DUsuario odUsuario =
+                        new Lucky.Data.Common.Application.DUsuario();
+
+                    Lucky.Entity.Common.Application.EUsuario oEUsuario =
+                        new Lucky.Entity.Common.Application.EUsuario();
+
+                    try
+                    {
+                        oEUsuario = odUsuario.obtenerPK(sUser, spasEncriptado);
+                        if (odUsuario.getMessages().Equals(""))
+                        {
+                            oE_Persona.Cod_city = oEUsuario.codcity;
+                            oE_Persona.Cod_Country = oEUsuario.codCountry;
+                            oE_Persona.Cod_dpto = oEUsuario.coddepartam;
+                            oE_Persona.Company_id = oEUsuario.companyid;
+                            oE_Persona.companyName = oEUsuario.companyName;
+                            oE_Persona.fotocompany = oEUsuario.fotocompany;
+                            oE_Persona.Id_type_Document = oEUsuario.idtypeDocument;
+                            oE_Persona.Modulo_id = oEUsuario.Moduloid;
+                            oE_Persona.Name_Perfil = oEUsuario.NamePerfil;
+                            oE_Persona.Name_user = oEUsuario.nameuser;
+                            oE_Persona.Perfil_id = oEUsuario.Perfilid;
+                            oE_Persona.Person_Addres = oEUsuario.PersonAddres;
+                            oE_Persona.Person_CreateBy = oEUsuario.PersonCreateBy;
+                            oE_Persona.Person_DateBy = oEUsuario.PersonDateBy;
+                            oE_Persona.Person_DateModiBy = oEUsuario.PersonDateModiBy;
+                            oE_Persona.Person_Email = oEUsuario.PersonEmail;
+                            oE_Persona.Person_Firtsname = oEUsuario.PersonFirtsname;
+                            oE_Persona.Person_id = oEUsuario.Personid;
+                            oE_Persona.Person_LastName = oEUsuario.PersonLastName;
+                            oE_Persona.Person_ModiBy = oEUsuario.PersonModiBy;
+                            oE_Persona.Person_nd = oEUsuario.Personnd;
+                            oE_Persona.Person_Phone = oEUsuario.PersonPhone;
+                            oE_Persona.Person_SeconName = oEUsuario.PersonSeconName;
+                            oE_Persona.Person_Status = oEUsuario.PersonStatus;
+                            oE_Persona.Person_Surname = oEUsuario.PersonSurname;
+                            oE_Persona.User_Password = oEUsuario.UserPassword;
+                            oE_Persona.User_Recall = oEUsuario.UserRecall;
+                        }
+                        else
+                        {
+                            messages = odUsuario.getMessages();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        messages = "Error: " + ex.Message.ToString();
+                    }
+                }
                 else
                 {
-                    //Valida si la Clave no esta Enciptada y la encripta Ing. CarlosH 30/11/2011
-                    spasEncriptado = Lucky.CFG.Util.Encriptacion.Codificar(sclvr, "YourUglyRandomKeyLike-lkj54923c478");
-                    //Actualiza la Clave encriptada Ing. CarlosH 30/11/2011
-                    oCoon.ejecutarDataReader("UP_WEBXPLORA_UPDATEPSWENCRIPTA", spasEncriptado, sUser);
+                    messages = "Error: No se obtuvo password para el nameUser indicado, ¡por favor verificar!";
                 }
             }
-
-            Lucky.Data.Common.Application.DUsuario odUsuario = new Lucky.Data.Common.Application.DUsuario();
-            Lucky.Entity.Common.Application.EUsuario oEUsuario = new Lucky.Entity.Common.Application.EUsuario();
-
-            oEUsuario = odUsuario.obtenerPK(sUser, spasEncriptado);
-
-            oE_Persona.Cod_city = oEUsuario.codcity;
-            oE_Persona.Cod_Country = oEUsuario.codCountry;
-            oE_Persona.Cod_dpto = oEUsuario.coddepartam;
-            oE_Persona.Company_id = oEUsuario.companyid;
-            oE_Persona.companyName = oEUsuario.companyName;
-            oE_Persona.fotocompany = oEUsuario.fotocompany;
-
-            oE_Persona.Id_type_Document = oEUsuario.idtypeDocument;
-            oE_Persona.Modulo_id = oEUsuario.Moduloid;
-            oE_Persona.Name_Perfil = oEUsuario.NamePerfil;
-            oE_Persona.Name_user = oEUsuario.nameuser;
-            oE_Persona.Perfil_id = oEUsuario.Perfilid;
-            oE_Persona.Person_Addres = oEUsuario.PersonAddres;
-            oE_Persona.Person_CreateBy = oEUsuario.PersonCreateBy;
-            oE_Persona.Person_DateBy = oEUsuario.PersonDateBy;
-            oE_Persona.Person_DateModiBy = oEUsuario.PersonDateModiBy;
-            oE_Persona.Person_Email = oEUsuario.PersonEmail;
-            oE_Persona.Person_Firtsname = oEUsuario.PersonFirtsname;
-            oE_Persona.Person_id = oEUsuario.Personid;
-            oE_Persona.Person_LastName = oEUsuario.PersonLastName;
-            oE_Persona.Person_ModiBy = oEUsuario.PersonModiBy;
-            oE_Persona.Person_nd = oEUsuario.Personnd;
-            oE_Persona.Person_Phone = oEUsuario.PersonPhone;
-            oE_Persona.Person_SeconName = oEUsuario.PersonSeconName;
-            oE_Persona.Person_Status = oEUsuario.PersonStatus;
-            oE_Persona.Person_Surname = oEUsuario.PersonSurname;
-            oE_Persona.User_Password = oEUsuario.UserPassword;
-            oE_Persona.User_Recall = oEUsuario.UserRecall;
-
+            else { 
+                messages = getMessages();
+            }
             return oE_Persona;
+        }
 
+        /// <summary>
+        /// Función para obtener el Password de la Base de Datos,
+        /// por idUser.
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        private DataTable fncGetPassword(String userName)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = oCoon.ejecutarDataTable("UP_WEBXPLORAGEN_PASSUSER", userName);
+            }
+            catch (Exception ex)
+            {
+                messages = "Ocurrio un Error: " + ex.Message.ToString();
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// Función para Actualizar la Encriptación del Password en Base de Datos
+        /// En caso el password no se haya almacenado Encriptado.
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="idUser"></param>
+        public void fncUpdatePasswordEncriptado(String password, String userName)
+        {
+            try
+            {
+                oCoon.ejecutarDataReader("UP_WEBXPLORA_UPDATEPSWENCRIPTA", password, userName);
+            }
+            catch (Exception ex)
+            {
+                messages = "Error: " + ex.Message.ToString();
+            }
         }
 
         public List<E_Informesv2> Listar_Informes_CM(string codPais, string codCliente, string idAgrupacion, string idPersona)

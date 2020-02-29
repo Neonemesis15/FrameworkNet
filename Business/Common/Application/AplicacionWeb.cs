@@ -5,7 +5,6 @@ using Lucky.Data;
 using Lucky.Entity.Common.Application;
 using Lucky.Data.Common.Application;
 using log4net;
-using log4net.Config;
 
 namespace Lucky.Business.Common.Application
 {
@@ -19,16 +18,13 @@ namespace Lucky.Business.Common.Application
     /// </summary>
     public class AplicacionWeb : Aplicacion
     {
-        static AplicacionWeb()
-        {
-            XmlConfigurator.Configure();
-        }
-        // Inicializar Ilog
-        private static readonly ILog log = LogManager.GetLogger(typeof(AplicacionWeb));
-        
-        // Setear en True isDebugEnabled
+        private static readonly ILog log = LogManager.GetLogger(typeof(Aplicacion));
         private static readonly bool isDebugEnabled = log.IsDebugEnabled;
-        
+        //static AplicacionWeb()
+        //{
+        //    XmlConfigurator.Configure();
+        //}
+        // Inicializar Ilog
 
 
         // Obtener información de la Aplicación

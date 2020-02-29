@@ -9,14 +9,31 @@ using Lucky.Entity.Common.Application.Interfaces;
 namespace Lucky.Data.Common.Application
 {  
     /// <summary>
-    /// Descripción breve de DPlanning.
-    /// CreateBy: Ing. Carlos Alberto Hernandez RIncón
-    /// CreateDate:02/05/2009
-    /// Requerimiento:<>
-    /// Description: Clase Data encargada de definir todos los metodos transaccionales para operar el Planning
+    /// Description: 
+    /// - Clase Data encargada de definir todos los metodos transaccionales para operar el Planning
+    /// CreateBy: 
+    /// - 02/05/2009 - Ing. Carlos Alberto Hernandez RIncón 
+    /// Changes:
+    /// - 08/01/2019 - Pablo A. Salas Alvarez (PSA) Add method presupuestoSearch by idCompany. 
+    /// - 02/05/2009 - Carlos Alberto Hernandez RIncón (CAHR) Create Class.
     public class DPlanning
     {
         private Conexion oConn;
+
+        // Variable para Almacenar los mensajes de Error
+        private String message = "";
+
+        /// <summary>
+        /// Retornar los mensajes de Error
+        /// </summary>
+        /// <returns></returns>
+        public String getMessages() {
+            return message;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public DPlanning()
         {
             UserInterface oUserInterface = new UserInterface();
@@ -24,232 +41,8 @@ namespace Lucky.Data.Common.Application
             oUserInterface = null;
         }
 
-        /// <summary>
-        /// Metodo para Activar acceso de Supervisor a SIGE
-        /// </summary>
-        public EPresupuesto Activar_Acces_Supervisor(int ipersonid, string snumberpresupuesto, string iperfilid)
-        {
-            EPresupuesto oepresupuesto = new EPresupuesto();
-            EUsuario oeusuarios = new EUsuario();
+        #region Methods: CREATE
 
-            DataSet ds = oConn.ejecutarDataSet("UP_WEBSIGEPLA_ACTIVARINGSIGESUPE", ipersonid, snumberpresupuesto, iperfilid);
-            if (ds != null)
-            {
-                if (ds.Tables.Count > 0)
-                {
-                    oeusuarios.Personid = ipersonid;
-                    oepresupuesto.Perfilid = iperfilid;
-                    oepresupuesto.Namebudget = snumberpresupuesto;
-                }
-            }
-            return oepresupuesto;
-        }
-
-
-        /// <summary>
-        /// Metodo para Crear el Planning
-        /// Modificación: 23/07/2010 Se adecuada inserción unicamente con los campos
-        ///               que de acuerdo al nuevo planteamiento se debe cubrir para 
-        ///               la creacion del planning. se excluyen @Planning_ReportAditional,
-        ///               @Planning_DevelopmentActivityReport, @Planning_Person_Eje,
-        ///               @Planning_ActivityFormats, @Planning_AreaInvolved, @id_designFor,
-        ///               @Name_Contact, @Email_Contac y @Planning_FormaCompe. Ing. Mauricio Ortiz
-        ///               30/07/2010 se adiciona parámetro @id_planning ya que éste no seguirá siendo 
-        ///               autogenerado por sql sino por la aplicación concatenando número de presupuesto y fecha actual.
-        ///               se modifica nombre del sp UP_WEBSIGE_REGISTERPLANNING por UP_WEBXPLORA_PLA_CREARPLANNING
-        ///               de acuerdo a métricas establecidas. Ing. Mauricio Ortiz 
-        /// </summary>
-        /// <param name="sid_planning"></param>
-        /// <param name="sPlanning_Name"></param>
-        /// <param name="icod_Strategy"></param>
-        /// <param name="sPlanning_CodChannel"></param>
-        /// <param name="tPlanning_StartActivity"></param>
-        /// <param name="tPlanning_EndActivity"></param>
-        /// <param name="tPlanning_DateRepSoli"></param>
-        /// <param name="tPlanning_PreproduDateini"></param>
-        /// <param name="tPlanning_PreproduDateEnd"></param>
-        /// <param name="sPlanning_ProjectDuration"></param>
-        /// <param name="tPlanning_DateFinreport"></param>
-        /// <param name="sPlanning_Vigen"></param>
-        /// <param name="sPlanning_Budget"></param>
-        /// <param name="bPlanning_Status"></param>
-        /// <param name="iStatus_id"></param>
-        /// <param name="sPlanning_CreateBy"></param>
-        /// <param name="tPlanning_DateBy"></param>
-        /// <param name="sPlanning_ModiBy"></param>
-        /// <param name="tPlanning_DateModiBy"></param>
-        /// <returns oeplanning></returns>
-        public EPlaning CrearPlanning(string sid_planning, string sPlanning_Name, int icod_Strategy, string sPlanning_CodChannel,
-            DateTime tPlanning_StartActivity, DateTime tPlanning_EndActivity, DateTime tPlanning_DateRepSoli,
-            DateTime tPlanning_PreproduDateini, DateTime tPlanning_PreproduDateEnd, string sPlanning_ProjectDuration,
-            DateTime tPlanning_DateFinreport, string sPlanning_Vigen, string sPlanning_Budget, bool bPlanning_Status,
-            int iStatus_id, string sPlanning_CreateBy, DateTime tPlanning_DateBy, string sPlanning_ModiBy,
-            DateTime tPlanning_DateModiBy)
-        {
-            EPlaning oeplanning = new EPlaning();
-
-            DataSet ds = oConn.ejecutarDataSet("UP_WEBXPLORA_PLA_CREARPLANNING", sid_planning, sPlanning_Name, icod_Strategy, sPlanning_CodChannel,
-             tPlanning_StartActivity, tPlanning_EndActivity, tPlanning_DateRepSoli,
-             tPlanning_PreproduDateini, tPlanning_PreproduDateEnd, sPlanning_ProjectDuration,
-             tPlanning_DateFinreport, sPlanning_Vigen, sPlanning_Budget, bPlanning_Status,
-             iStatus_id, sPlanning_CreateBy, tPlanning_DateBy, sPlanning_ModiBy,
-             tPlanning_DateModiBy);
-
-            if (ds != null)
-            {
-                if (ds.Tables.Count > 0)
-                {
-                    oeplanning.idplanning = sid_planning;
-                    oeplanning.PlanningName = sPlanning_Name;
-                    oeplanning.codStrategy = icod_Strategy;
-                    oeplanning.PlanningCodChannel = sPlanning_CodChannel;
-                    oeplanning.PlanningStartActivity = tPlanning_StartActivity;
-                    oeplanning.PlanningEndActivity = tPlanning_EndActivity;
-                    oeplanning.PlanningDateRepSoli = tPlanning_DateRepSoli;
-                    oeplanning.PlanningPreproduDateini = tPlanning_PreproduDateini;
-                    oeplanning.PlanningPreproduDateEnd = tPlanning_PreproduDateEnd;
-                    oeplanning.PlanningProjectDuration = sPlanning_ProjectDuration;
-                    oeplanning.PlanningDateFinreport = tPlanning_DateFinreport;
-                    oeplanning.PlanningVigen = sPlanning_Vigen;
-                    oeplanning.PlanningBudget = sPlanning_Budget;
-                    oeplanning.PlanningStatus = bPlanning_Status;
-                    oeplanning.Statusid = iStatus_id;
-                    oeplanning.PlanningCreateBy = sPlanning_CreateBy;
-                    oeplanning.PlanningDateBy = tPlanning_DateBy;
-                    oeplanning.PlanningModiBy = sPlanning_ModiBy;
-                    oeplanning.PlanningDateModiBy = tPlanning_DateModiBy;
-                }
-            }
-            return oeplanning;
-        }
-
-        /// <summary>
-        /// Metodo para crear registro en la base de datos DB_LUCKY_TMP en la tabla TBL_EQUIPO
-        /// Ing. Mauricio Ortiz
-        /// 14/02/2011
-        /// Modificación : 24/05/2011 se adiciona el parametro canal no existía al momento de crear el metodo  . Ing. Mauricio Ortiz. 
-        /// </summary>
-        /// <param name="sid_planning"></param>
-        /// <param name="sPlanning_Name"></param>
-        /// <param name="SCanal"></param>
-        /// <returns>dt</returns>
-        public DataTable CrearPlanningTBL_EQUIPO(string sid_planning, string sPlanning_Name, string SCanal)
-        {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_CREARPLANNING_TBL_EQUIPO", sid_planning, sPlanning_Name, SCanal);
-            return dt;                                     
-        }
-
-        public DataTable RegistrarTBL_MARCA_COMPETIDORA(string ID_Cliente, string ID_Competidora, string ID_EQMARCA, string STATUS)
-        {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_TBL_MARCA_COMPETIDORA", ID_Cliente, ID_Competidora, ID_EQMARCA, STATUS);
-            return dt;                                     
-        }
-
-
-        
-
-        /// <summary>
-        /// Descripción     :Metodo para  Actualizar contacto y area involucrada en Planning
-        /// Fecha Creación  : 06/08/2010
-        /// Creado por      : Mauricio Ortiz 
-        /// </summary>
-        /// <param name="sid_planning"></param>
-        /// <param name="sPlanning_AreaInvolved"></param>
-        /// <param name="sName_Contact"></param>
-        /// <param name="sPlanning_ModiBy"></param>
-        /// <param name="tPlanning_DateModiBy"></param>
-        /// <returns oeplanning></returns>
-        public EPlaning ActualizaContactoyarea(string sid_planning, string sPlanning_AreaInvolved, string sName_Contact,
-             string sPlanning_ModiBy, DateTime tPlanning_DateModiBy)
-        {
-            EPlaning oeplanning = new EPlaning();
-
-            DataSet ds = oConn.ejecutarDataSet("UP_WEBXPLORA_PLA_UPDATECONTACTO_Y_AREAINVOLUCRADA", sid_planning, sPlanning_AreaInvolved,
-                sName_Contact, sPlanning_ModiBy, tPlanning_DateModiBy);
-
-            if (ds != null)
-            {
-                if (ds.Tables.Count > 0)
-                {
-                    oeplanning.idplanning = sid_planning;
-                    oeplanning.PlanningAreaInvolved = sPlanning_AreaInvolved;
-                    oeplanning.namecontac = sName_Contact;
-                    oeplanning.PlanningModiBy = sPlanning_ModiBy;
-                    oeplanning.PlanningDateModiBy = tPlanning_DateModiBy;
-                }
-            }
-            return oeplanning;
-        }
-
-        /// <summary>
-        /// Descripción : Metodo para actualizar la informacion relacionada a la primera pestaña de planning . asignacion de presupuesto
-        /// Creado      : Ing. Mauricio Ortiz
-        /// Fecha       : 10/09/2010
-        /// </summary>
-        /// <param name="sid_planning"></param>
-        /// <param name="sPlanning_CodChannel"></param>
-        /// <param name="tPlanning_StartActivity"></param>
-        /// <param name="tPlanning_EndActivity"></param>
-        /// <param name="tPlanning_DateRepSoli"></param>
-        /// <param name="tPlanning_PreproduDateini"></param>
-        /// <param name="tPlanning_PreproduDateEnd"></param>
-        /// <param name="sPlanning_ProjectDuration"></param>
-        /// <param name="tPlanning_DateFinreport"></param>
-        /// <param name="sPlanning_Vigen"></param>
-        /// <param name="bPlanning_Status"></param>
-        /// <param name="iStatus_id"></param>
-        /// <param name="sPlanning_ModiBy"></param>
-        /// <param name="tPlanning_DateModiBy"></param>
-        /// <returns></returns>
-        public EPlaning Actualiza_DatosAsignarPresupuesto(string sid_planning, string sPlanning_CodChannel, DateTime tPlanning_StartActivity,
-            DateTime tPlanning_EndActivity, DateTime tPlanning_DateRepSoli, DateTime tPlanning_PreproduDateini, DateTime tPlanning_PreproduDateEnd,
-            string sPlanning_ProjectDuration, DateTime tPlanning_DateFinreport, string sPlanning_Vigen, bool bPlanning_Status, int iStatus_id,
-            string sPlanning_ModiBy, DateTime tPlanning_DateModiBy)
-        {
-            EPlaning oePlanning = new EPlaning();
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ACTUALIZA_DATOSASIGNARPRESUPUESTO", sid_planning, sPlanning_CodChannel, tPlanning_StartActivity,
-             tPlanning_EndActivity, tPlanning_DateRepSoli, tPlanning_PreproduDateini, tPlanning_PreproduDateEnd,
-             sPlanning_ProjectDuration, tPlanning_DateFinreport, sPlanning_Vigen, bPlanning_Status, iStatus_id,
-             sPlanning_ModiBy, tPlanning_DateModiBy);
-
-            if (dt != null)
-            {
-                if (dt.Rows.Count > 0)
-                {
-                    oePlanning.idplanning = sid_planning;
-                    oePlanning.PlanningCodChannel = sPlanning_CodChannel;
-                    oePlanning.PlanningStartActivity = tPlanning_StartActivity;
-                    oePlanning.PlanningEndActivity = tPlanning_EndActivity;
-                    oePlanning.PlanningDateRepSoli = tPlanning_DateRepSoli;
-                    oePlanning.PlanningPreproduDateini = tPlanning_PreproduDateini;
-                    oePlanning.PlanningPreproduDateEnd = tPlanning_PreproduDateEnd;
-                    oePlanning.PlanningProjectDuration = sPlanning_ProjectDuration;
-                    oePlanning.PlanningDateFinreport = tPlanning_DateFinreport;
-                    oePlanning.PlanningVigen = sPlanning_Vigen;
-                    oePlanning.PlanningStatus = bPlanning_Status;
-                    oePlanning.Statusid = iStatus_id;
-                    oePlanning.PlanningModiBy = sPlanning_ModiBy;
-                    oePlanning.PlanningDateModiBy = tPlanning_DateModiBy;
-                }
-            }
-            return oePlanning;
-        }
-
-        /// <summary>
-        /// Metodo para actualizar estado en TBL_EQUIPO
-        /// Ing. Mauricio Ortiz
-        /// 14/02/2011
-        /// Modificación : se adiciona el campo Canal . Ing. Mauricio Ortiz 24/05/2011
-        /// </summary>
-        /// <param name="sid_planning"></param>
-        /// <param name="sCanal"></param>
-        /// <param name="sEstado"></param>       
-        /// <returns></returns>
-        public DataTable ActualizarEstadoTBL_EQUIPO(string sid_planning, string sCanal, string sEstado)
-        {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ACTUALIZARPLANNING_TBL_EQUIPO", sid_planning , sCanal, sEstado );
-            return dt;  
-        }
         /// <summary>
         /// Metodo para Crear Ciudades Planning
         /// Modificación : 29/07/2010 se cambia tipo de dato de id_planning de int a string 
@@ -413,8 +206,6 @@ namespace Lucky.Data.Common.Application
 
         }
 
-
-
         /// <summary>
         /// Método para Crear Observaciones del la Actividad
         /// Modificación : 29/07/2010 se cambia tipo de dato de id_planning de int a string 
@@ -461,7 +252,6 @@ namespace Lucky.Data.Common.Application
 
 
         }
-
 
         /// <summary>
         /// Metodo para Registrar Presentaciones de la Competencia 12/12/2009
@@ -760,17 +550,468 @@ namespace Lucky.Data.Common.Application
             return oecontegorma;
         }
 
-        public EContenedoraFormatos Actualizar_Items_Formatos(int icodItem, bool bcontenstatus, string scontenedorModiBy, DateTime tcontenedorDateModiBy)
-        {
-            DataSet dsconte = null;
-            dsconte = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_UPDATEITEMSFORMATO", icodItem, bcontenstatus, scontenedorModiBy, tcontenedorDateModiBy);
-            EContenedoraFormatos oeconte = new EContenedoraFormatos();
-            oeconte.codItem = icodItem;
-            oeconte.contenstatus = bcontenstatus;
-            oeconte.contenedorModiBy = scontenedorModiBy;
-            oeconte.contenedorDateModiBy = tcontenedorDateModiBy;
-            return oeconte;
 
+
+        /// <summary>
+        /// Metodo para Crear el Planning
+        /// Modificación: 23/07/2010 Se adecuada inserción unicamente con los campos
+        ///               que de acuerdo al nuevo planteamiento se debe cubrir para 
+        ///               la creacion del planning. se excluyen @Planning_ReportAditional,
+        ///               @Planning_DevelopmentActivityReport, @Planning_Person_Eje,
+        ///               @Planning_ActivityFormats, @Planning_AreaInvolved, @id_designFor,
+        ///               @Name_Contact, @Email_Contac y @Planning_FormaCompe. Ing. Mauricio Ortiz
+        ///               30/07/2010 se adiciona parámetro @id_planning ya que éste no seguirá siendo 
+        ///               autogenerado por sql sino por la aplicación concatenando número de presupuesto y fecha actual.
+        ///               se modifica nombre del sp UP_WEBSIGE_REGISTERPLANNING por UP_WEBXPLORA_PLA_CREARPLANNING
+        ///               de acuerdo a métricas establecidas. Ing. Mauricio Ortiz 
+        /// </summary>
+        /// <param name="sid_planning"></param>
+        /// <param name="sPlanning_Name"></param>
+        /// <param name="icod_Strategy"></param>
+        /// <param name="sPlanning_CodChannel"></param>
+        /// <param name="tPlanning_StartActivity"></param>
+        /// <param name="tPlanning_EndActivity"></param>
+        /// <param name="tPlanning_DateRepSoli"></param>
+        /// <param name="tPlanning_PreproduDateini"></param>
+        /// <param name="tPlanning_PreproduDateEnd"></param>
+        /// <param name="sPlanning_ProjectDuration"></param>
+        /// <param name="tPlanning_DateFinreport"></param>
+        /// <param name="sPlanning_Vigen"></param>
+        /// <param name="sPlanning_Budget"></param>
+        /// <param name="bPlanning_Status"></param>
+        /// <param name="iStatus_id"></param>
+        /// <param name="sPlanning_CreateBy"></param>
+        /// <param name="tPlanning_DateBy"></param>
+        /// <param name="sPlanning_ModiBy"></param>
+        /// <param name="tPlanning_DateModiBy"></param>
+        /// <returns oeplanning></returns>
+        public EPlaning CrearPlanning(string sid_planning, string sPlanning_Name, int icod_Strategy, string sPlanning_CodChannel,
+            DateTime tPlanning_StartActivity, DateTime tPlanning_EndActivity, DateTime tPlanning_DateRepSoli,
+            DateTime tPlanning_PreproduDateini, DateTime tPlanning_PreproduDateEnd, string sPlanning_ProjectDuration,
+            DateTime tPlanning_DateFinreport, string sPlanning_Vigen, string sPlanning_Budget, bool bPlanning_Status,
+            int iStatus_id, string sPlanning_CreateBy, DateTime tPlanning_DateBy, string sPlanning_ModiBy,
+            DateTime tPlanning_DateModiBy)
+        {
+            EPlaning oeplanning = new EPlaning();
+
+            DataSet ds = oConn.ejecutarDataSet("UP_WEBXPLORA_PLA_CREARPLANNING", sid_planning, sPlanning_Name, icod_Strategy, sPlanning_CodChannel,
+             tPlanning_StartActivity, tPlanning_EndActivity, tPlanning_DateRepSoli,
+             tPlanning_PreproduDateini, tPlanning_PreproduDateEnd, sPlanning_ProjectDuration,
+             tPlanning_DateFinreport, sPlanning_Vigen, sPlanning_Budget, bPlanning_Status,
+             iStatus_id, sPlanning_CreateBy, tPlanning_DateBy, sPlanning_ModiBy,
+             tPlanning_DateModiBy);
+
+            if (ds != null)
+            {
+                if (ds.Tables.Count > 0)
+                {
+                    oeplanning.idplanning = sid_planning;
+                    oeplanning.PlanningName = sPlanning_Name;
+                    oeplanning.codStrategy = icod_Strategy;
+                    oeplanning.PlanningCodChannel = sPlanning_CodChannel;
+                    oeplanning.PlanningStartActivity = tPlanning_StartActivity;
+                    oeplanning.PlanningEndActivity = tPlanning_EndActivity;
+                    oeplanning.PlanningDateRepSoli = tPlanning_DateRepSoli;
+                    oeplanning.PlanningPreproduDateini = tPlanning_PreproduDateini;
+                    oeplanning.PlanningPreproduDateEnd = tPlanning_PreproduDateEnd;
+                    oeplanning.PlanningProjectDuration = sPlanning_ProjectDuration;
+                    oeplanning.PlanningDateFinreport = tPlanning_DateFinreport;
+                    oeplanning.PlanningVigen = sPlanning_Vigen;
+                    oeplanning.PlanningBudget = sPlanning_Budget;
+                    oeplanning.PlanningStatus = bPlanning_Status;
+                    oeplanning.Statusid = iStatus_id;
+                    oeplanning.PlanningCreateBy = sPlanning_CreateBy;
+                    oeplanning.PlanningDateBy = tPlanning_DateBy;
+                    oeplanning.PlanningModiBy = sPlanning_ModiBy;
+                    oeplanning.PlanningDateModiBy = tPlanning_DateModiBy;
+                }
+            }
+            return oeplanning;
+        }
+
+        /// <summary>
+        /// Metodo para crear registro en la base de datos DB_LUCKY_TMP en la tabla TBL_EQUIPO
+        /// Ing. Mauricio Ortiz
+        /// 14/02/2011
+        /// Modificación : 24/05/2011 se adiciona el parametro canal no existía al momento de crear el metodo  . Ing. Mauricio Ortiz. 
+        /// </summary>
+        /// <param name="sid_planning"></param>
+        /// <param name="sPlanning_Name"></param>
+        /// <param name="SCanal"></param>
+        /// <returns>dt</returns>
+        public DataTable CrearPlanningTBL_EQUIPO(string sid_planning, string sPlanning_Name, string SCanal)
+        {
+            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_CREARPLANNING_TBL_EQUIPO", sid_planning, sPlanning_Name, SCanal);
+            return dt;
+        }
+
+        public DataTable RegistrarTBL_MARCA_COMPETIDORA(string ID_Cliente, string ID_Competidora, string ID_EQMARCA, string STATUS)
+        {
+            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_TBL_MARCA_COMPETIDORA", ID_Cliente, ID_Competidora, ID_EQMARCA, STATUS);
+            return dt;
+        }
+
+
+
+        /// <summary>
+        /// Método para insertar registros en PLA_Panel_Planning
+        /// Ing. Mauricio Ortiz
+        /// 03/03/2011
+        /// </summary>
+        /// <param name="sid_planning"></param>
+        /// <param name="iid_MPOSPlanning"></param>
+        /// <param name="sClientPDV_Code"></param>
+        /// <param name="iReport_Id"></param>
+        /// <param name="bStatus_PanelPlanning"></param>
+        /// <param name="sPanelPlanning_CreateBy"></param>
+        /// <param name="tPanelPlanning_DateBy"></param>
+        /// <param name="sPanelPlanning_ModiBy"></param>
+        /// <param name="tPanelPlanning_DateModiBy"></param>
+        /// <returns></returns>
+        public EPLA_Panel_Planning Registrar_PLA_Panel_Planning(string sid_planning, int iid_MPOSPlanning, string sClientPDV_Code, int iReport_Id, bool bStatus_PanelPlanning,
+            string sPanelPlanning_CreateBy, DateTime tPanelPlanning_DateBy,
+            string sPanelPlanning_ModiBy, DateTime tPanelPlanning_DateModiBy, int iid_ReportsPlanning)
+        {
+            EPLA_Panel_Planning oeEPLA_Panel_Planning = new EPLA_Panel_Planning();
+
+            DataTable dtPLA_Panel_Planning = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_PLA_Panel_Planning", sid_planning, iid_MPOSPlanning, sClientPDV_Code, iReport_Id,
+                bStatus_PanelPlanning, sPanelPlanning_CreateBy, tPanelPlanning_DateBy,
+                sPanelPlanning_ModiBy, tPanelPlanning_DateModiBy, iid_ReportsPlanning);
+
+            if (dtPLA_Panel_Planning != null)
+            {
+                if (dtPLA_Panel_Planning.Rows.Count > 0)
+                {
+                    oeEPLA_Panel_Planning.id_planning = sid_planning;
+                    oeEPLA_Panel_Planning.id_MPOSPlanning = iid_MPOSPlanning;
+                    oeEPLA_Panel_Planning.ClientPDV_Code = sClientPDV_Code;
+                    oeEPLA_Panel_Planning.Report_Id = iReport_Id;
+                    oeEPLA_Panel_Planning.Status_PanelPlanning = bStatus_PanelPlanning;
+                    oeEPLA_Panel_Planning.PanelPlanning_CreateBy = sPanelPlanning_CreateBy;
+                    oeEPLA_Panel_Planning.PanelPlanning_DateBy = tPanelPlanning_DateBy;
+                    oeEPLA_Panel_Planning.PanelPlanning_ModiBy = sPanelPlanning_ModiBy;
+                    oeEPLA_Panel_Planning.PanelPlanning_DateModiBy = tPanelPlanning_DateModiBy;
+                }
+            }
+            dtPLA_Panel_Planning = null;
+            return oeEPLA_Panel_Planning;
+        }
+
+
+
+        /// <summary>
+        /// Metodo para insertar reportes por planning
+        /// Ing. Mauricio Ortiz
+        /// 26/10/2010 
+        /// Modificación: Se adiciona el campo año , fecha inicio y fecha fin . Ing. Mauricio Ortiz . 03/02/2010
+        /// </summary>
+        /// <param name="sid_planning"></param>
+        /// <param name="iReport_Id"></param>
+        /// <param name="sid_Month"></param>
+        /// <param name="iReportsPlanning_Periodo"></param>
+        /// <param name="bReportsPlanning_Status"></param>
+        /// <param name="sReportsPlanning_CreateBy"></param>
+        /// <param name="tReportsPlanning_DateBy"></param>
+        /// <param name="sReportsPlanning_ModiBy"></param>
+        /// <param name="tReportsPlanning_DateModiBy"></param>
+        /// <returns>dtReportesPla</returns>
+        public DataTable Crear_ReportPlanning(string sid_planning, int iReport_Id, int iid_Year, string sid_Month, int iReportsPlanning_Periodo,
+          DateTime tReportsPlanning_RecogerDesde, DateTime tReportsPlanning_RecogerHasta, bool bReportsPlanning_Status, string sReportsPlanning_CreateBy, DateTime tReportsPlanning_DateBy, string sReportsPlanning_ModiBy,
+            DateTime tReportsPlanning_DateModiBy)
+        {
+            DataTable dtReportesPla = null;
+            dtReportesPla = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_CREARREPORTESPLANNING", sid_planning, iReport_Id, iid_Year, sid_Month, iReportsPlanning_Periodo,
+            tReportsPlanning_RecogerDesde, tReportsPlanning_RecogerHasta, bReportsPlanning_Status, sReportsPlanning_CreateBy, tReportsPlanning_DateBy, sReportsPlanning_ModiBy,
+             tReportsPlanning_DateModiBy);
+
+            return dtReportesPla;
+        }
+
+
+        /// Modificaciones: Se adiciona el campo Cod_channel y Assignment_Status , Ing. Mauricio Ortiz . 21/01/2010
+        public EAssignment__Presentations Crear_Presentaciones_AsignacionCanal(
+            string sidProductCategory, int iidProduct, int iid_productprincipal,
+            int icompanyid, int icodstrategy, string sPresentaCompetition1,
+            string sPresentaCompetition2, string sPresentaCompetition3,
+            string scod_Channel, bool bAssignment_Status,
+            string sproductServiceCreateBy, DateTime tproductServiceDateBy,
+            string sproductServiceModiBy, DateTime tproductServiceDateModiBy)
+        {
+            DataSet dspresasi = null;
+            dspresasi = oConn.ejecutarDataSet("UP_WEBSIGE_ASIGNACION_CANAL_PRESENTAREGISTER", sidProductCategory, iidProduct, iid_productprincipal, icompanyid, icodstrategy, sPresentaCompetition1, sPresentaCompetition2, sPresentaCompetition3, scod_Channel, bAssignment_Status, sproductServiceCreateBy, tproductServiceDateBy, sproductServiceModiBy, tproductServiceDateModiBy);
+            EAssignment__Presentations oeapre = new EAssignment__Presentations();
+            if (dspresasi != null)
+            {
+                if (dspresasi.Tables.Count > 0)
+                {
+                    oeapre.idProductCategory = sidProductCategory;
+                    oeapre.idProduct = iidProduct;
+                    oeapre.idproductprincipal = iid_productprincipal;
+                    oeapre.companyid = icompanyid;
+                    oeapre.codstrategy = icodstrategy;
+                    oeapre.PresentaCompetition1 = sPresentaCompetition1;
+                    oeapre.PresentaCompetition2 = sPresentaCompetition2;
+                    oeapre.PresentaCompetition3 = sPresentaCompetition3;
+                    oeapre.cod_Channel = scod_Channel;
+                    oeapre.Assignment_Status = bAssignment_Status;
+                    oeapre.productServiceCreateBy = sproductServiceCreateBy;
+                    oeapre.productServiceDateBy = tproductServiceDateBy;
+                    oeapre.productServiceModiBy = sproductServiceModiBy;
+                    oeapre.productServiceDateModiBy = tproductServiceDateModiBy;
+                }
+
+
+            }
+            return oeapre;
+
+
+        }
+
+        public ECity_Principal_Service Crear_Ciudad_Principal(
+            string scod_City, int iCod_Strategy, string sCod_Channel,
+            int icompany_id, bool bCityPri_Status,
+            string sCityPri_CreateBy, DateTime tCityPri_DateBy,
+            string sCityPri_ModiBy, DateTime tCityPri_DateModiBy)
+        {
+            DataSet dscp = null;
+            dscp = oConn.ejecutarDataSet("UP_WEBSIGE_ASIGNACION_CANAL_REGISTERCIUDADPRINCIPAL", scod_City, iCod_Strategy, sCod_Channel, icompany_id, bCityPri_Status, sCityPri_CreateBy, tCityPri_DateBy, sCityPri_ModiBy, tCityPri_DateModiBy);
+            ECity_Principal_Service oecp = new ECity_Principal_Service();
+            if (dscp != null)
+            {
+                if (dscp.Tables.Count > 0)
+                {
+                    oecp.cod_City = scod_City;
+                    oecp.CodStrategy = iCod_Strategy;
+                    oecp.CodChannel = sCod_Channel;
+                    oecp.company_id = icompany_id;
+                    oecp.CityPriStatus = bCityPri_Status;
+                    oecp.CityPriCreateBy = sCityPri_CreateBy;
+                    oecp.CityPriDateBy = tCityPri_DateBy;
+                    oecp.CityPriModiBy = sCityPri_ModiBy;
+                    oecp.CityPriDateModiBy = tCityPri_DateModiBy;
+
+
+
+                }
+
+
+            }
+            return oecp;
+
+        }
+
+
+
+        /// <summary>
+        /// Metodo Data Para Registrar los Indicadores para Precios Ing.Carlos Hernandez
+        /// Modificación : 29/07/2010 se cambia tipo de dato de id_planning de int a string 
+        ///                y se coloca parametros dentro del comentario de clase
+        ///                Ing. Mauricio Ortiz                 
+        /// </summary>
+        /// <param name="iidtabla"></param>
+        /// <param name="sidplanning"></param>
+        /// <param name="iidindicador"></param>
+        /// <param name="icolumn"></param>
+        /// <param name="sSymbolName"></param>
+        /// <param name="sOperating"></param>
+        /// <param name="sFormula"></param>
+        /// <param name="sReformulation"></param>
+        /// <param name="sorigendatos"></param>
+        /// <param name="smetapricesCreateBy"></param>
+        /// <param name="tmetapricesDateBy"></param>
+        /// <param name="smetapricesModiBy"></param>
+        /// <param name="tmetapricesDateModiBy"></param>
+        /// <returns oesaveindicator></returns>
+        public EMetadataPrices_Planning Crear_Indicarores_Prices_Planning(int iidtabla, string sidplanning, int iidindicador, int icolumn, string sSymbolName, string sOperating, string sFormula, string sReformulation, string sorigendatos, string smetapricesCreateBy, DateTime tmetapricesDateBy, string smetapricesModiBy, DateTime tmetapricesDateModiBy)
+        {
+
+            DataSet dsidica = null;
+            dsidica = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_REGISTERINDICATORPRICES", iidtabla, sidplanning, iidindicador, icolumn, sSymbolName, sOperating, sFormula, sReformulation, sorigendatos, smetapricesCreateBy, tmetapricesDateBy, smetapricesModiBy, tmetapricesDateModiBy);
+            EMetadataPrices_Planning oesaveindicator = new EMetadataPrices_Planning();
+            if (dsidica != null)
+            {
+                if (dsidica.Tables.Count > 0)
+                {
+                    oesaveindicator.objectid = iidtabla;
+                    oesaveindicator.idplanning = sidplanning;
+                    oesaveindicator.idindicador = iidindicador;
+                    oesaveindicator.columnid = icolumn;
+                    oesaveindicator.SymbolName = sSymbolName;
+                    oesaveindicator.Operating = sOperating;
+                    oesaveindicator.Formula = sFormula;
+                    oesaveindicator.Reformulation = sReformulation;
+                    oesaveindicator.OrigenDatos = sorigendatos;
+                    oesaveindicator.metapricesCreateBy = smetapricesCreateBy;
+                    oesaveindicator.metapricesDateBy = tmetapricesDateBy;
+                    oesaveindicator.metapricesModiBy = smetapricesModiBy;
+                    oesaveindicator.metapricesDateModiBy = tmetapricesDateModiBy;
+                }
+            }
+            return oesaveindicator;
+        }
+
+
+        /// <summary>
+        /// Metodo Data Para Registrar los Indicadores para Cobertura Ing.Carlos Hernandez
+        /// Modificación : 29/07/2010 se cambia tipo de dato de id_planning de int a string 
+        ///                y se coloca parametros dentro del comentario de clase
+        ///                Ing. Mauricio Ortiz                 
+        /// </summary>
+        /// <param name="iidtabla"></param>
+        /// <param name="sidplanning"></param>
+        /// <param name="iidindicador"></param>
+        /// <param name="icolumn"></param>
+        /// <param name="sSymbolName"></param>
+        /// <param name="sOperating"></param>
+        /// <param name="sFormula"></param>
+        /// <param name="sReformulation"></param>
+        /// <param name="sorigendatos"></param>
+        /// <param name="smetacoverageCreateBy"></param>
+        /// <param name="tmetacoverageDateBy"></param>
+        /// <param name="smetacoverageModiBy"></param>
+        /// <param name="tmetacoverageDateModiBy"></param>
+        /// <returns oesaveindicator></returns>
+        public EMetadataCoverage_Planning Crear_Indicarores_coverage_Planning(int iidtabla, string sidplanning, int iidindicador, int icolumn, string sSymbolName, string sOperating, string sFormula, string sReformulation, string sorigendatos, string smetacoverageCreateBy, DateTime tmetacoverageDateBy, string smetacoverageModiBy, DateTime tmetacoverageDateModiBy)
+        {
+
+            DataSet dsidica = null;
+            dsidica = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_REGISTERINDICATORCOVERAGE", iidtabla, sidplanning, iidindicador, icolumn, sSymbolName, sOperating, sFormula, sReformulation, sorigendatos, smetacoverageCreateBy, tmetacoverageDateBy, smetacoverageModiBy, tmetacoverageDateModiBy);
+            EMetadataCoverage_Planning oesaveindicator = new EMetadataCoverage_Planning();
+            if (dsidica != null)
+            {
+                if (dsidica.Tables.Count > 0)
+                {
+                    oesaveindicator.objectid = iidtabla;
+                    oesaveindicator.idplanning = sidplanning;
+                    oesaveindicator.idindicador = iidindicador;
+                    oesaveindicator.columnid = icolumn;
+                    oesaveindicator.SymbolName = sSymbolName;
+                    oesaveindicator.Operating = sOperating;
+                    oesaveindicator.Formula = sFormula;
+                    oesaveindicator.Reformulation = sReformulation;
+                    oesaveindicator.OrigenDatos = sorigendatos;
+                    oesaveindicator.metacoverageCreateBy = smetacoverageCreateBy;
+                    oesaveindicator.metacoverageDateBy = tmetacoverageDateBy;
+                    oesaveindicator.metacoverageModiBy = smetacoverageModiBy;
+                    oesaveindicator.metacoverageDateModiBy = tmetacoverageDateModiBy;
+                }
+            }
+            return oesaveindicator;
+        }
+
+        /// <summary>
+        /// Metodo Data Para Registrar los Indicadores para Medicion de Espacios Ing.Carlos Hernandez
+        /// Modificación : 29/07/2010 se cambia tipo de dato de id_planning de int a string 
+        ///                y se coloca parametros dentro del comentario de clase
+        ///                Ing. Mauricio Ortiz                 
+        /// </summary>
+        /// <param name="iidtabla"></param>
+        /// <param name="sidplanning"></param>
+        /// <param name="iidindicador"></param>
+        /// <param name="icolumn"></param>
+        /// <param name="sSymbolName"></param>
+        /// <param name="sOperating"></param>
+        /// <param name="sFormula"></param>
+        /// <param name="sReformulation"></param>
+        /// <param name="sorigendatos"></param>
+        /// <param name="smetaspaceCreateBy"></param>
+        /// <param name="tmetaspaceDateBy"></param>
+        /// <param name="smetaspaceModiBy"></param>
+        /// <param name="tmetaspaceDateModiBy"></param>
+        /// <returns oesaveindicator></returns>
+        public EMetadataSpaceMeasurement_Planning Crear_Indicarores_Space_Planning(int iidtabla, string sidplanning, int iidindicador, int icolumn, string sSymbolName, string sOperating, string sFormula, string sReformulation, string sorigendatos, string smetaspaceCreateBy, DateTime tmetaspaceDateBy, string smetaspaceModiBy, DateTime tmetaspaceDateModiBy)
+        {
+            DataSet dsidica = null;
+            dsidica = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_REGISTERINDICATORSPACE", iidtabla, sidplanning, iidindicador, icolumn, sSymbolName, sOperating, sFormula, sReformulation, sorigendatos, smetaspaceCreateBy, tmetaspaceDateBy, smetaspaceModiBy, tmetaspaceDateModiBy);
+            EMetadataSpaceMeasurement_Planning oesaveindicator = new EMetadataSpaceMeasurement_Planning();
+            if (dsidica != null)
+            {
+                if (dsidica.Tables.Count > 0)
+                {
+                    oesaveindicator.objectid = iidtabla;
+                    oesaveindicator.idplanning = sidplanning;
+                    oesaveindicator.idindicador = iidindicador;
+                    oesaveindicator.columnid = icolumn;
+                    oesaveindicator.SymbolName = sSymbolName;
+                    oesaveindicator.Operating = sOperating;
+                    oesaveindicator.Formula = sFormula;
+                    oesaveindicator.Reformulation = sReformulation;
+                    oesaveindicator.OrigenDatos = sorigendatos;
+                    oesaveindicator.metaspaceCreateBy = smetaspaceCreateBy;
+                    oesaveindicator.metaspaceDateBy = tmetaspaceDateBy;
+                    oesaveindicator.metaspaceModiBy = smetaspaceModiBy;
+                    oesaveindicator.metaspaceDateModiBy = tmetaspaceDateModiBy;
+                }
+            }
+            return oesaveindicator;
+        }
+
+        /// <summary>
+        /// Metodo para Asignar Operativos a Supervisores Ing. Carlos Hernandez 18/12/2009
+        /// Modificación : 29/07/2010 se cambia tipo de dato de id_planning de int a string 
+        ///                y se coloca parametros dentro del comentario de clase
+        ///                Ing. Mauricio Ortiz                 
+        /// </summary>
+        /// <param name="sidplanning"></param>
+        /// <param name="iPersonidSupe"></param>
+        /// <param name="iPersonidOpera"></param>
+        /// <param name="bAsigmenPerstatus"></param>
+        /// <param name="sAsigmenPerCreateBy"></param>
+        /// <param name="tAsigmenPerDateBy"></param>
+        /// <param name="sAsigmenPerModiBy"></param>
+        /// <param name="tAsigmenPerDateModiBy"></param>
+        /// <returns oeasiop></returns>
+        public EOperating__Supervisor__Assignment Crear_Asignaciones_Operativos_Supervi(string sidplanning, int iPersonidSupe, int iPersonidOpera, bool bAsigmenPerstatus, string sAsigmenPerCreateBy, DateTime tAsigmenPerDateBy, string sAsigmenPerModiBy, DateTime tAsigmenPerDateModiBy)
+        {
+            DataSet dsasisop = null;
+            dsasisop = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_REGISTEROPERATYXSUPERVISOR", sidplanning, iPersonidSupe, iPersonidOpera, bAsigmenPerstatus, sAsigmenPerCreateBy, tAsigmenPerDateBy, sAsigmenPerModiBy, tAsigmenPerDateModiBy);
+            EOperating__Supervisor__Assignment oeasiop = new EOperating__Supervisor__Assignment();
+            if (dsasisop != null)
+            {
+                if (dsasisop.Tables.Count > 0)
+                {
+                    oeasiop.idplanning = sidplanning;
+                    oeasiop.PersonidSupe = iPersonidSupe;
+                    oeasiop.PersonidOpera = iPersonidOpera;
+                    oeasiop.AsigmenPerstatus = bAsigmenPerstatus;
+                    oeasiop.AsigmenPerCreateBy = sAsigmenPerCreateBy;
+                    oeasiop.AsigmenPerDateBy = tAsigmenPerDateBy;
+                    oeasiop.AsigmenPerModiBy = sAsigmenPerModiBy;
+                    oeasiop.AsigmenPerDateModiBy = tAsigmenPerDateModiBy;
+                }
+            }
+            return oeasiop;
+        }
+
+
+        public ESales_Plan Crear_Plan_Ventas(int icodstrategy, int icompanyid, string sPlanningCodChannel, int iidCityPri, decimal fValuePlanCityPri, string scodcountry, decimal fValuePlanCountry, string sSalesPlanUnit, int iidMonth, int iYearsid, bool bSalesPlan_Status, string sSalesPlanCreateBy, DateTime tSalesPlanDateBy, string sSalesPlanModiBy, DateTime tSalesPlanDateModiBy)
+        {
+
+            DataSet dsplan = null;
+            dsplan = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_SALESPLAN", icodstrategy, icompanyid, sPlanningCodChannel, iidCityPri, fValuePlanCityPri, scodcountry, fValuePlanCountry, sSalesPlanUnit, iidMonth, iYearsid, bSalesPlan_Status, sSalesPlanCreateBy, tSalesPlanDateBy, sSalesPlanModiBy, tSalesPlanDateModiBy);
+            ESales_Plan oesalesplan = new ESales_Plan();
+            if (dsplan != null)
+            {
+                if (dsplan.Tables.Count > 0)
+                {
+                    oesalesplan.codstrategy = icodstrategy;
+                    oesalesplan.companyid = icompanyid;
+                    oesalesplan.PlanningCodChannel = sPlanningCodChannel;
+                    oesalesplan.idCityPri = iidCityPri;
+                    oesalesplan.ValuePlanCityPri = fValuePlanCityPri;
+                    oesalesplan.codcountry = scodcountry;
+                    oesalesplan.ValuePlanCountry = fValuePlanCountry;
+                    oesalesplan.SalesPlanUnit = sSalesPlanUnit;
+                    oesalesplan.idMonth = iidMonth;
+                    oesalesplan.Yearsid = iYearsid;
+                    oesalesplan.SalesPlan_Status = bSalesPlan_Status;
+                    oesalesplan.SalesPlanCreateBy = sSalesPlanCreateBy;
+                    oesalesplan.SalesPlanDateBy = tSalesPlanDateBy;
+                    oesalesplan.SalesPlanModiBy = sSalesPlanModiBy;
+                    oesalesplan.SalesPlanDateModiBy = tSalesPlanDateModiBy;
+                }
+            }
+            return oesalesplan;
 
         }
 
@@ -1002,6 +1243,7 @@ namespace Lucky.Data.Common.Application
             dt = cn.ejecutarDataTable("UP_WEBSIGE_PLANNING_REGISTERPRODUCTPLANNING", sid_planning, lid_Product, sidProductCategory, iid_Brand, sidSubBrand, sProduct_Family, sProduct_SubFamily, sProducCarac, sProducBeni, iProductsPlanningInitialStock, iReport_Id, bStatus, sProductPlanCreateBy, tProductPlanDateBy, sProductPlanModiBy, tProductPlanDateModiBy);
             return dt;
         }
+        
         /// <summary>
         /// Método para insertar registro en la tabla PLA_Brand_Planning
         /// Ing. Mauricio Ortiz
@@ -1032,7 +1274,7 @@ namespace Lucky.Data.Common.Application
             return dt;
         }
 
-        public DataTable Crear_FamiliasPlanning( string sid_planning, string sid_ProductCategory, int iid_Brand, string sid_ProductFamily, int iReport_Id, bool bStatus, string sFamilyPlan_CreateBy, DateTime tFamilyPlan_DateBy, string sFamilyPlan_ModiBy, DateTime tFamilyPlan_DateModiBy)
+        public DataTable Crear_FamiliasPlanning(string sid_planning, string sid_ProductCategory, int iid_Brand, string sid_ProductFamily, int iReport_Id, bool bStatus, string sFamilyPlan_CreateBy, DateTime tFamilyPlan_DateBy, string sFamilyPlan_ModiBy, DateTime tFamilyPlan_DateModiBy)
         {
             DataTable dt = null;
             dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_PLA_Family_Planning", sid_planning, sid_ProductCategory, iid_Brand, sid_ProductFamily, iReport_Id, bStatus, sFamilyPlan_CreateBy, tFamilyPlan_DateBy, sFamilyPlan_ModiBy, tFamilyPlan_DateModiBy);
@@ -1056,8 +1298,8 @@ namespace Lucky.Data.Common.Application
         public DataTable Crear_CategoriasPlanning(string sid_planning, string sid_ProductCategory, int iReport_Id, bool bStatus, string sCategoryPlan_CreateBy, DateTime tCategoryPlan_DateBy, string sCategoryPlan_ModiBy, DateTime tCategoryPlan_DateModiBy)
         {
             DataTable dt = null;
-            dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_PLA_Category_Planning", sid_planning, sid_ProductCategory, iReport_Id,  bStatus, sCategoryPlan_CreateBy, tCategoryPlan_DateBy, sCategoryPlan_ModiBy, tCategoryPlan_DateModiBy);
-           
+            dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_PLA_Category_Planning", sid_planning, sid_ProductCategory, iReport_Id, bStatus, sCategoryPlan_CreateBy, tCategoryPlan_DateBy, sCategoryPlan_ModiBy, tCategoryPlan_DateModiBy);
+
             if (dt != null)
             {
                 if (dt.Rows.Count > 0)
@@ -1065,10 +1307,10 @@ namespace Lucky.Data.Common.Application
                     return dt;
                 }
             }
-            return dt;            
+            return dt;
         }
 
-            /// <summary>
+        /// <summary>
         /// Método para regitrar en la tabla TBL_PRODUCTO_CADENA 
         /// Ing. Mauricio Ortiz
         /// 16/02/2011
@@ -1077,12 +1319,12 @@ namespace Lucky.Data.Common.Application
         /// <param name="lid_Product"></param>
         /// <param name="sid_planning"></param>
         /// <returns></returns>
-        public DataTable Registrar_TBL_PRODUCTO_CADENA(string sescenario ,string stipoProducto, long lid_Product, string sid_planning, 
+        public DataTable Registrar_TBL_PRODUCTO_CADENA(string sescenario, string stipoProducto, long lid_Product, string sid_planning,
             string sID_SKU, string sID_CADENA, string sID_CANAL, string sCOD_PRODUCTO, string sID_CLIENTE, string sID_CATEGORIA, string sID_MARCA, string sID_FAMILIA, string @TIPO_PRODUCTO, string sFLG_ACTIVO)
         {
             oConn = new Conexion(2);
-            DataTable dtRegistrar_TBL_PRODUCTO_CADENA = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_TBL_PRODUCTO_CADENA",sescenario, stipoProducto, lid_Product, sid_planning,
-                 sID_SKU,  sID_CADENA,  sID_CANAL,  sCOD_PRODUCTO,  sID_CLIENTE,  sID_CATEGORIA,  sID_MARCA,  sID_FAMILIA,  @TIPO_PRODUCTO,  sFLG_ACTIVO);
+            DataTable dtRegistrar_TBL_PRODUCTO_CADENA = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_TBL_PRODUCTO_CADENA", sescenario, stipoProducto, lid_Product, sid_planning,
+                 sID_SKU, sID_CADENA, sID_CANAL, sCOD_PRODUCTO, sID_CLIENTE, sID_CATEGORIA, sID_MARCA, sID_FAMILIA, @TIPO_PRODUCTO, sFLG_ACTIVO);
             return dtRegistrar_TBL_PRODUCTO_CADENA;
         }
 
@@ -1096,8 +1338,8 @@ namespace Lucky.Data.Common.Application
         /// <param name="sopcionreporte"></param>
         /// <returns></returns>
 
-        public DataTable Registrar_TBL_EQUIPO_PRODUCTOS(string id_planning,long id_producto, string cod_producto,
-                string id_categoria, string categoria, int id_marca, string id_submarca, string id_eq_fam, string id_familia, string familia, string id_eq_subfam, 
+        public DataTable Registrar_TBL_EQUIPO_PRODUCTOS(string id_planning, long id_producto, string cod_producto,
+                string id_categoria, string categoria, int id_marca, string id_submarca, string id_eq_fam, string id_familia, string familia, string id_eq_subfam,
             string id_subfamilia, string subfamilia, string marca, string mar_propio, int id_reporte, string tipo_prod, string sopcionreporte, string idcompany, string canal)
         {
             oConn = new Conexion(2);
@@ -1114,15 +1356,15 @@ namespace Lucky.Data.Common.Application
         /// Modificación: Se adiciona los parámetros para realizar la inserción desde la aplicación.
         /// </summary>
         /// <returns></returns>
-        public DataTable Registrar_TBL_EQUIPO_MARCAS(string id_eq_marca, string id_equipo, string id_categoria, string categoria, string id_eq_categoria, 
+        public DataTable Registrar_TBL_EQUIPO_MARCAS(string id_eq_marca, string id_equipo, string id_categoria, string categoria, string id_eq_categoria,
             string id_marca, string id_reporte, string status)
         {
             oConn = new Conexion(2);
             DataTable dtRegistrar_TBL_EQUIPO_MARCAS = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_TBL_EQUIPO_MARCAS", id_eq_marca, id_equipo, id_categoria, categoria,
-                id_eq_categoria, id_marca, id_reporte,status);
+                id_eq_categoria, id_marca, id_reporte, status);
             return dtRegistrar_TBL_EQUIPO_MARCAS;
         }
-        
+
         /// <summary>
         /// Método para registrar en la tabla TBL_EQUIPO_FAMILIAS 
         /// Ing. Mauricio Ortiz
@@ -1136,7 +1378,7 @@ namespace Lucky.Data.Common.Application
             string id_familia, string id_reporte)
         {
             oConn = new Conexion(2);
-            DataTable dtRegistrar_TBL_EQUIPO_FAMILIAS = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_TBL_EQUIPO_FAMILIAS",id_eqfamilia, id_equipo, id_categoria,
+            DataTable dtRegistrar_TBL_EQUIPO_FAMILIAS = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_TBL_EQUIPO_FAMILIAS", id_eqfamilia, id_equipo, id_categoria,
                 id_eqcategoria, id_marca, id_eqmarca, id_familia, id_reporte);
             return dtRegistrar_TBL_EQUIPO_FAMILIAS;
         }
@@ -1153,7 +1395,7 @@ namespace Lucky.Data.Common.Application
         public DataTable Registrar_TBL_EQUIPO_CATEGORIAS(string id_eq_catego, string id_equipo, string id_categoria, string id_reporte, string status)
         {
             oConn = new Conexion(2);
-            DataTable dtRegistrar_TBL_EQUIPO_CATEGORIAS = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_TBL_EQUIPO_CATEGORIAS",id_eq_catego, id_equipo, id_categoria, id_reporte, status);
+            DataTable dtRegistrar_TBL_EQUIPO_CATEGORIAS = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_TBL_EQUIPO_CATEGORIAS", id_eq_catego, id_equipo, id_categoria, id_reporte, status);
             return dtRegistrar_TBL_EQUIPO_CATEGORIAS;
         }
 
@@ -1246,20 +1488,40 @@ namespace Lucky.Data.Common.Application
         /// <param name="sPdvModiBy"></param>
         /// <param name="tPdvDateModiBy"></param>
         /// <returns></returns>
-        public EPuntosDV Cargar_PDV_Planning(int iid_PointOfsale, string sid_typeDocument, string spdvRegTax,
-        string spdvcontact1, string spdvposition1, string spdvcontact2, string spdvposition2, string spdvRazónSocial,
-        string spdvName, string spdvPhone, string spdvAnexo, string spdvFax, string spdvcodCountry, string snameCountry, string spdvcodDepartment, string snameDepartament,
-        string spdvcodProvince, string snameprovince, string spdvcodDistrict, string snameDistrict, string spdvcodCommunity, string snameComunity, string spdvAddress, string spdvemail,
-        string spdvcodChannel, string snameChannel, int iidNodeComType, string snamecomtype, string sNodeCommercial, string snamenodecomercial, int iid_Segment, string snameSegment, bool bpdvstatus, string sPdvCreateBy, DateTime tPdvDateBy,
-        string sPdvModiBy, DateTime tPdvDateModiBy)
+        public EPuntosDV Cargar_PDV_Planning(
+            int iid_PointOfsale, string sid_typeDocument, string spdvRegTax,
+            string spdvcontact1, string spdvposition1, string spdvcontact2,
+            string spdvposition2, string spdvRazónSocial,
+            string spdvName, string spdvPhone, string spdvAnexo,
+            string spdvFax, string spdvcodCountry, string snameCountry,
+            string spdvcodDepartment, string snameDepartament,
+            string spdvcodProvince, string snameprovince,
+            string spdvcodDistrict, string snameDistrict,
+            string spdvcodCommunity, string snameComunity,
+            string spdvAddress, string spdvemail,
+            string spdvcodChannel, string snameChannel,
+            int iidNodeComType, string snamecomtype,
+            string sNodeCommercial, string snamenodecomercial,
+            int iid_Segment, string snameSegment,
+            bool bpdvstatus, string sPdvCreateBy, DateTime tPdvDateBy,
+            string sPdvModiBy, DateTime tPdvDateModiBy)
         {
             DataSet dspdv = null;
-            dspdv = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_INSERTARPDVTMP", iid_PointOfsale, sid_typeDocument, spdvRegTax,
-             spdvcontact1, spdvposition1, spdvcontact2, spdvposition2, spdvRazónSocial,
-             spdvName, spdvPhone, spdvAnexo, spdvFax, spdvcodCountry, snameCountry, spdvcodDepartment, snameDepartament,
-             spdvcodProvince, snameprovince, spdvcodDistrict, snameDistrict, spdvcodCommunity, snameComunity, spdvAddress, spdvemail,
-             spdvcodChannel, snameChannel, iidNodeComType, snamecomtype, sNodeCommercial, snamenodecomercial, iid_Segment, snameSegment, bpdvstatus, sPdvCreateBy, tPdvDateBy,
-             sPdvModiBy, tPdvDateModiBy);
+            dspdv = oConn.ejecutarDataSet(
+             "UP_WEBSIGE_PLANNING_INSERTARPDVTMP",
+             iid_PointOfsale, sid_typeDocument, spdvRegTax,
+             spdvcontact1, spdvposition1, spdvcontact2,
+             spdvposition2, spdvRazónSocial,
+             spdvName, spdvPhone, spdvAnexo, spdvFax,
+             spdvcodCountry, snameCountry, spdvcodDepartment,
+             snameDepartament,
+             spdvcodProvince, snameprovince, spdvcodDistrict,
+             snameDistrict, spdvcodCommunity, snameComunity,
+             spdvAddress, spdvemail,
+             spdvcodChannel, snameChannel, iidNodeComType,
+             snamecomtype, sNodeCommercial, snamenodecomercial,
+             iid_Segment, snameSegment, bpdvstatus, sPdvCreateBy,
+             tPdvDateBy, sPdvModiBy, tPdvDateModiBy);
             EPuntosDV oerPDV = new EPuntosDV();
             if (dspdv != null)
             {
@@ -1309,235 +1571,188 @@ namespace Lucky.Data.Common.Application
             return oerPDV;
         }
 
-        /// <summary>
-        /// Metodo Data Para Registrar los Indicadores para Precios Ing.Carlos Hernandez
-        /// Modificación : 29/07/2010 se cambia tipo de dato de id_planning de int a string 
-        ///                y se coloca parametros dentro del comentario de clase
-        ///                Ing. Mauricio Ortiz                 
-        /// </summary>
-        /// <param name="iidtabla"></param>
-        /// <param name="sidplanning"></param>
-        /// <param name="iidindicador"></param>
-        /// <param name="icolumn"></param>
-        /// <param name="sSymbolName"></param>
-        /// <param name="sOperating"></param>
-        /// <param name="sFormula"></param>
-        /// <param name="sReformulation"></param>
-        /// <param name="sorigendatos"></param>
-        /// <param name="smetapricesCreateBy"></param>
-        /// <param name="tmetapricesDateBy"></param>
-        /// <param name="smetapricesModiBy"></param>
-        /// <param name="tmetapricesDateModiBy"></param>
-        /// <returns oesaveindicator></returns>
-        public EMetadataPrices_Planning Crear_Indicarores_Prices_Planning(int iidtabla, string sidplanning, int iidindicador, int icolumn, string sSymbolName, string sOperating, string sFormula, string sReformulation, string sorigendatos, string smetapricesCreateBy, DateTime tmetapricesDateBy, string smetapricesModiBy, DateTime tmetapricesDateModiBy)
-        {
 
-            DataSet dsidica = null;
-            dsidica = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_REGISTERINDICATORPRICES", iidtabla, sidplanning, iidindicador, icolumn, sSymbolName, sOperating, sFormula, sReformulation, sorigendatos, smetapricesCreateBy, tmetapricesDateBy, smetapricesModiBy, tmetapricesDateModiBy);
-            EMetadataPrices_Planning oesaveindicator = new EMetadataPrices_Planning();
-            if (dsidica != null)
-            {
-                if (dsidica.Tables.Count > 0)
-                {
-                    oesaveindicator.objectid = iidtabla;
-                    oesaveindicator.idplanning = sidplanning;
-                    oesaveindicator.idindicador = iidindicador;
-                    oesaveindicator.columnid = icolumn;
-                    oesaveindicator.SymbolName = sSymbolName;
-                    oesaveindicator.Operating = sOperating;
-                    oesaveindicator.Formula = sFormula;
-                    oesaveindicator.Reformulation = sReformulation;
-                    oesaveindicator.OrigenDatos = sorigendatos;
-                    oesaveindicator.metapricesCreateBy = smetapricesCreateBy;
-                    oesaveindicator.metapricesDateBy = tmetapricesDateBy;
-                    oesaveindicator.metapricesModiBy = smetapricesModiBy;
-                    oesaveindicator.metapricesDateModiBy = tmetapricesDateModiBy;
-                }
-            }
-            return oesaveindicator;
-        }
+
+        #endregion
+
+        #region Methods: UPDATE
+
+
 
 
         /// <summary>
-        /// Metodo Data Para Registrar los Indicadores para Cobertura Ing.Carlos Hernandez
-        /// Modificación : 29/07/2010 se cambia tipo de dato de id_planning de int a string 
-        ///                y se coloca parametros dentro del comentario de clase
-        ///                Ing. Mauricio Ortiz                 
+        /// Descripción     :Metodo para  Actualizar contacto y area involucrada en Planning
+        /// Fecha Creación  : 06/08/2010
+        /// Creado por      : Mauricio Ortiz 
         /// </summary>
-        /// <param name="iidtabla"></param>
-        /// <param name="sidplanning"></param>
-        /// <param name="iidindicador"></param>
-        /// <param name="icolumn"></param>
-        /// <param name="sSymbolName"></param>
-        /// <param name="sOperating"></param>
-        /// <param name="sFormula"></param>
-        /// <param name="sReformulation"></param>
-        /// <param name="sorigendatos"></param>
-        /// <param name="smetacoverageCreateBy"></param>
-        /// <param name="tmetacoverageDateBy"></param>
-        /// <param name="smetacoverageModiBy"></param>
-        /// <param name="tmetacoverageDateModiBy"></param>
-        /// <returns oesaveindicator></returns>
-        public EMetadataCoverage_Planning Crear_Indicarores_coverage_Planning(int iidtabla, string sidplanning, int iidindicador, int icolumn, string sSymbolName, string sOperating, string sFormula, string sReformulation, string sorigendatos, string smetacoverageCreateBy, DateTime tmetacoverageDateBy, string smetacoverageModiBy, DateTime tmetacoverageDateModiBy)
+        /// <param name="sid_planning"></param>
+        /// <param name="sPlanning_AreaInvolved"></param>
+        /// <param name="sName_Contact"></param>
+        /// <param name="sPlanning_ModiBy"></param>
+        /// <param name="tPlanning_DateModiBy"></param>
+        /// <returns oeplanning></returns>
+        public EPlaning ActualizaContactoyarea(string sid_planning, string sPlanning_AreaInvolved, string sName_Contact,
+             string sPlanning_ModiBy, DateTime tPlanning_DateModiBy)
         {
+            EPlaning oeplanning = new EPlaning();
 
-            DataSet dsidica = null;
-            dsidica = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_REGISTERINDICATORCOVERAGE", iidtabla, sidplanning, iidindicador, icolumn, sSymbolName, sOperating, sFormula, sReformulation, sorigendatos, smetacoverageCreateBy, tmetacoverageDateBy, smetacoverageModiBy, tmetacoverageDateModiBy);
-            EMetadataCoverage_Planning oesaveindicator = new EMetadataCoverage_Planning();
-            if (dsidica != null)
+            DataSet ds = oConn.ejecutarDataSet("UP_WEBXPLORA_PLA_UPDATECONTACTO_Y_AREAINVOLUCRADA", sid_planning, sPlanning_AreaInvolved,
+                sName_Contact, sPlanning_ModiBy, tPlanning_DateModiBy);
+
+            if (ds != null)
             {
-                if (dsidica.Tables.Count > 0)
+                if (ds.Tables.Count > 0)
                 {
-                    oesaveindicator.objectid = iidtabla;
-                    oesaveindicator.idplanning = sidplanning;
-                    oesaveindicator.idindicador = iidindicador;
-                    oesaveindicator.columnid = icolumn;
-                    oesaveindicator.SymbolName = sSymbolName;
-                    oesaveindicator.Operating = sOperating;
-                    oesaveindicator.Formula = sFormula;
-                    oesaveindicator.Reformulation = sReformulation;
-                    oesaveindicator.OrigenDatos = sorigendatos;
-                    oesaveindicator.metacoverageCreateBy = smetacoverageCreateBy;
-                    oesaveindicator.metacoverageDateBy = tmetacoverageDateBy;
-                    oesaveindicator.metacoverageModiBy = smetacoverageModiBy;
-                    oesaveindicator.metacoverageDateModiBy = tmetacoverageDateModiBy;
+                    oeplanning.idplanning = sid_planning;
+                    oeplanning.PlanningAreaInvolved = sPlanning_AreaInvolved;
+                    oeplanning.namecontac = sName_Contact;
+                    oeplanning.PlanningModiBy = sPlanning_ModiBy;
+                    oeplanning.PlanningDateModiBy = tPlanning_DateModiBy;
                 }
             }
-            return oesaveindicator;
+            return oeplanning;
         }
 
         /// <summary>
-        /// Metodo Data Para Registrar los Indicadores para Medicion de Espacios Ing.Carlos Hernandez
-        /// Modificación : 29/07/2010 se cambia tipo de dato de id_planning de int a string 
-        ///                y se coloca parametros dentro del comentario de clase
-        ///                Ing. Mauricio Ortiz                 
+        /// Descripción : Metodo para actualizar la informacion relacionada a la primera pestaña de planning . asignacion de presupuesto
+        /// Creado      : Ing. Mauricio Ortiz
+        /// Fecha       : 10/09/2010
         /// </summary>
-        /// <param name="iidtabla"></param>
-        /// <param name="sidplanning"></param>
-        /// <param name="iidindicador"></param>
-        /// <param name="icolumn"></param>
-        /// <param name="sSymbolName"></param>
-        /// <param name="sOperating"></param>
-        /// <param name="sFormula"></param>
-        /// <param name="sReformulation"></param>
-        /// <param name="sorigendatos"></param>
-        /// <param name="smetaspaceCreateBy"></param>
-        /// <param name="tmetaspaceDateBy"></param>
-        /// <param name="smetaspaceModiBy"></param>
-        /// <param name="tmetaspaceDateModiBy"></param>
-        /// <returns oesaveindicator></returns>
-        public EMetadataSpaceMeasurement_Planning Crear_Indicarores_Space_Planning(int iidtabla, string sidplanning, int iidindicador, int icolumn, string sSymbolName, string sOperating, string sFormula, string sReformulation, string sorigendatos, string smetaspaceCreateBy, DateTime tmetaspaceDateBy, string smetaspaceModiBy, DateTime tmetaspaceDateModiBy)
+        /// <param name="sid_planning"></param>
+        /// <param name="sPlanning_CodChannel"></param>
+        /// <param name="tPlanning_StartActivity"></param>
+        /// <param name="tPlanning_EndActivity"></param>
+        /// <param name="tPlanning_DateRepSoli"></param>
+        /// <param name="tPlanning_PreproduDateini"></param>
+        /// <param name="tPlanning_PreproduDateEnd"></param>
+        /// <param name="sPlanning_ProjectDuration"></param>
+        /// <param name="tPlanning_DateFinreport"></param>
+        /// <param name="sPlanning_Vigen"></param>
+        /// <param name="bPlanning_Status"></param>
+        /// <param name="iStatus_id"></param>
+        /// <param name="sPlanning_ModiBy"></param>
+        /// <param name="tPlanning_DateModiBy"></param>
+        /// <returns></returns>
+        public EPlaning Actualiza_DatosAsignarPresupuesto(string sid_planning, string sPlanning_CodChannel, DateTime tPlanning_StartActivity,
+            DateTime tPlanning_EndActivity, DateTime tPlanning_DateRepSoli, DateTime tPlanning_PreproduDateini, DateTime tPlanning_PreproduDateEnd,
+            string sPlanning_ProjectDuration, DateTime tPlanning_DateFinreport, string sPlanning_Vigen, bool bPlanning_Status, int iStatus_id,
+            string sPlanning_ModiBy, DateTime tPlanning_DateModiBy)
         {
-            DataSet dsidica = null;
-            dsidica = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_REGISTERINDICATORSPACE", iidtabla, sidplanning, iidindicador, icolumn, sSymbolName, sOperating, sFormula, sReformulation, sorigendatos, smetaspaceCreateBy, tmetaspaceDateBy, smetaspaceModiBy, tmetaspaceDateModiBy);
-            EMetadataSpaceMeasurement_Planning oesaveindicator = new EMetadataSpaceMeasurement_Planning();
-            if (dsidica != null)
+            EPlaning oePlanning = new EPlaning();
+            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ACTUALIZA_DATOSASIGNARPRESUPUESTO", sid_planning, sPlanning_CodChannel, tPlanning_StartActivity,
+             tPlanning_EndActivity, tPlanning_DateRepSoli, tPlanning_PreproduDateini, tPlanning_PreproduDateEnd,
+             sPlanning_ProjectDuration, tPlanning_DateFinreport, sPlanning_Vigen, bPlanning_Status, iStatus_id,
+             sPlanning_ModiBy, tPlanning_DateModiBy);
+
+            if (dt != null)
             {
-                if (dsidica.Tables.Count > 0)
+                if (dt.Rows.Count > 0)
                 {
-                    oesaveindicator.objectid = iidtabla;
-                    oesaveindicator.idplanning = sidplanning;
-                    oesaveindicator.idindicador = iidindicador;
-                    oesaveindicator.columnid = icolumn;
-                    oesaveindicator.SymbolName = sSymbolName;
-                    oesaveindicator.Operating = sOperating;
-                    oesaveindicator.Formula = sFormula;
-                    oesaveindicator.Reformulation = sReformulation;
-                    oesaveindicator.OrigenDatos = sorigendatos;
-                    oesaveindicator.metaspaceCreateBy = smetaspaceCreateBy;
-                    oesaveindicator.metaspaceDateBy = tmetaspaceDateBy;
-                    oesaveindicator.metaspaceModiBy = smetaspaceModiBy;
-                    oesaveindicator.metaspaceDateModiBy = tmetaspaceDateModiBy;
+                    oePlanning.idplanning = sid_planning;
+                    oePlanning.PlanningCodChannel = sPlanning_CodChannel;
+                    oePlanning.PlanningStartActivity = tPlanning_StartActivity;
+                    oePlanning.PlanningEndActivity = tPlanning_EndActivity;
+                    oePlanning.PlanningDateRepSoli = tPlanning_DateRepSoli;
+                    oePlanning.PlanningPreproduDateini = tPlanning_PreproduDateini;
+                    oePlanning.PlanningPreproduDateEnd = tPlanning_PreproduDateEnd;
+                    oePlanning.PlanningProjectDuration = sPlanning_ProjectDuration;
+                    oePlanning.PlanningDateFinreport = tPlanning_DateFinreport;
+                    oePlanning.PlanningVigen = sPlanning_Vigen;
+                    oePlanning.PlanningStatus = bPlanning_Status;
+                    oePlanning.Statusid = iStatus_id;
+                    oePlanning.PlanningModiBy = sPlanning_ModiBy;
+                    oePlanning.PlanningDateModiBy = tPlanning_DateModiBy;
                 }
             }
-            return oesaveindicator;
+            return oePlanning;
         }
 
         /// <summary>
-        /// Metodo para Asignar Operativos a Supervisores Ing. Carlos Hernandez 18/12/2009
-        /// Modificación : 29/07/2010 se cambia tipo de dato de id_planning de int a string 
-        ///                y se coloca parametros dentro del comentario de clase
-        ///                Ing. Mauricio Ortiz                 
+        /// Metodo para actualizar estado en TBL_EQUIPO
+        /// Ing. Mauricio Ortiz
+        /// 14/02/2011
+        /// Modificación : se adiciona el campo Canal . Ing. Mauricio Ortiz 24/05/2011
         /// </summary>
-        /// <param name="sidplanning"></param>
-        /// <param name="iPersonidSupe"></param>
-        /// <param name="iPersonidOpera"></param>
-        /// <param name="bAsigmenPerstatus"></param>
-        /// <param name="sAsigmenPerCreateBy"></param>
-        /// <param name="tAsigmenPerDateBy"></param>
-        /// <param name="sAsigmenPerModiBy"></param>
-        /// <param name="tAsigmenPerDateModiBy"></param>
-        /// <returns oeasiop></returns>
-        public EOperating__Supervisor__Assignment Crear_Asignaciones_Operativos_Supervi(string sidplanning, int iPersonidSupe, int iPersonidOpera, bool bAsigmenPerstatus, string sAsigmenPerCreateBy, DateTime tAsigmenPerDateBy, string sAsigmenPerModiBy, DateTime tAsigmenPerDateModiBy)
+        /// <param name="sid_planning"></param>
+        /// <param name="sCanal"></param>
+        /// <param name="sEstado"></param>       
+        /// <returns></returns>
+        public DataTable ActualizarEstadoTBL_EQUIPO(string sid_planning, string sCanal, string sEstado)
         {
-            DataSet dsasisop = null;
-            dsasisop = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_REGISTEROPERATYXSUPERVISOR", sidplanning, iPersonidSupe, iPersonidOpera, bAsigmenPerstatus, sAsigmenPerCreateBy, tAsigmenPerDateBy, sAsigmenPerModiBy, tAsigmenPerDateModiBy);
-            EOperating__Supervisor__Assignment oeasiop = new EOperating__Supervisor__Assignment();
-            if (dsasisop != null)
-            {
-                if (dsasisop.Tables.Count > 0)
-                {
-                    oeasiop.idplanning = sidplanning;
-                    oeasiop.PersonidSupe = iPersonidSupe;
-                    oeasiop.PersonidOpera = iPersonidOpera;
-                    oeasiop.AsigmenPerstatus = bAsigmenPerstatus;
-                    oeasiop.AsigmenPerCreateBy = sAsigmenPerCreateBy;
-                    oeasiop.AsigmenPerDateBy = tAsigmenPerDateBy;
-                    oeasiop.AsigmenPerModiBy = sAsigmenPerModiBy;
-                    oeasiop.AsigmenPerDateModiBy = tAsigmenPerDateModiBy;
-                }
-            }
-            return oeasiop;
-        }
-
-        public DataTable Delete_Asignaciones_Operativos_Supervi(string sidplanning, int iPersonidOpera)
-        {
-            DataTable dt = null;
-            dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_DELETE_ASIGNACION_OPERATIVO_A_SUPERVISOR", sidplanning, iPersonidOpera);        
+            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ACTUALIZARPLANNING_TBL_EQUIPO", sid_planning, sCanal, sEstado);
             return dt;
         }
-
-        public DataTable DeletePDV_Planning(int iid_MPOSPlanning)
+        public EContenedoraFormatos Actualizar_Items_Formatos(int icodItem, bool bcontenstatus, string scontenedorModiBy, DateTime tcontenedorDateModiBy)
         {
-            DataTable dt = null;
-            dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_DELETE_PDVPLANNING", iid_MPOSPlanning);
-            return dt;
+            DataSet dsconte = null;
+            dsconte = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_UPDATEITEMSFORMATO", icodItem, bcontenstatus, scontenedorModiBy, tcontenedorDateModiBy);
+            EContenedoraFormatos oeconte = new EContenedoraFormatos();
+            oeconte.codItem = icodItem;
+            oeconte.contenstatus = bcontenstatus;
+            oeconte.contenedorModiBy = scontenedorModiBy;
+            oeconte.contenedorDateModiBy = tcontenedorDateModiBy;
+            return oeconte;
+
+
         }
 
-        public ESales_Plan Crear_Plan_Ventas(int icodstrategy, int icompanyid, string sPlanningCodChannel, int iidCityPri, decimal fValuePlanCityPri, string scodcountry, decimal fValuePlanCountry, string sSalesPlanUnit, int iidMonth, int iYearsid, bool bSalesPlan_Status, string sSalesPlanCreateBy, DateTime tSalesPlanDateBy, string sSalesPlanModiBy, DateTime tSalesPlanDateModiBy)
+
+
+        public ECity_Principal_Service Modify_Ciudad_Principal(
+    string sCod_Channel, int icompany_id, bool bCityPri_Status,
+    string sCityPri_ModiBy, DateTime tCityPri_DateModiBy)
         {
-
-            DataSet dsplan = null;
-            dsplan = oConn.ejecutarDataSet("UP_WEBSIGE_PLANNING_SALESPLAN", icodstrategy, icompanyid, sPlanningCodChannel, iidCityPri, fValuePlanCityPri, scodcountry, fValuePlanCountry, sSalesPlanUnit, iidMonth, iYearsid, bSalesPlan_Status, sSalesPlanCreateBy, tSalesPlanDateBy, sSalesPlanModiBy, tSalesPlanDateModiBy);
-            ESales_Plan oesalesplan = new ESales_Plan();
-            if (dsplan != null)
-            {
-                if (dsplan.Tables.Count > 0)
-                {
-                    oesalesplan.codstrategy = icodstrategy;
-                    oesalesplan.companyid = icompanyid;
-                    oesalesplan.PlanningCodChannel = sPlanningCodChannel;
-                    oesalesplan.idCityPri = iidCityPri;
-                    oesalesplan.ValuePlanCityPri = fValuePlanCityPri;
-                    oesalesplan.codcountry = scodcountry;
-                    oesalesplan.ValuePlanCountry = fValuePlanCountry;
-                    oesalesplan.SalesPlanUnit = sSalesPlanUnit;
-                    oesalesplan.idMonth = iidMonth;
-                    oesalesplan.Yearsid = iYearsid;
-                    oesalesplan.SalesPlan_Status = bSalesPlan_Status;
-                    oesalesplan.SalesPlanCreateBy = sSalesPlanCreateBy;
-                    oesalesplan.SalesPlanDateBy = tSalesPlanDateBy;
-                    oesalesplan.SalesPlanModiBy = sSalesPlanModiBy;
-                    oesalesplan.SalesPlanDateModiBy = tSalesPlanDateModiBy;
-                }
-            }
-            return oesalesplan;
-
+            DataTable dtmcp = null;
+            dtmcp = oConn.ejecutarDataTable("UP_WEBSIGE_ASIGNACION_CANAL_MODIFYCIUDADPRINCIPAL", sCod_Channel, icompany_id, bCityPri_Status, sCityPri_ModiBy, tCityPri_DateModiBy);
+            ECity_Principal_Service oemcp = new ECity_Principal_Service();
+            oemcp.CodChannel = sCod_Channel;
+            oemcp.company_id = icompany_id;
+            oemcp.CityPriStatus = bCityPri_Status;
+            oemcp.CityPriModiBy = sCityPri_ModiBy;
+            oemcp.CityPriDateModiBy = tCityPri_DateModiBy;
+            return oemcp;
         }
+
+        public EAssignment__Presentations Modify_Assignment__Presentations(
+            string scod_Channel, string sidProductCategory, int icompanyid,
+            bool bAssignment_Status, string sproductServiceModiBy,
+            DateTime tproductServiceDateModiBy)
+        {
+            DataTable dtmap = null;
+            dtmap = oConn.ejecutarDataTable("UP_WEBSIGE_ASIGNACION_CANAL_MODIFYASIGNACIONCATEGORIA", scod_Channel, sidProductCategory, icompanyid, bAssignment_Status, sproductServiceModiBy, tproductServiceDateModiBy);
+            EAssignment__Presentations oemap = new EAssignment__Presentations();
+            oemap.cod_Channel = scod_Channel;
+            oemap.idProductCategory = sidProductCategory;
+            oemap.companyid = icompanyid;
+            oemap.Assignment_Status = bAssignment_Status;
+            oemap.productServiceModiBy = sproductServiceModiBy;
+            oemap.productServiceDateModiBy = tproductServiceDateModiBy;
+
+            return oemap;
+        }
+
+        public EAssignment__Presentations Modify_Assignment__PresentationXCategoria(
+            string scod_Channel, string sidProductCategory, int iid_Product,
+            int icompanyid, bool bAssignment_Status, string sproductServiceModiBy,
+            DateTime tproductServiceDateModiBy)
+        {
+            DataTable dtmap = null;
+            dtmap = oConn.ejecutarDataTable("UP_WEBSIGE_ASIGNACION_CANAL_MODIFYASIGNACIONPRODUCTOPRINCIPALXCATEGORIA", scod_Channel, sidProductCategory, iid_Product, icompanyid, bAssignment_Status, sproductServiceModiBy, tproductServiceDateModiBy);
+            EAssignment__Presentations oemap = new EAssignment__Presentations();
+            oemap.cod_Channel = scod_Channel;
+            oemap.idProductCategory = sidProductCategory;
+            oemap.idProduct = iid_Product;
+            oemap.companyid = icompanyid;
+            oemap.Assignment_Status = bAssignment_Status;
+            oemap.productServiceModiBy = sproductServiceModiBy;
+            oemap.productServiceDateModiBy = tproductServiceDateModiBy;
+
+            return oemap;
+        }
+
         /// <summary>
         /// Metodo para actulizar Presupuesto de Campañas Lucky
         /// </summary>
-
         public EPresupuesto Actualizar_Presupuestos(string sNumberbudget, string sprenew, string snamepresu, DateTime tFeciniPlanning, DateTime tFecFinPlanning, string sbudgetModiBy, DateTime tbudgetDateModiBy)
         {
             DataTable dtupresu = oConn.ejecutarDataTable("UP_WEBSIGE_PLANNING_UPDATE_PRESUPUESTO", sNumberbudget, sprenew, snamepresu, tFeciniPlanning, tFecFinPlanning, sbudgetModiBy, tbudgetDateModiBy);
@@ -1645,8 +1860,12 @@ namespace Lucky.Data.Common.Application
             return oeupmanda;
         }
 
-
-        public ESales_Plan Actualizar_PlanVentas(int iSalesPlanid, int icod_strategy, int icmpanyid, int iidCityPri, decimal fValuePlanCityPri, string scodcountry, decimal fValuePlanCountry, string sSalesPlanUnit, string sSalesPlanModiBy, DateTime tSalesPlanDateModiBy)
+        public ESales_Plan Actualizar_PlanVentas(
+            int iSalesPlanid, int icod_strategy, int icmpanyid, 
+            int iidCityPri, decimal fValuePlanCityPri, 
+            string scodcountry, decimal fValuePlanCountry, 
+            string sSalesPlanUnit, string sSalesPlanModiBy, 
+            DateTime tSalesPlanDateModiBy)
         {
             DataTable dtupplan = oConn.ejecutarDataTable("UP_WEBSIGE_PLANNING_UPDATESALESPLAN", iSalesPlanid, icod_strategy, icmpanyid, iidCityPri, fValuePlanCityPri, scodcountry, fValuePlanCountry, sSalesPlanUnit, sSalesPlanModiBy, tSalesPlanDateModiBy);
 
@@ -1664,191 +1883,62 @@ namespace Lucky.Data.Common.Application
             return oeupsalesplan;
         }
 
-        /// Modificaciones: Se adiciona el campo Cod_channel y Assignment_Status , Ing. Mauricio Ortiz . 21/01/2010
-        public EAssignment__Presentations Crear_Presentaciones_AsignacionCanal(string sidProductCategory, int iidProduct, int iid_productprincipal, int icompanyid, int icodstrategy, string sPresentaCompetition1, string sPresentaCompetition2, string sPresentaCompetition3, string scod_Channel, bool bAssignment_Status, string sproductServiceCreateBy, DateTime tproductServiceDateBy, string sproductServiceModiBy, DateTime tproductServiceDateModiBy)
-        {
-            DataSet dspresasi = null;
-            dspresasi = oConn.ejecutarDataSet("UP_WEBSIGE_ASIGNACION_CANAL_PRESENTAREGISTER", sidProductCategory, iidProduct, iid_productprincipal, icompanyid, icodstrategy, sPresentaCompetition1, sPresentaCompetition2, sPresentaCompetition3, scod_Channel, bAssignment_Status, sproductServiceCreateBy, tproductServiceDateBy, sproductServiceModiBy, tproductServiceDateModiBy);
-            EAssignment__Presentations oeapre = new EAssignment__Presentations();
-            if (dspresasi != null)
-            {
-                if (dspresasi.Tables.Count > 0)
-                {
-                    oeapre.idProductCategory = sidProductCategory;
-                    oeapre.idProduct = iidProduct;
-                    oeapre.idproductprincipal = iid_productprincipal;
-                    oeapre.companyid = icompanyid;
-                    oeapre.codstrategy = icodstrategy;
-                    oeapre.PresentaCompetition1 = sPresentaCompetition1;
-                    oeapre.PresentaCompetition2 = sPresentaCompetition2;
-                    oeapre.PresentaCompetition3 = sPresentaCompetition3;
-                    oeapre.cod_Channel = scod_Channel;
-                    oeapre.Assignment_Status = bAssignment_Status;
-                    oeapre.productServiceCreateBy = sproductServiceCreateBy;
-                    oeapre.productServiceDateBy = tproductServiceDateBy;
-                    oeapre.productServiceModiBy = sproductServiceModiBy;
-                    oeapre.productServiceDateModiBy = tproductServiceDateModiBy;
-                }
-
-
-            }
-            return oeapre;
-
-
-        }
-        public ECity_Principal_Service Crear_Ciudad_Principal(string scod_City, int iCod_Strategy, string sCod_Channel, int icompany_id, bool bCityPri_Status, string sCityPri_CreateBy, DateTime tCityPri_DateBy,
-            string sCityPri_ModiBy, DateTime tCityPri_DateModiBy)
-        {
-            DataSet dscp = null;
-            dscp = oConn.ejecutarDataSet("UP_WEBSIGE_ASIGNACION_CANAL_REGISTERCIUDADPRINCIPAL", scod_City, iCod_Strategy, sCod_Channel, icompany_id, bCityPri_Status, sCityPri_CreateBy, tCityPri_DateBy, sCityPri_ModiBy, tCityPri_DateModiBy);
-            ECity_Principal_Service oecp = new ECity_Principal_Service();
-            if (dscp != null)
-            {
-                if (dscp.Tables.Count > 0)
-                {
-                    oecp.cod_City = scod_City;
-                    oecp.CodStrategy = iCod_Strategy;
-                    oecp.CodChannel = sCod_Channel;
-                    oecp.company_id = icompany_id;
-                    oecp.CityPriStatus = bCityPri_Status;
-                    oecp.CityPriCreateBy = sCityPri_CreateBy;
-                    oecp.CityPriDateBy = tCityPri_DateBy;
-                    oecp.CityPriModiBy = sCityPri_ModiBy;
-                    oecp.CityPriDateModiBy = tCityPri_DateModiBy;
-
-
-
-                }
-
-
-            }
-            return oecp;
-
-        }
-
-        public ECity_Principal_Service Modify_Ciudad_Principal(string sCod_Channel, int icompany_id, bool bCityPri_Status, string sCityPri_ModiBy, DateTime tCityPri_DateModiBy)
-        {
-            DataTable dtmcp = null;
-            dtmcp = oConn.ejecutarDataTable("UP_WEBSIGE_ASIGNACION_CANAL_MODIFYCIUDADPRINCIPAL", sCod_Channel, icompany_id, bCityPri_Status, sCityPri_ModiBy, tCityPri_DateModiBy);
-            ECity_Principal_Service oemcp = new ECity_Principal_Service();
-            oemcp.CodChannel = sCod_Channel;
-            oemcp.company_id = icompany_id;
-            oemcp.CityPriStatus = bCityPri_Status;
-            oemcp.CityPriModiBy = sCityPri_ModiBy;
-            oemcp.CityPriDateModiBy = tCityPri_DateModiBy;
-            return oemcp;
-        }
-
-        public EAssignment__Presentations Modify_Assignment__Presentations(string scod_Channel, string sidProductCategory, int icompanyid, bool bAssignment_Status, string sproductServiceModiBy, DateTime tproductServiceDateModiBy)
-        {
-            DataTable dtmap = null;
-            dtmap = oConn.ejecutarDataTable("UP_WEBSIGE_ASIGNACION_CANAL_MODIFYASIGNACIONCATEGORIA", scod_Channel, sidProductCategory, icompanyid, bAssignment_Status, sproductServiceModiBy, tproductServiceDateModiBy);
-            EAssignment__Presentations oemap = new EAssignment__Presentations();
-            oemap.cod_Channel = scod_Channel;
-            oemap.idProductCategory = sidProductCategory;
-            oemap.companyid = icompanyid;
-            oemap.Assignment_Status = bAssignment_Status;
-            oemap.productServiceModiBy = sproductServiceModiBy;
-            oemap.productServiceDateModiBy = tproductServiceDateModiBy;
-
-            return oemap;
-        }
-
-        public EAssignment__Presentations Modify_Assignment__PresentationXCategoria(string scod_Channel, string sidProductCategory, int iid_Product, int icompanyid, bool bAssignment_Status, string sproductServiceModiBy, DateTime tproductServiceDateModiBy)
-        {
-            DataTable dtmap = null;
-            dtmap = oConn.ejecutarDataTable("UP_WEBSIGE_ASIGNACION_CANAL_MODIFYASIGNACIONPRODUCTOPRINCIPALXCATEGORIA", scod_Channel, sidProductCategory, iid_Product, icompanyid, bAssignment_Status, sproductServiceModiBy, tproductServiceDateModiBy);
-            EAssignment__Presentations oemap = new EAssignment__Presentations();
-            oemap.cod_Channel = scod_Channel;
-            oemap.idProductCategory = sidProductCategory;
-            oemap.idProduct = iid_Product;
-            oemap.companyid = icompanyid;
-            oemap.Assignment_Status = bAssignment_Status;
-            oemap.productServiceModiBy = sproductServiceModiBy;
-            oemap.productServiceDateModiBy = tproductServiceDateModiBy;
-
-            return oemap;
-        }
 
         /// <summary>
-        /// Descripción : Método para consultar los puntos de venta asignados a un planning
-        /// Creado por  : Ing. Mauricio Ortiz
-        /// Fecha       : 04/09/2010
-        /// Modificación: 12/11/2010 se adiciona nuevos parametros scod_City ,iidNodeComType ,
-        ///					sNodeCommercial, lcod_Oficina  Ing. Mauricio Ortiz
-        /// </summary>       
-        /// <param name="sid_planning"></param>
-        /// <param name="scod_City"></param>
-        /// <param name="iidNodeComType"></param>
-        /// <param name="sNodeCommercial"></param>
-        /// <param name="lcod_Oficina"></param>
-        /// <param name="imalla"></param>
-        /// <param name="isector"></param>
-        /// <returns>dt</returns>
-        public DataTable Consultar_PDVPlanning(string sid_planning, string scod_City , int iidNodeComType , string sNodeCommercial , long lcod_Oficina , int imalla, int isector)
+        /// Método para actualizar en reportsplanning
+        /// Ing. Mauricio Ortiz
+        /// 17/03/2011
+        /// </summary>
+        /// <param name="iid_ReportsPlanning"></param>
+        /// <param name="tReportsPlanning_RecogerDesde"></param>
+        /// <param name="tReportsPlanning_RecogerHasta"></param>
+        /// <param name="sReportsPlanning_ModiBy"></param>
+        /// <param name="tReportsPlanning_DateModiBy"></param>
+        /// <returns></returns>
+        public DataTable Actualizar_ReportsPlanning(int iid_ReportsPlanning, DateTime tReportsPlanning_RecogerDesde,
+             DateTime tReportsPlanning_RecogerHasta, string sReportsPlanning_ModiBy, DateTime tReportsPlanning_DateModiBy)
         {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_CONSULTARPDVPLANNING", sid_planning, scod_City, iidNodeComType,sNodeCommercial,lcod_Oficina, imalla, isector);
+            DataTable dtReportsPlanning = null;
+            dtReportsPlanning = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ACTUALIZARREPORTESPLANNING",
+                 iid_ReportsPlanning, tReportsPlanning_RecogerDesde,
+              tReportsPlanning_RecogerHasta, sReportsPlanning_ModiBy, tReportsPlanning_DateModiBy);
+            return dtReportsPlanning;
+        }
+
+
+        #endregion
+
+        #region Methods: DELETE
+
+
+        /// <summary>
+        /// Método para eliminar los registro de la tabla PLA_Panel_Planning de un planning para un reporte seleccinado
+        /// Ing. Mauricio Ortiz
+        /// 04/03/2011
+        /// </summary>
+        /// <param name="lid_PanelPlanning"></param>
+        /// <returns></returns>
+        public DataTable Eliminar_Pla_paneles(long lid_PanelPlanning)
+        {
+            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ELIMINAR_PANELES_PLANNING", lid_PanelPlanning);
             return dt;
         }
 
-        /// <summary>
-        /// Descripción : Método para consultar los puntos de venta asignados a un planning general
-        ///               se crea este método debido a que por Web Services generaba problemas ya que los puntos de venta
-        ///               presentaban en sus datos caracteres especiales 
-        /// Creado por  : Ing. Mauricio Ortiz
-        /// Fecha       : 21/10/2010        
-        /// </summary>
-        /// <param name="sid_planning"></param>
-        /// <returns></returns>
-        public DataTable Consultar_PDVPlanningGeneral(string sid_planning, int imalla ,int isector )
+
+        public DataTable Delete_Asignaciones_Operativos_Supervi(string sidplanning, int iPersonidOpera)
         {
-            DataTable dtpdvpla = null;
-            dtpdvpla = oConn.ejecutarDataTable("UP_WEBSIGE_PLANNING_OBTENERPDVPLA", sid_planning,imalla,isector);
-            return dtpdvpla;
+            DataTable dt = null;
+            dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_DELETE_ASIGNACION_OPERATIVO_A_SUPERVISOR", sidplanning, iPersonidOpera);
+            return dt;
         }
 
-
-        /// <summary>
-        /// Metodo para insertar reportes por planning
-        /// Ing. Mauricio Ortiz
-        /// 26/10/2010 
-        /// Modificación: Se adiciona el campo año , fecha inicio y fecha fin . Ing. Mauricio Ortiz . 03/02/2010
-        /// </summary>
-        /// <param name="sid_planning"></param>
-        /// <param name="iReport_Id"></param>
-        /// <param name="sid_Month"></param>
-        /// <param name="iReportsPlanning_Periodo"></param>
-        /// <param name="bReportsPlanning_Status"></param>
-        /// <param name="sReportsPlanning_CreateBy"></param>
-        /// <param name="tReportsPlanning_DateBy"></param>
-        /// <param name="sReportsPlanning_ModiBy"></param>
-        /// <param name="tReportsPlanning_DateModiBy"></param>
-        /// <returns>dtReportesPla</returns>
-        public DataTable Crear_ReportPlanning(string sid_planning,int iReport_Id, int iid_Year, string sid_Month, int iReportsPlanning_Periodo,
-          DateTime tReportsPlanning_RecogerDesde, DateTime  tReportsPlanning_RecogerHasta, bool bReportsPlanning_Status, string sReportsPlanning_CreateBy, DateTime tReportsPlanning_DateBy, string sReportsPlanning_ModiBy,
-            DateTime tReportsPlanning_DateModiBy)
+        public DataTable DeletePDV_Planning(int iid_MPOSPlanning)
         {
-            DataTable dtReportesPla = null;
-            dtReportesPla = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_CREARREPORTESPLANNING", sid_planning, iReport_Id, iid_Year, sid_Month,  iReportsPlanning_Periodo,
-            tReportsPlanning_RecogerDesde, tReportsPlanning_RecogerHasta, bReportsPlanning_Status,  sReportsPlanning_CreateBy,  tReportsPlanning_DateBy,  sReportsPlanning_ModiBy,
-             tReportsPlanning_DateModiBy);
-
-            return dtReportesPla;
+            DataTable dt = null;
+            dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_DELETE_PDVPLANNING", iid_MPOSPlanning);
+            return dt;
         }
 
-        /// <summary>
-        /// Metodo para consultar reportes planning
-        /// Ing. Mauricio Ortiz
-        /// 09/11/2010 
-        /// </summary>
-        /// <param name="sid_planning"></param>
-        /// <returns>dtReportesPla</returns>
-        public DataTable Consulta_ReportPlanning(string sid_planning)
-        {
-            DataTable dtReportesPla = null;
-            dtReportesPla = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_CONSULTAREPORTESPLANNING", sid_planning);
-            return dtReportesPla;
-        }
 
         /// <summary>
         /// Metodo para eliminar reportes planning
@@ -1864,42 +1954,6 @@ namespace Lucky.Data.Common.Application
             return dtReportsPlanning;
         }
 
-
-        /// <summary>
-        /// Método para actualizar en reportsplanning
-        /// Ing. Mauricio Ortiz
-        /// 17/03/2011
-        /// </summary>
-        /// <param name="iid_ReportsPlanning"></param>
-        /// <param name="tReportsPlanning_RecogerDesde"></param>
-        /// <param name="tReportsPlanning_RecogerHasta"></param>
-        /// <param name="sReportsPlanning_ModiBy"></param>
-        /// <param name="tReportsPlanning_DateModiBy"></param>
-        /// <returns></returns>
-        public DataTable Actualizar_ReportsPlanning(int iid_ReportsPlanning , DateTime tReportsPlanning_RecogerDesde ,
-             DateTime tReportsPlanning_RecogerHasta , string sReportsPlanning_ModiBy , DateTime tReportsPlanning_DateModiBy)
-        {
-            DataTable dtReportsPlanning = null;
-            dtReportsPlanning = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ACTUALIZARREPORTESPLANNING",
-                 iid_ReportsPlanning, tReportsPlanning_RecogerDesde,
-              tReportsPlanning_RecogerHasta, sReportsPlanning_ModiBy, tReportsPlanning_DateModiBy);
-            return dtReportsPlanning;
-        }
-
-        /// <summary>
-        /// Método para consultar los productos del planning
-        /// Ing. Mauricio Ortiz
-        /// 28/10/2010 
-        /// </summary>
-        /// <param name="sid_planning"></param>
-        /// <param name="iid_company"></param>
-        /// <returns>dsProductPlanning</returns>
-        public DataSet Consultar_ProductPlanning(string sid_planning, int iid_company)
-        {
-            DataSet dsProductPlanning = null;
-            dsProductPlanning = oConn.ejecutarDataSet("UP_WEBXPLORA_PLA_OBTENERPRODUCTOSPLANNING", sid_planning, iid_company);
-            return dsProductPlanning;
-        }
 
         /// <summary>
         /// Método para eliminar los productos del planning
@@ -1955,7 +2009,7 @@ namespace Lucky.Data.Common.Application
         {
             DataTable dtEliminaCategoriasPlanning = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ELIMINARCATEGORIASPLANNING", lid_CategoryPlanning);
             return dtEliminaCategoriasPlanning;
-        }   
+        }
 
         /// <summary>
         /// Método para eliminar productos de la tabla TBL_PRODUCTO_CADENA
@@ -1986,8 +2040,6 @@ namespace Lucky.Data.Common.Application
             return dtEliminaProductTBL_EQUIPO_PRODUCTOS;
         }
 
-
-
         /// <summary>
         /// Método para eliminar Marcas de la tabla TBL_EQUIPO_MARCAS
         /// Ing. Mauricio Ortiz
@@ -2016,7 +2068,6 @@ namespace Lucky.Data.Common.Application
             return dtEliminaFamiliasTBL_EQUIPO_FAMILIAS;
         }
 
-
         /// <summary>
         /// Método para eliminar Categorias de la bd intermedia
         /// Ing. Mauricio Ortiz
@@ -2029,6 +2080,613 @@ namespace Lucky.Data.Common.Application
             oConn = new Conexion(2);
             DataTable dtEliminaTBL_EQUIPO_CATEGORIAS = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ELIMINAR_TBL_EQUIPO_CATEGORIAS", sid_CategoryPlanning);
             return dtEliminaTBL_EQUIPO_CATEGORIAS;
+        }
+
+        #endregion
+
+        #region Methods: LIST / GET
+
+        public DataTable lista_campanias_cliente(int company_id)
+        {
+            DataTable dt = new DataTable();
+            dt = oConn.ejecutarDataTable("UP_XPLORAMAPS_OBTENER_LISTA_CAMPANIAS", company_id);
+            return dt;
+        }
+
+        /// <summary>
+        /// Obtener información del Presupuesto,
+        /// Interface con EasyWin, devuelve información 
+        /// para llenar Combos correspondientes al Planning.
+        /// Case 1: (Obtiene Clientes asociados a un Planning.)
+        /// - Company_id    .- Identificador de Compañia.
+        /// - Company_Name  .- Nombre de la Compañia.
+        /// Case 5: (Obtiene Clientes Historicos asociados a un Planning.)
+        /// - Person_id         .- Identificador de Usuario.
+        /// - Nombres           .- Nombre del Usuario
+        /// - person_status     .- Estado del usuario.
+        /// - Perfil_id         .- Identificador del Perfil del Usuario.
+        /// - name_user         .- Nombre que se utiliza en el sistema.
+        /// - User_Password     .- Password para acceder al sistema.
+        /// - Person_Email      .- Email del Usuario.
+        /// Case 2: (Obtener Supervisores)
+        /// - Person_id         .- Identificador de Usuario Supervisor.
+        /// - Nombres           .- Nombre del Usuario Supervisor.
+        /// - Perfil_id         .- Identificador del Perfil del Usuario (Supervisor).
+        /// - name_user         .- Nombre utilizado en el Sistema (Supervisor)
+        /// - User_Password     .- Password para acceder al Sistema.
+        /// - Person_Email      .- Email del Usuario (Supervisor).
+        /// Case 6: (Obtener Supervisores Históricos)
+        /// - Person_id         .- Identificador de Usuario Supervisor Histórico.
+        /// - Nombres           .- Nombre del Usuario Supervisor Histórico.
+        /// - Perfil_id         .- Identificador del Perfil del Usuario (Supervisor Histórico).
+        /// - name_user         .- Nombre utilizado en el Sistema (Supervisor Histórico)
+        /// - User_Password     .- Password para acceder al Sistema.
+        /// - Person_Email      .- Email del Usuario (Supervisor Histórico).
+        /// Case 3: (Obtener Personal Operativo)
+        /// - Person_id         .- Identificador de Usuario Operativo.
+        /// - Nombres           .- Nombre del Usuario Operativo.
+        /// - Perfil_id         .- Identificador del Perfil del Usuario (Operativo).
+        /// - perfil_name       .- Nombre utilizado en el Sistema (Operativo)
+        /// Case 4: (Obtener Supervisores en Consulta)
+        /// - person_id         .- Identificador de Usuario Supervisor.
+        /// - Nombres           .- Nombre del Usuario Supervisor.
+        /// - person_status     .- Estado del Usuario Supervisor.
+        /// - Perfil_id         .- Identificador del Perfil en el Sistema (Supervisor).
+        /// </summary>
+        /// <param name="idPlanning"></param>
+        /// <param name="option"></param>
+        /// <returns></returns>
+        public DataTable cmbInterfaceEasyWin(String idBudget,
+        int option)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = oConn.ejecutarDataTable(
+                    "UP_WEB_INTERFACE_EASYWIN_SIGE_LLENARCOMBOS",
+                    idBudget,
+                    option);
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message.ToString();
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// Obtener el Listado de Controllers,
+        /// Supervisores y Mercaderistas
+        /// </summary>
+        /// <param name="idPlanning"></param>
+        /// <returns></returns>
+        public DataSet getStaffPlanning(String idPlanning)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                ds = oConn.ejecutarDataSet(
+                    "UP_WEBXPLORA_PLA_OBTENERSTAFFPLANNING",
+                    idPlanning);
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message.ToString();
+            }
+            return ds;
+        }
+
+        /// <summary>
+        /// Verificar si una persona ya tiene asignado un Supervisor.
+        /// </summary>
+        /// <param name="idPlanning"></param>
+        /// <param name="idPerson"></param>
+        /// <returns></returns>
+        public DataTable getCheckOperationAssigment(
+        String idPlanning, int idPerson)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = oConn.ejecutarDataTable(
+                    "UP_WEBXPLORA_PLA_VERIFICAR_ASIGNACION_OPERATIVO_A_SUPERVISOR",
+                    idPlanning,
+                    idPerson);
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message.ToString();
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idPlanning"></param>
+        /// <param name="idCity"></param>
+        /// <param name="idNodeCommercial"></param>
+        /// <param name="idOficina"></param>
+        /// <param name="idMalla"></param>
+        /// <returns></returns>
+        public DataSet getInfoPtoVenta(String idPlanning,
+        string idCity, int idNodeCommercialType,
+        string idNodeCommercial, int idOficina,
+        int idMalla)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                ds = oConn.ejecutarDataSet(
+                    "UP_WEBXPLORA_PLA_LLENAFILTROSASIGNACIONPDV",
+                    idPlanning,
+                    idCity,
+                    idNodeCommercialType,
+                    idNodeCommercial,
+                    idOficina,
+                    idMalla);
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message.ToString();
+            }
+            return ds;
+        }
+
+        /// <summary>
+        /// Obtener información del Planning By IdPlanning
+        /// </summary>
+        /// <param name="idPlanning"></param>
+        /// <returns></returns>
+        public DataTable getByIdPlanning(String idBudget)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = oConn.ejecutarDataTable(
+                    "UP_WEBSIGE_SEARCH_PLANNINGXPRESUPUESTO",
+                    idBudget);
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message.ToString();
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// Método para consultar los registro de la tabla PLA_Panel_Planning de un planning para un reporte seleccinado
+        /// Ing. Mauricio Ortiz
+        /// 04/03/2011
+        /// </summary>
+        /// <param name="iid_planning"></param>
+        /// <param name="iReport_Id"></param>
+        /// <returns></returns>
+        public DataTable Consulta_Pla_paneles(
+            string iid_planning, int iReport_Id, 
+            int ireportplanning)
+        {
+            DataTable dt = 
+                oConn.ejecutarDataTable(
+                "UP_WEBXPLORA_PLA_CONSULTAR_PANELES_PLANNING", 
+                iid_planning, iReport_Id, ireportplanning);
+            return dt;
+        }
+
+        /// <summary>
+        /// Descripción : Método para consultar los puntos de venta asignados a un planning
+        /// Creado por  : Ing. Mauricio Ortiz
+        /// Fecha       : 04/09/2010
+        /// Modificación: 12/11/2010 se adiciona nuevos parametros scod_City ,iidNodeComType ,
+        ///					sNodeCommercial, lcod_Oficina  Ing. Mauricio Ortiz
+        /// </summary>       
+        /// <param name="sid_planning"></param>
+        /// <param name="scod_City"></param>
+        /// <param name="iidNodeComType"></param>
+        /// <param name="sNodeCommercial"></param>
+        /// <param name="lcod_Oficina"></param>
+        /// <param name="imalla"></param>
+        /// <param name="isector"></param>
+        /// <returns>dt</returns>
+        public DataTable Consultar_PDVPlanning(
+            string sid_planning,
+            string scod_City,
+            int iidNodeComType,
+            string sNodeCommercial,
+            long lcod_Oficina,
+            int imalla,
+            int isector)
+        {
+
+            DataTable dt = new DataTable();
+
+            try
+            {
+                dt = oConn.ejecutarDataTable(
+                    "UP_WEBXPLORA_PLA_CONSULTARPDVPLANNING",
+                    sid_planning,
+                    scod_City,
+                    iidNodeComType,
+                    sNodeCommercial,
+                    lcod_Oficina,
+                    imalla,
+                    isector);
+            }
+            catch (Exception ex)
+            {
+                message = "Ocurrio un Error: " + ex.ToString();
+            }
+
+            return dt;
+        }
+
+        /// <summary>
+        /// Descripción : Método para consultar los puntos de venta asignados a un planning general
+        ///               se crea este método debido a que por Web Services generaba problemas ya que los puntos de venta
+        ///               presentaban en sus datos caracteres especiales 
+        /// Creado por  : Ing. Mauricio Ortiz
+        /// Fecha       : 21/10/2010        
+        /// </summary>
+        /// <param name="sid_planning"></param>
+        /// <returns></returns>
+        public DataTable Consultar_PDVPlanningGeneral(
+            string sid_planning, int imalla, int isector)
+        {
+            DataTable dtpdvpla = null;
+            dtpdvpla = oConn.ejecutarDataTable(
+                "UP_WEBSIGE_PLANNING_OBTENERPDVPLA",
+                sid_planning,
+                imalla,
+                isector);
+            return dtpdvpla;
+        }
+
+        /// <summary>
+        /// Get List of PointOfSale by IdPlanning
+        /// </summary>
+        /// <param name="idPlanning"></param>
+        /// <param name="idCity"></param>
+        /// <param name="idTypeNodeCommercial"></param>
+        /// <param name="idNodeCommercial"></param>
+        /// <param name="idOficina"></param>
+        /// <param name="idMalla"></param>
+        /// <param name="idSector"></param>
+        /// <returns></returns>
+        public DataTable getListPdvPlanning(String idPlanning,
+        String idCity, int idTypeNodeCommercial,
+        String idNodeCommercial, int idOficina,
+        int idMalla, int idSector)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = oConn.ejecutarDataTable(
+                    "UP_WEBSIGE_PLANNING_OBTENERPDVPLA",
+                    idPlanning,
+                    idCity,
+                    idTypeNodeCommercial,
+                    idNodeCommercial,
+                    idOficina,
+                    idMalla,
+                    idSector);
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message.ToString();
+            }
+            return dt;
+
+        }
+
+        /// <summary>
+        /// Metodo para consultar reportes planning
+        /// Ing. Mauricio Ortiz
+        /// 09/11/2010 
+        /// </summary>
+        /// <param name="sid_planning"></param>
+        /// <returns>dtReportesPla</returns>
+        public DataTable Consulta_ReportPlanning(
+            string sid_planning)
+        {
+            DataTable dtReportesPla = null;
+            dtReportesPla = oConn.ejecutarDataTable(
+                "UP_WEBXPLORA_PLA_CONSULTAREPORTESPLANNING", 
+                sid_planning);
+            return dtReportesPla;
+        }
+
+
+        /// <summary>
+        /// Método para consultar los productos del planning
+        /// Ing. Mauricio Ortiz
+        /// 28/10/2010 
+        /// </summary>
+        /// <param name="sid_planning"></param>
+        /// <param name="iid_company"></param>
+        /// <returns>dsProductPlanning</returns>
+        public DataSet Consultar_ProductPlanning(
+            string sid_planning, int iid_company)
+        {
+            DataSet dsProductPlanning = null;
+            dsProductPlanning = oConn.ejecutarDataSet(
+                "UP_WEBXPLORA_PLA_OBTENERPRODUCTOSPLANNING", 
+                sid_planning, iid_company);
+            return dsProductPlanning;
+        }
+
+
+        /// <summary>
+        /// Retornar la información del Presupuesto by idCompany
+        /// - Numero_Presupuesto    .- Correspondiente al [number_ budget].
+        /// - Nombre                .- Concatenado del [number_ budget] + name_budget.
+        /// - name                  .- Corresponde al name_budget (Nombre del Bucket).
+        /// - id_planning           .- Corresponde al Identificador del Planning.
+        /// </summary>
+        /// <param name="idCompany"></param>
+        /// <returns></returns>
+        public DataTable presupuestoSearch(int idCompany)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = oConn.ejecutarDataTable(
+                    "UP_WEBXPLORA_PLA_SEARCHPRESUPUESTOSASIGNADOS",
+                    idCompany);
+            }
+            catch (Exception ex)
+            {
+                message = "Ocurrio un Error: " + ex.Message.ToString();
+            }
+
+            // Validar si no existen errores
+            if (getMessages().Equals(""))
+            {
+                // Alertar que no se encontraron registros
+                if (dt.Rows.Count <= 0)
+                {
+                    message = "Error: No se encontraron registros";
+                }
+            }
+
+            return dt;
+        }
+
+        /// <summary>
+        /// Obtener toda la información relacionada al Planning
+        /// para poder realizar seguimiento.
+        /// </summary>
+        /// <param name="idPlanning"></param>
+        /// <returns>DataSet</returns>
+        /// DataTable[0] - Obtiene información para llenar combo de Planning
+        /// - id_objplanning    .- Identificador del Objetivo del Planning,
+        /// - id_planning       .- Identificador del Planning.
+        /// DataTable[1] - Obtiene información de los objetivos para la Campaña
+        /// - id_planning       .- Identificador del Planning.
+        /// - planning_name     .- Nombre del Planning,
+        /// - objpladescription .- Breve Descripción del Objetivo del Planning,
+        /// - objplacreateby    .- Persona que creó los Objetivos del Planning,
+        /// - objpladateby      .- Fecha de creación de los Objetivos del Planning,
+        /// - objplamodiby      .- Ultima Persona que actualizó la información de los Objetivos del Planning,
+        /// - objpladatemodiby  .- Ultima fecha de actualización de los Objetivos del Planning.)
+        /// DataTable[2] - Obtiene información de los Productos con SKU Mandatorio Planning.
+        /// - id_mandtoryplanning   .- Identificador del Id SKU Mandatorio Planning.
+        /// - id_planning           .- Identificador del Planning.
+        /// - mandtorydescription   .- Descripción del SKU Mandatorio Planning.
+        /// - mandtorycreateby      .- Persona que creó el SKU Mandatorio Planning.
+        /// - mandtorydateby        .- Fecha de Creación del SKU Mandatorio Planning.
+        /// - mandtorymodiby        .- Última persona que actualizó el SKU Mandatorio Planning.
+        /// - mandtorydatemodiby    .- Última fecha de actualización del SKU Mandatorio Planning.
+        /// DataTable[3] - Obtiene información de la Mecánica de las Actividades
+        /// - mechanicalactivity_id         .- Identificador de la Mecánica de la Actividad Planning.
+        /// - id_planning                   .- Identificador del Planning.
+        /// - mechanicalactivity_description.- Descripción de la Mecánica de la Actividad Planning.
+        /// - mechanicalactivity_createby   .- Persona que creó la Mecánica de la Actividad Planning.
+        /// - mechanicalactivity_dateby     .- Fecha de creación de la Mecánica de la Actividad Planning.
+        /// - mechanicalactivity_modyby     .- Última persona que actualizó la Mecánica de la Actividad Planning.
+        /// - mechanicalactivity_datemodyby .- Última fecha de actualización de la Mecánica de la Actividad Planning.
+        /// DataTable[4] - Obtiene información del Personal Asignado al Planning.
+        /// - id_staffplanning          .- Identificador del Staff Planning.
+        /// - id_planning               .- Identificador del Planning.
+        /// - person_id                 .- Identificador del Trabajador Asignado a X Punto de Venta.
+        /// - staffplanning_status      .- Estado en que se encuentra la Asignación de X Punto de Venta al Trabajador.
+        /// - staffplanning_createby    .- Persona que definió el Staff Planning.
+        /// - staffplanning_dateby      .- Fecha que el usuario crea la asignación del trabajador al Planning.
+        /// - staffplanning_modiby      .- Usuario que actualizó la asignación del trabajador al Planning.
+        /// - staffplanning_datemodiby  .- Fecha que el usuario actualizó  la asignación del trabajador al Planning.
+        /// DataTable[5] - Obtiene información de la asginación de Mercaderista y Supervisores
+        /// - id_asigper                .- Identificador de la Asignación Supervisor - Mercaderista al Planning.
+        /// - id_planning               .- Identificador de Planning.
+        /// - person_idsupe             .- Usuario Supervisor asignado a la Asignación Supervisor - Mercaderista al Planning.
+        /// - person_idopera            .- Usuario Mercaderista asignado a la Asignación Supervisor - Mercaderista al Planning.
+        /// - asigmenper_status         .- Estado de la asignación Supervisor - Mercaderista al Planning
+        /// - asigmenper_createby       .- Usuario que creo la relación Asignación Supervisor - Mercaderista al Planning.
+        /// - asigmenper_dateby         .- Fecha de creación de la relación Asignación Supervisor - Mercaderista al Planning.
+        /// - asigmenper_modiby         .- Usuario que actualizó la relación Asignación Supervisor - Mercaderista al Planning.
+        /// - asigmenper_datemodiby     .- Fecha de actualización de la relación Asignación Supervisor - Mercaderista al Planning.
+        /// DataTable[6] - Obtiene información de los PDVs de la Campania
+        /// - id_mposplanning           .- Identificador del Punto de Venta asignado al Planning.
+        /// DataTable[7] - Obtiene información de los Productos Asignados por Campania 
+        /// - id_productsplanning           .- Identificador de la asignación de Productos al Planning
+        /// - id_planning                   .- Identificador de Planning.
+        /// - id_product                    .- Identificador de Producto asignado al Planning.
+        /// - id_productcategory            .- Identificador de la Categoria del Producto asignado al Planning.
+        /// - id_brand                      .- Identificador de la Marca del Producto asignado al Planning.
+        /// - id_subbrand                   .- Identificador de la SubMarca del Producto asignado al Planning.
+        /// - id_productfamily              .- Identificador de la Familia del Producto asignado al Planning.
+        /// - id_productsubfamily           .- Identificador de la SubFamilia del Producto asignada al Planning.
+        /// - product_caracte               .- Caracteristicas del Producto asignado al Planning.
+        /// - product_benefi                .- Beneficios del Producto asignado al Planning.
+        /// - productsplanning_initialstock .- Stock Inicial del Producto asignado al Planning.
+        /// - report_id                     .- Identificador del Reporte Asignado al Producto y Planning.
+        /// - status                        .- Estado de la Asignación del Producto al Planning.
+        /// - productplan_createby          .- Usuario que creó la Asignación del Producto al Planning.
+        /// - productplan_dateby            .- Fecha de creación de la Asignación del Producto al Planning.
+        /// - productplan_modiby            .- Usuario que modificó la Asignación del Producto al Planning.
+        /// - productplan_datemodiby        .- Fecha de actualización de la Asignación del Producto al Planning.
+        /// DataTable[8] - Obtiene información de los Puntos de Venta Asignados a los Mercaderistas.
+        /// - id_posplanningope             .- Identificador de la Asignación de la Ruta al Planning.
+        /// - id_mposplanning               .- Identificador del Punto de Venta Planificado asignado a la Ruta y Planning.
+        /// - id_planning                   .- Identificador del Planning.
+        /// - person_id                     .- Identificador del Usuario Asignado a la Ruta y Planning.
+        /// - posplanningope_fechainicio    .- Fecha Inicio de la Asignación de la Ruta al Planning.
+        /// - posplanningope_fechafin       .- Fecha Fin de la Asignación de la Ruta al Planning.
+        /// - id_frecuencia                 .- Identificador de la frecuencia de visita de la Asignación de la Ruta al Planning.
+        /// - posplanningope_status         .- Status de la Asignación de la Ruta al Planning.
+        /// - posplanningope_createby       .- Usuario que creó la Asignación de la Ruta al Planning.
+        /// - posplanningope_dateby         .- Fecha de creación de la Asignación de la Ruta al Planning.
+        /// - posplanningope_modiby         .- Usuario que modifió la Asignación de la Ruta al Planning.
+        /// - posplanningope_datemodiby     .- Fecha de actualización de la Asignación de la Ruta al Planning.
+        /// DataTable[9] - Obtiene información del Planning Seleccionado
+        /// - id_planning                           .- Identificador del Planning.
+        /// - planning_name                         .- Nombre del Planning.
+        /// - cod_strategy                          .- Identificador de la Estrategia asignada al Planning.
+        /// - planning_codchannel                   .- Identificador del Canal asignado al Planning.
+        /// - planning_startactivity                .- Fecha de inicio de actividades del Planning
+        /// - planning_endactivity                  .- Fecha de fin de actividades del Planning.
+        /// - planning_reportaditional              .- Descripción de los reportes que se espera del Planning.
+        /// - planning_developmentactivityreport    .- Descripción del desarrollo de las actividades del Planning
+        /// - planning_person_eje                   .- Usuario responsable del Planning.
+        /// - planning_activityformats              .- Descripción de los formatos de actividades del Planning.
+        /// - planning_areainvolved                 .- Descripción de las áreas involucradas del Planning.
+        /// - planning_daterepsoli                  .- Fecha de Inicio para alimentar la información de los reportes asignado al Planning.
+        /// - planning_preprodudateini              .- Fecha de inicio de Salida piloto asignada al Planning.
+        /// - planning_preprodudateend              .- Fecha de Fin de Salida piloto asignada al Planning.
+        /// - planning_projectduration              .- Descripción de la duración de la Salida piloto asignada al Planning.
+        /// - planning_datefinreport                .- Fecha de Fin para alimentar la información de los reportes asignados al Planning.
+        /// - planning_vigen                        .- Vigencia del Planning.
+        /// - planning_budget                       .- Identificado del Budget asignado al Planning.
+        /// - id_designfor                          .- Código del usuario responsable del Planning.
+        /// - name_contact                          .- Persona de Contacto del Planning.
+        /// - email_contac                          .- Email de Contacto del Planning.
+        /// - planning_status                       .- Estado del Planning.
+        /// - status_id                             .- Identificador del Estado del Planning.
+        /// - planning_formacompe                   .- Descripción de los formatos asignados al Planning.
+        /// - planning_createby                     .- Usuario que creo el Planning.
+        /// - planning_dateby                       .- Fecha de creación del Planning.
+        /// - planning_modiby                       .- Usuario que modificó la información del Planning.
+        /// - planning_datemodiby                   .- Fecha de actualización del Planning.
+        /// - strategy_name                         .- Descripción de la Estrategia asociado al Planning.
+        /// DataTable[10]- Obtiene información de los Reportes asignados a la Campania
+        /// - id_reportsplanning                    .- 
+        /// - id_planning                           .- 
+        /// - report_id                             .- 
+        /// - id_year                               .- 
+        /// - id_month                              .- 
+        /// - reportsplanning_periodo               .- 
+        /// - reportsplanning_recogerdesde          .- 
+        /// - reportsplanning_recogerhasta          .- 
+        /// - reportsplanning_validacionanalista    .- 
+        /// - reportsplanning_status                .- 
+        /// - reportsplanning_createby              .- 
+        /// - reportsplanning_dateby                .- 
+        /// - reportsplanning_modiby                .- 
+        /// - reportsplanning_datemodiby            .- 
+        /// DataTable[11]- Obtiene información de los Paneles Asignados a la Campania
+        /// - id_panelplanning
+        /// - id_planning
+        /// - id_mposplanning
+        /// - clientpdv_code
+        /// - report_id
+        /// - status_panelplanning
+        /// - panelplanning_createby
+        /// - panelplanning_dateby
+        /// - panelplanning_modiby
+        /// - panelplanning_datemodiby
+        /// DataTable[12]- Obtiene información de las Marcas Asignadas a la Campania
+        /// - id_brandplanning
+        /// - id_planning
+        /// - id_productcategory
+        /// - id_brand
+        /// - report_id
+        /// - status
+        /// - brandplan_createby
+        /// - brandplan_dateby
+        /// - brandplan_modiby
+        /// - brandplan_datemodiby
+        /// DataTable[13]- Obtiene información de las Familias Asignadas a la Campania
+        /// - id_familyplanning
+        /// - id_planning
+        /// - id_productcategory
+        /// - id_brand
+        /// - id_productfamily
+        /// - report_id
+        /// - status
+        /// - familyplan_createby
+        /// - familyplan_dateby
+        /// - familyplan_modiby
+        /// - familyplan_datemodiby
+        /// DataTable[14]- Obtiene información de las Categorias Asignadas a la Campania
+        /// - id_categoryplanning
+        /// - id_planning
+        /// - id_productcategory
+        /// - report_id
+        /// - status
+        /// - categoryplan_createby
+        /// - categoryplan_dateby
+        /// - categoryplan_modiby
+        /// - categoryplan_datemodiby
+        public DataSet getInfoPlanning(String idPlanning)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                ds = oConn.ejecutarDataSet(
+                    "UP_WEBSIGE_PLANNIG_CREADOS",
+                    idPlanning);
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message.ToString();
+            }
+            return ds;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public DataTable getDuplicateRutas(String idPointOfSalePlanningOper,
+        String idPerson, String idPlanning)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = oConn.ejecutarDataTable(
+                    "UP_WEBXPLORA_PLA_DUPLICADOASIGNARPDVAOPERATIVO",
+                    idPointOfSalePlanningOper,
+                    idPerson,
+                    idPlanning);
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message.ToString();
+            }
+            return dt;
+        }
+
+        #region Methods: VALIDATIONS / ENABLED / DISABLED
+
+        /// <summary>
+        /// Metodo para Activar acceso de Supervisor a SIGE
+        /// </summary>
+        public EPresupuesto Activar_Acces_Supervisor(int ipersonid, string snumberpresupuesto, string iperfilid)
+        {
+            EPresupuesto oepresupuesto = new EPresupuesto();
+            EUsuario oeusuarios = new EUsuario();
+
+            DataSet ds = oConn.ejecutarDataSet("UP_WEBSIGEPLA_ACTIVARINGSIGESUPE", ipersonid, snumberpresupuesto, iperfilid);
+            if (ds != null)
+            {
+                if (ds.Tables.Count > 0)
+                {
+                    oeusuarios.Personid = ipersonid;
+                    oepresupuesto.Perfilid = iperfilid;
+                    oepresupuesto.Namebudget = snumberpresupuesto;
+                }
+            }
+            return oepresupuesto;
         }
 
 
@@ -2047,80 +2705,6 @@ namespace Lucky.Data.Common.Application
             return dtValidacion;
         }
 
-
-       /// <summary>
-        /// Método para insertar registros en PLA_Panel_Planning
-        /// Ing. Mauricio Ortiz
-        /// 03/03/2011
-       /// </summary>
-       /// <param name="sid_planning"></param>
-       /// <param name="iid_MPOSPlanning"></param>
-       /// <param name="sClientPDV_Code"></param>
-       /// <param name="iReport_Id"></param>
-       /// <param name="bStatus_PanelPlanning"></param>
-       /// <param name="sPanelPlanning_CreateBy"></param>
-       /// <param name="tPanelPlanning_DateBy"></param>
-       /// <param name="sPanelPlanning_ModiBy"></param>
-       /// <param name="tPanelPlanning_DateModiBy"></param>
-       /// <returns></returns>
-        public EPLA_Panel_Planning Registrar_PLA_Panel_Planning(string sid_planning, int iid_MPOSPlanning, string sClientPDV_Code, int iReport_Id, bool bStatus_PanelPlanning,
-            string sPanelPlanning_CreateBy, DateTime tPanelPlanning_DateBy,
-            string sPanelPlanning_ModiBy, DateTime tPanelPlanning_DateModiBy, int iid_ReportsPlanning)
-        {
-            EPLA_Panel_Planning oeEPLA_Panel_Planning = new EPLA_Panel_Planning();
-            
-            DataTable dtPLA_Panel_Planning = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_PLA_Panel_Planning", sid_planning, iid_MPOSPlanning, sClientPDV_Code, iReport_Id,
-                bStatus_PanelPlanning, sPanelPlanning_CreateBy, tPanelPlanning_DateBy,
-                sPanelPlanning_ModiBy, tPanelPlanning_DateModiBy, iid_ReportsPlanning);
-
-            if (dtPLA_Panel_Planning != null)
-            {
-                if (dtPLA_Panel_Planning.Rows.Count > 0)
-                {
-                    oeEPLA_Panel_Planning.id_planning = sid_planning;
-                    oeEPLA_Panel_Planning.id_MPOSPlanning = iid_MPOSPlanning;
-                    oeEPLA_Panel_Planning.ClientPDV_Code = sClientPDV_Code;
-                    oeEPLA_Panel_Planning.Report_Id = iReport_Id;
-                    oeEPLA_Panel_Planning.Status_PanelPlanning = bStatus_PanelPlanning;
-                    oeEPLA_Panel_Planning.PanelPlanning_CreateBy = sPanelPlanning_CreateBy;
-                    oeEPLA_Panel_Planning.PanelPlanning_DateBy = tPanelPlanning_DateBy;
-                    oeEPLA_Panel_Planning.PanelPlanning_ModiBy =sPanelPlanning_ModiBy;
-                    oeEPLA_Panel_Planning.PanelPlanning_DateModiBy = tPanelPlanning_DateModiBy;
-                }
-            }
-            dtPLA_Panel_Planning = null;
-            return oeEPLA_Panel_Planning;
-        }
-
-
-        /// <summary>
-        /// Método para consultar los registro de la tabla PLA_Panel_Planning de un planning para un reporte seleccinado
-        /// Ing. Mauricio Ortiz
-        /// 04/03/2011
-        /// </summary>
-        /// <param name="iid_planning"></param>
-        /// <param name="iReport_Id"></param>
-        /// <returns></returns>
-        public DataTable Consulta_Pla_paneles(string iid_planning, int iReport_Id,int ireportplanning)
-        {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_CONSULTAR_PANELES_PLANNING", iid_planning, iReport_Id, ireportplanning);
-            return dt;
-        }
-        
-        /// <summary>
-        /// Método para eliminar los registro de la tabla PLA_Panel_Planning de un planning para un reporte seleccinado
-        /// Ing. Mauricio Ortiz
-        /// 04/03/2011
-        /// </summary>
-        /// <param name="lid_PanelPlanning"></param>
-        /// <returns></returns>
-        public DataTable Eliminar_Pla_paneles(long lid_PanelPlanning)
-        {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ELIMINAR_PANELES_PLANNING",lid_PanelPlanning);
-            return dt;
-        }
-
-
         /// <summary>
         /// Método para permitir continuar con el registro de productos , categorias , marcas y familias
         /// 07/05/2011
@@ -2132,19 +2716,15 @@ namespace Lucky.Data.Common.Application
         /// <param name="iid_Brand"></param>
         /// <param name="sid_ProductFamily"></param>
         /// <returns></returns>
-        public DataTable Permitir_GuardarLevantamiento( string sTIPO_LEVANTAMIENTO, long lid_Product,
-            string sid_ProductCategory ,int iid_Brand , string sid_ProductFamily)
+        public DataTable Permitir_GuardarLevantamiento(string sTIPO_LEVANTAMIENTO, long lid_Product,
+            string sid_ProductCategory, int iid_Brand, string sid_ProductFamily)
         {
             DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_PERMITIR_REGISTRAR_Levantamiento_inf", sTIPO_LEVANTAMIENTO, lid_Product,
              sid_ProductCategory, iid_Brand, sid_ProductFamily);
-                return dt;
-        }
-
-        public DataTable lista_campanias_cliente(int company_id)
-        {
-            DataTable dt = new DataTable();
-            dt = oConn.ejecutarDataTable("UP_XPLORAMAPS_OBTENER_LISTA_CAMPANIAS", company_id);
             return dt;
         }
+
+        #endregion
+
     }
 }

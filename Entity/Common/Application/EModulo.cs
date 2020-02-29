@@ -28,32 +28,20 @@ namespace Lucky.Entity.Common.Application
 
 
        public string Moduloid {
-
            get {return this.lModuloid;}
            set { this.lModuloid = value; }
-       
-       
-       
        }
 
        public string ModuloName
        {
-
            get { return this.lModuloName; }
            set { this.lModuloName = value; }
-
-
-
        }
 
        public string ModuloDescription
        {
-
            get { return this.lModuloDescription; }
            set { this.lModuloDescription = value; }
-
-
-
        }
 
        public bool ModuloStatus
@@ -61,50 +49,31 @@ namespace Lucky.Entity.Common.Application
 
            get { return this.lModuloStatus; }
            set { this.lModuloStatus = value; }
-
-
-
        }
 
        public string ModuloCreateBy
        {
-
            get { return this.lModuloCreateBy; }
            set { this.lModuloCreateBy = value; }
-
-
-
        }
 
 
        public string ModuloDateBy
        {
-
            get { return this.lModuloDateBy; }
            set { this.lModuloDateBy = value; }
-
-
-
        }
 
        public string ModuloModiBy
        {
-
            get { return this.lModuloModiBy; }
            set { this.lModuloModiBy = value; }
-
-
-
        }
 
        public string ModuloDateModiBy
        {
-
            get { return this.lModuloDateModiBy; }
            set { this.lModuloDateModiBy = value; }
-
-
-
        }
     }
 }

@@ -9,7 +9,18 @@ namespace Lucky.Business.Common.Maestros.Producto
 {
     public class BL_Producto
     {
+
         DAO_Producto oDAO_Producto = new DAO_Producto();
+        
+        public String message;
+
+        public String getMessages() {
+            return message;
+        }
+
+        public BL_Producto() {
+            this.message = "";
+        }
 
         public string Insert_Producto(MA_Producto oMA_Producto){
             /*
@@ -44,16 +55,26 @@ namespace Lucky.Business.Common.Maestros.Producto
             return codigoProducto;
 
         }
+        
+        /// <summary>
+        /// Obtener el Listado de Productos según IdCategoría y IdMarca.
+        /// </summary>
+        /// <param name="codCategoria"></param>
+        /// <param name="codMarca"></param>
+        /// <returns></returns>
         public List<MA_Producto> Get_Productos(string codCategoria, string codMarca)
         {
             List<MA_Producto> oListMA_Producto = new List<MA_Producto>();
             try
             {
                 oListMA_Producto = oDAO_Producto.Get_Productos(codCategoria, codMarca);
+                if (!oDAO_Producto.getMessages().Equals("")) {
+                    message = oDAO_Producto.getMessages().ToString();
+                }
             }
             catch (Exception ex)
             {
-                return null;
+                message = ex.Message.ToString();
             }
             return oListMA_Producto;
         }

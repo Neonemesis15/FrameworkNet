@@ -60,11 +60,13 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lucky.CFG">
-      <HintPath>..\CFG\bin\Debug\Lucky.CFG.dll</HintPath>
+    <Reference Include="Lucky.CFG, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CFG\obj\Debug\Lucky.CFG.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\Mi Carpeta Personal\Fuentes Lucky\Framework_Lucky 1.0\Framework_Lucky 1.0\Lucky FrameWork\Entity\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -80,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Application\Cross\E_CmbGeneric.cs" />
     <Compile Include="Common\Application\EAdditionalItems_ Management.cs" />
     <Compile Include="Common\Application\EAD_AsignacionCompetidores.cs" />
     <Compile Include="Common\Application\EAD_Category_Company.cs" />
@@ -121,6 +124,7 @@
     <Compile Include="Common\Application\EOPE_REPORTE_PUBLICACION.cs" />
     <Compile Include="Common\Application\EOPE_Reporte_SOD.cs" />
     <Compile Include="Common\Application\EOPE_Reporte_Stock.cs" />
+    <Compile Include="Common\Application\EParametros.cs" />
     <Compile Include="Common\Application\EPersonLevel.cs" />
     <Compile Include="Common\Application\EPhotographs_Service.cs" />
     <Compile Include="Common\Application\EPlaning_History.cs" />
@@ -189,6 +193,8 @@
     <Compile Include="Common\Application\EUsuario.cs" />
     <Compile Include="Common\Application\Control\EMensajeriaError.cs" />
     <Compile Include="Common\Application\E_Filtros.cs" />
+    <Compile Include="Common\Application\E_PersonLevel.cs" />
+    <Compile Include="Common\Application\E_PersonModulos.cs" />
     <Compile Include="Common\Application\E_TipoProfiles.cs" />
     <Compile Include="Common\Application\Interfaces\EIntEasywin_SIGE.cs" />
     <Compile Include="Common\Application\Interfaces\EPresupuesto.cs" />
@@ -347,6 +353,7 @@
     <Compile Include="Common\Application\JavaMovil\E_Visita_Mov.cs" />
     <Compile Include="Common\Application\PointOfSaleMarker.cs" />
     <Compile Include="Common\Application\Reports\Reporte_Alicorp_Mayor_Precio.cs" />
+    <Compile Include="Common\Application\Response\LoginResponse.cs" />
     <Compile Include="Common\Application\Security\EEntrySeccion.cs" />
     <Compile Include="Common\Application\ENodeType.cs" />
     <Compile Include="Common\Application\Security\EUsuarioAcceso.cs" />

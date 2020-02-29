@@ -15,8 +15,15 @@ namespace Lucky.Data.Common.Application
     /// </summary>
     public class DSesion_Users
     {
+        // Variable Conexión a Base de Datos
         private Conexion oConn;
 
+        // Variable para Almacenar los Errores
+        private String messages = "";
+
+        /// <summary>
+        /// Contructor
+        /// </summary>
         public DSesion_Users()
         {
             UserInterface oUserInterface = new UserInterface();
@@ -24,6 +31,13 @@ namespace Lucky.Data.Common.Application
             oUserInterface = null;
         }
 
+        /// <summary>
+        /// Retornar los mensajes de Error
+        /// </summary>
+        /// <returns></returns>
+        public String getMessages() {
+            return messages;
+        }
 
         /// <summary>
         /// Descripción : Método para registrar auditoria de ingreso al sistema xplora
@@ -43,19 +57,25 @@ namespace Lucky.Data.Common.Application
             string sMachine, 
             DateTime tDateby){
 
-            DataTable dtRegistrar = 
-                oConn.ejecutarDataTable("UP_WEBXPLORA_GEN_AUDITORIAINGRESO", 
-                sname_user, 
-                iCompany_id, 
-                sMachine, 
-                tDateby);
+                ESesion_Users oerSesion_Users = new ESesion_Users();
 
-            ESesion_Users oerSesion_Users = new ESesion_Users();
-            
-            oerSesion_Users.name_user = sname_user;
-            oerSesion_Users.Company_id = iCompany_id;
-            oerSesion_Users.Machine = sMachine;
-            oerSesion_Users.Dateby = tDateby;
+                try
+                {
+                    DataTable dtRegistrar =
+                        oConn.ejecutarDataTable("UP_WEBXPLORA_GEN_AUDITORIAINGRESO",
+                        sname_user,
+                        iCompany_id,
+                        sMachine,
+                        tDateby);
+                    
+                        oerSesion_Users.name_user = sname_user;
+                        oerSesion_Users.Company_id = iCompany_id;
+                        oerSesion_Users.Machine = sMachine;
+                        oerSesion_Users.Dateby = tDateby;
+                }
+                catch (Exception ex) {
+                    messages = "Error: " + ex.Message.ToString();
+                }
 
             return oerSesion_Users;
         }

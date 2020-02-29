@@ -15,11 +15,14 @@ namespace Lucky.Business.Common.Application
     /// DateBy: 17/07/2009
     /// Description: Establece los metodos para operar informacion relacionada con categorias de producto Lucky
     /// Requerimiento No:
+    /// Historial de Cambios :
+    /// - 18/08/2010 Magaly Jiménez
     /// </summary>
     /// 
 
     public class Product_Type
     {
+        String messages = "";
         public Product_Type()
         {
             //Se define el constructor por defecto
@@ -74,10 +77,8 @@ namespace Lucky.Business.Common.Application
             return oeProductCategory;
         }
 
-        //---Metodo de Consulta de Categorias de producto
         /// <summary>
-        /// Modificiación: se elimina campo id_ProductClass, ya no se utiliza.
-        /// 18/08/2010 Magaly Jiménez
+        /// Buscar las Categorias de Productos por IdProductCategory y/o Nombre de la Categoria y/o idCompany
         /// </summary>
         /// <param name="sid_ProductCategory"></param>
         /// <param name="sProductCategory"></param>
@@ -85,10 +86,13 @@ namespace Lucky.Business.Common.Application
         public DataTable SearchProductCategory(string sid_ProductCategory, string sProductCategory, string sCompanyId)
         {
             DProduct_Type odsProductCategory = new DProduct_Type();
-            EProduct_Type oeProductCategory = new EProduct_Type();
-            DataTable dtProductCategory = odsProductCategory.ObtenerCategoryProduct(sid_ProductCategory, sProductCategory, sCompanyId);
+            DataTable dtProductCategory = 
+                odsProductCategory.ObtenerCategoryProduct(sid_ProductCategory, sProductCategory, sCompanyId);
 
-            odsProductCategory = null;
+            if (!odsProductCategory.getMessage().Equals("")) {
+                messages = odsProductCategory.getMessage();
+            }
+
             return dtProductCategory;
         }
 
@@ -125,6 +129,14 @@ namespace Lucky.Business.Common.Application
             EProduct_Type oeaProductCategorytmp = odaProductCategorytmp.Actualizar_ProductCategoryTMP(sid_ProductCategory, sProductCategory, bProductCategory_Status);
             odaProductCategorytmp = null;
             return oeaProductCategorytmp;
+        }
+
+        /// <summary>
+        /// Retorna los mensajes de Error
+        /// </summary>
+        /// <returns></returns>
+        public String getMessage(){
+            return messages;
         }
     }
 }

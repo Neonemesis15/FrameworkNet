@@ -17,11 +17,25 @@ namespace Lucky.Business.Common.Application
     /// </summary>
     public class Sesion_Users
     {
+        // Variable para guardar los Errores
+        private String messages = "";
+
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Sesion_Users()
         {
             // Se define el constructor por defecto
         }
 
+        /// <summary>
+        /// Retornar los Mensajes de Error
+        /// </summary>
+        /// <returns></returns>
+        public String getMessages() {
+            return messages;
+        }
 
         /// <summary>
         /// Descripción : Método para registrar auditoria de ingreso al sistema xplora
@@ -39,10 +53,19 @@ namespace Lucky.Business.Common.Application
             DateTime tDateby)
         {
             DSesion_Users odrSesion_Users = new DSesion_Users();
-            ESesion_Users oeSesion_Users = 
-                odrSesion_Users.Registrar_Auditoria(sname_user, iCompany_id, sMachine, tDateby);
+            ESesion_Users oeSesion_Users = new ESesion_Users();
 
-            odrSesion_Users = null;
+            try{
+                oeSesion_Users =
+                    odrSesion_Users.Registrar_Auditoria(sname_user, iCompany_id, sMachine, tDateby);
+                if(!odrSesion_Users.getMessages().Equals("")){
+                    messages = odrSesion_Users.getMessages();
+                }
+            }
+            catch (Exception ex) {
+                messages = ex.Message.ToString();
+            }
+            
             return oeSesion_Users;
         }
 

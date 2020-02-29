@@ -5,15 +5,12 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Text;
 using Microsoft.ApplicationBlocks.Data;
-using log4net;
+
 
 namespace Lucky.Data
 {
     public class Conexion
     {
-
-        private static readonly ILog log = LogManager.GetLogger(typeof(Conexion));
-        private static readonly bool isDebugEnabled = log.IsDebugEnabled;
 
         /// <summary>
         /// Clase: Conexion
@@ -32,7 +29,7 @@ namespace Lucky.Data
             ConnectionStringSettings settingconection;
             settingconection = ConfigurationManager.ConnectionStrings["ConectaDBLucky"];
             oSqlConnIN = settingconection.ConnectionString;
-            log.Debug("[Conexion][Constructor-Prueba-Borrar]:");
+            
         }
 
         /// <summary>

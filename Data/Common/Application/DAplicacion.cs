@@ -62,7 +62,7 @@ namespace Lucky.Data.Common.Application
                         oeAplicacion.nameapp = ds.Tables[0].Rows[0]["name_app"].ToString().Trim();
                         oeAplicacion.verapp = ds.Tables[0].Rows[0]["ver_app"].ToString().Trim();
                         oeAplicacion.abrapp = ds.Tables[0].Rows[0]["abr_app"].ToString().Trim();
-                        oeAplicacion.appStatus = Convert.ToBoolean(ds.Tables[0].Rows[0]["app_Status"].ToString().Trim());
+                        oeAplicacion.appStatus = Convert.ToBoolean(ds.Tables[0].Rows[0]["app_Status"]);
                         oeAplicacion.appurl = ds.Tables[0].Rows[0]["app_url"].ToString().Trim();
                         oeAplicacion.appCreateBy = ds.Tables[0].Rows[0]["app_CreateBy"].ToString().Trim();
                         oeAplicacion.appDateBy = ds.Tables[0].Rows[0]["app_DateBy"].ToString().Trim();
@@ -78,6 +78,7 @@ namespace Lucky.Data.Common.Application
                 }
             }catch (Exception ex) {
                 message = "Ocurrio un Error: " + ex.ToString().Substring(0, 100) + "...";
+                System.Diagnostics.Debug.WriteLine("Error:" + ex.Message.ToString());
             }
 
             return oeAplicacion;

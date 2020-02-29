@@ -11,14 +11,15 @@ namespace Lucky.CFG.Util
     public class Encriptacion
     {
         //Function to encode the string
-        static public string Codificar(string value, string key)
-        {
+        static public string Codificar(string value, string key){
+
             System.Security.Cryptography.MACTripleDES mac3des = new System.Security.Cryptography.MACTripleDES();
             System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
             mac3des.Key = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
-            return System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(value)) + System.Convert.ToChar("-") + System.Convert.ToBase64String(mac3des.ComputeHash(System.Text.Encoding.UTF8.GetBytes(value)));
-        }
+            return System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(value)) +
+                     System.Convert.ToChar("-") + System.Convert.ToBase64String(mac3des.ComputeHash(System.Text.Encoding.UTF8.GetBytes(value)));
 
+        }
         //Function to decode the string
         //Throws an exception if the data is corrupt
         static public string DesCodificar(string value, string key)

@@ -14,11 +14,21 @@ namespace Lucky.Data.Common.Application
 
     public class DCanales
     {
+        // Variable para almacenar los mensajes de Error
+        public String messages = "";
         private Conexion oConn;
         public DCanales()
         {
             UserInterface oUserInterface = new UserInterface();            
             oUserInterface = null;
+        }
+
+        /// <summary>
+        /// Retornar los mensajes de Error Generados
+        /// </summary>
+        /// <returns></returns>
+        public String getMessages() {
+            return messages;
         }
 
         //Método para Registrar Canales
@@ -119,6 +129,30 @@ namespace Lucky.Data.Common.Application
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Obtener Canales By idCountry y IdCompany
+        /// </summary>
+        /// <param name="idCountry"></param>
+        /// <param name="idCompany"></param>
+        /// <returns></returns>
+        public DataTable getCanalesByIdCountryAndIdCompany(
+            String idCountry, String idCompany) {
+
+            DataTable dt = new DataTable();
+            oConn = new Conexion(1);
+            try
+            {
+                dt = oConn.ejecutarDataTable(
+                        "UP_WEBXPLORA_OPE_COMBO_CHANNEL",
+                        idCountry,
+                        idCompany);
+            }
+            catch (Exception ex) {
+                messages = "Error: " + ex.Message.ToString();
+            }
+            return dt;
         }
         
            

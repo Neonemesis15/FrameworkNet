@@ -18,12 +18,17 @@ namespace Lucky.Data.Common.Application
     {
 
         private Conexion oConn;
+        private String message = "";
         public DCompany()
         {
 
             UserInterface oUserInterface = new UserInterface();
             oConn = new Conexion();
             oUserInterface = null;
+        }
+
+        public String getMessage() {
+            return message;
         }
 
         /// <summary>
@@ -175,6 +180,22 @@ namespace Lucky.Data.Common.Application
             ocacompany.CompanyModiBy = sCompanyModiBy;
             ocacompany.CompanyDateModiBy = sCompanyDateModiBy;
             return ocacompany;
+        }
+
+
+        public DataTable getCompanyCompetition()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = oConn.ejecutarDataTable(
+                    "UP_WEB_SIGE_OBTENER_CLIENTES");
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message.ToString();
+            }
+            return dt;
         }
     }
 }

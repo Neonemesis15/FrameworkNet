@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{73EF3BD1-8899-4C74-A746-1361BEFF8B21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFG", "CFG\CFG.csproj", "{DB9627F9-9525-493E-9751-A7E93078BDA7}"
@@ -10,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{98AAE6AC-12E2-46B7-976C-9A643DC0E77B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuckyMer.Contracts", "LuckyMer.Contracts\LuckyMer.Contracts\LuckyMer.Contracts.csproj", "{15C43C99-4BA3-46DE-ABE3-C4FCFAFF0147}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{C22375DF-E268-4FDF-A521-FADF9889776F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Test", "Data.Test\Data.Test.csproj", "{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,8 +77,33 @@ Global
 		{15C43C99-4BA3-46DE-ABE3-C4FCFAFF0147}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{15C43C99-4BA3-46DE-ABE3-C4FCFAFF0147}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{15C43C99-4BA3-46DE-ABE3-C4FCFAFF0147}.Release|x86.ActiveCfg = Release|Any CPU
+		{C22375DF-E268-4FDF-A521-FADF9889776F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C22375DF-E268-4FDF-A521-FADF9889776F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C22375DF-E268-4FDF-A521-FADF9889776F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C22375DF-E268-4FDF-A521-FADF9889776F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C22375DF-E268-4FDF-A521-FADF9889776F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C22375DF-E268-4FDF-A521-FADF9889776F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C22375DF-E268-4FDF-A521-FADF9889776F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C22375DF-E268-4FDF-A521-FADF9889776F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C22375DF-E268-4FDF-A521-FADF9889776F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C22375DF-E268-4FDF-A521-FADF9889776F}.Release|x86.ActiveCfg = Release|Any CPU
+		{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}.Debug|x86.Build.0 = Debug|Any CPU
+		{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}.Release|x86.ActiveCfg = Release|Any CPU
+		{96BD4AE3-CB32-4DC3-B7B1-488A21F64083}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {46192C91-846A-4B0A-B6B1-E59DC216D481}
 	EndGlobalSection
 EndGlobal

@@ -12,6 +12,7 @@ namespace Lucky.Data.Common.Application
     /// Requerimiento:
     public class DProduct_Type
     {
+        String messages = "";
         private Conexion oConn;
         public DProduct_Type()
         {
@@ -67,7 +68,27 @@ namespace Lucky.Data.Common.Application
         public DataTable ObtenerCategoryProduct(string sid_ProductCategory, string sProductCategory, string sCompanyId)
         {
             oConn = new Conexion(1);
-            DataTable dt = oConn.ejecutarDataTable("UP_WEB_SEARCHPRODUCTCATEGORY", sid_ProductCategory, sProductCategory, sCompanyId);
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = oConn.ejecutarDataTable("UP_WEB_SEARCHPRODUCTCATEGORY",
+                    sid_ProductCategory, sProductCategory, sCompanyId);
+            }
+            catch (Exception ex)
+            {
+                messages = "Ocurrio un Error: " + ex.ToString();
+            }
+
+            if (messages.Equals(""))
+            {
+                if (dt.Rows.Count == 0)
+                {
+                    messages = "Error: No Existen Categorías Disponibles, ¡por favor Verificar...!";
+                }   
+            }
+
+            #region Validación Comentada
+            /*
             EProduct_Type oeProductCategory = new EProduct_Type();
 
             if (dt != null)
@@ -96,6 +117,10 @@ namespace Lucky.Data.Common.Application
                 oConn = null;
                 return null;
             }
+             * */
+            #endregion 
+            
+            return dt;
         }
 
 
@@ -141,10 +166,12 @@ namespace Lucky.Data.Common.Application
         /// <param name="sProductCategory_ModiBy"></param>
         /// <param name="tProductCategory_DateModiBy"></param>
         /// <returns>oerCategProduct</returns>
-        public EProduct_Type RegistrarProductCategoryPKTMP(string sid_ProductCategory, string sProductCategory, bool bProductCategory_Status)
+        public EProduct_Type RegistrarProductCategoryPKTMP(string sid_ProductCategory, 
+            string sProductCategory, bool bProductCategory_Status)
         {
             oConn = new Conexion(2);
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_AD_REGISTER_CATEGORIA_TMP", sid_ProductCategory, sProductCategory, Convert.ToInt32(bProductCategory_Status));
+            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_AD_REGISTER_CATEGORIA_TMP", 
+                sid_ProductCategory, sProductCategory, Convert.ToInt32(bProductCategory_Status));
             oConn = null;
             EProduct_Type oerCategProduct = new EProduct_Type();
             oerCategProduct.id_Product_Category = sid_ProductCategory;
@@ -172,6 +199,14 @@ namespace Lucky.Data.Common.Application
             oeaProductCategorytmp.Product_Category = sProductCategory;
             oeaProductCategorytmp.Product_Category_Status = bProductCategory_Status;
             return oeaProductCategorytmp;
+        }
+        
+        /// <summary>
+        /// Devuelve los mensajes de Error
+        /// </summary>
+        /// <returns></returns>
+        public String getMessage() {
+            return messages;
         }
     }
 }

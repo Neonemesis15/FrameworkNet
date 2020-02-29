@@ -81,35 +81,40 @@ namespace Lucky.Data.Common.Application
         //Metodo para Consultar Perfiles
         public DataTable ObtenerPerfiles(string sPerfilName, string sRolid, int idChannel, string sLevel/*, string sTipoPerfil*/)
         {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEB_SEARCHPERFILES", sPerfilName, sRolid, idChannel, sLevel/*, sTipoPerfil*/);
-            EProfiles oePerfiles = new EProfiles();
-            if (dt != null)
+            DataTable dt = null;
+            try
             {
-                #region Comentar codigo No Utilizado 18/09/2012
-                //if (dt.Rows.Count > 0)
-                //{
-                //    for (int i = 0; i <= dt.Rows.Count - 1; i++)
-                //    {
-                //        oePerfiles.Perfilid = dt.Rows[i]["Perfil_id"].ToString().Trim();
-                //        oePerfiles.Rolid = dt.Rows[i]["Rol_id"].ToString().Trim();
-                //        oePerfiles.id_Level = dt.Rows[i]["id_Level"].ToString().Trim();
-                //        oePerfiles.PerfilName = (dt.Rows[i]["Perfil_Name"].ToString().Trim());
-                //        oePerfiles.ModuloId = (dt.Rows[i]["Modulo_id"].ToString().Trim());
-                //        oePerfiles.PerfilDescription = (dt.Rows[i]["Perfil_Description"].ToString().Trim());
-                //        oePerfiles.PerfilChannel = Convert.ToInt32(dt.Rows[i]["cod_Channel"].ToString().Trim());
-                //        oePerfiles.PerfilStatus = Convert.ToBoolean(dt.Rows[i]["Perfil_Status"].ToString().Trim());
-                //        oePerfiles.PerfilCreateBy = (dt.Rows[i]["Perfil_CreateBy"].ToString().Trim());
-                //        oePerfiles.PerfilDateBy = (dt.Rows[i]["Perfil_DateBy"].ToString().Trim());
-                //        oePerfiles.PerfilModiBy = (dt.Rows[i]["Perfil_ModiBy"].ToString().Trim());
-                //        oePerfiles.PerfilDateModiBy = (dt.Rows[i]["Perfil_DateModiBy"].ToString().Trim());
-                //    }
-                //}
-                #endregion
-                return dt;
+               dt = oConn.ejecutarDataTable("UP_WEB_SEARCHPERFILES", sPerfilName, sRolid, idChannel, sLevel/*, sTipoPerfil*/);
             }
-            else
-            {  return null; }
+            catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message.ToString());
+            }
+            return dt;
+
+            #region Comentar codigo No Utilizado 18/09/2012
+            //if (dt.Rows.Count > 0)
+            //{
+            //    for (int i = 0; i <= dt.Rows.Count - 1; i++)
+            //    {
+            //        oePerfiles.Perfilid = dt.Rows[i]["Perfil_id"].ToString().Trim();
+            //        oePerfiles.Rolid = dt.Rows[i]["Rol_id"].ToString().Trim();
+            //        oePerfiles.id_Level = dt.Rows[i]["id_Level"].ToString().Trim();
+            //        oePerfiles.PerfilName = (dt.Rows[i]["Perfil_Name"].ToString().Trim());
+            //        oePerfiles.ModuloId = (dt.Rows[i]["Modulo_id"].ToString().Trim());
+            //        oePerfiles.PerfilDescription = (dt.Rows[i]["Perfil_Description"].ToString().Trim());
+            //        oePerfiles.PerfilChannel = Convert.ToInt32(dt.Rows[i]["cod_Channel"].ToString().Trim());
+            //        oePerfiles.PerfilStatus = Convert.ToBoolean(dt.Rows[i]["Perfil_Status"].ToString().Trim());
+            //        oePerfiles.PerfilCreateBy = (dt.Rows[i]["Perfil_CreateBy"].ToString().Trim());
+            //        oePerfiles.PerfilDateBy = (dt.Rows[i]["Perfil_DateBy"].ToString().Trim());
+            //        oePerfiles.PerfilModiBy = (dt.Rows[i]["Perfil_ModiBy"].ToString().Trim());
+            //        oePerfiles.PerfilDateModiBy = (dt.Rows[i]["Perfil_DateModiBy"].ToString().Trim());
+            //    }
+            //}
+            #endregion
         }
+
+
+
 
         //Metodo para Actualizar Perfiles Ing. Carlos Alberto Hernandez
         public EProfiles Actualizar_Perfiles(

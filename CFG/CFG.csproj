@@ -65,11 +65,15 @@
     </Reference>
     <Reference Include="Lucky.Business, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Mi Carpeta Personal\Fuentes Lucky\Framework_Lucky 1.0\Framework_Lucky 1.0\Lucky FrameWork\CFG\bin\Debug\Lucky.Business.dll</HintPath>
+      <HintPath>bin\Debug\Lucky.Business.dll</HintPath>
     </Reference>
     <Reference Include="Lucky.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Mi Carpeta Personal\Fuentes Lucky\Framework_Lucky 1.0\Framework_Lucky 1.0\Lucky FrameWork\CFG\bin\Debug\Lucky.Data.dll</HintPath>
+      <HintPath>bin\Debug\Lucky.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucky.Entity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Lucky.Entity.dll</HintPath>
     </Reference>
     <Reference Include="LuckyMer.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -80,8 +84,9 @@
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 10.0\ReportViewer\Microsoft.ReportViewer.WebForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Windows.Design.Interaction, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\Mi Carpeta Personal\Fuentes Lucky\Framework_Lucky 1.0\Framework_Lucky 1.0\Lucky FrameWork\CFG\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -166,12 +171,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Entity\Entity.csproj">
-      <Project>{98AAE6AC-12E2-46B7-976C-9A643DC0E77B}</Project>
-      <Name>Entity</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

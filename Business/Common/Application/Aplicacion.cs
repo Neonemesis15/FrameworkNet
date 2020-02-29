@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Lucky.Entity.Common.Application;
 
+
 namespace Lucky.Business.Common.Application
 {
     /// <summary>
@@ -11,6 +12,8 @@ namespace Lucky.Business.Common.Application
     /// </summary>
     public class Aplicacion
     {
+
+        Lucky.Data.Common.Application.DAplicacion odAplicacion = new Lucky.Data.Common.Application.DAplicacion();
         public Aplicacion()
         {
             //
@@ -19,10 +22,14 @@ namespace Lucky.Business.Common.Application
         }
         public EAplicacion obtener(string sCountry,string smodul)
         {
-            Lucky.Data.Common.Application.DAplicacion odAplicacion = 
-                new Lucky.Data.Common.Application.DAplicacion();
-            EAplicacion oeAplicacion = odAplicacion.obtenerPK(sCountry, smodul);
-            odAplicacion = null;
+            EAplicacion oeAplicacion = null;
+            try
+            {
+                oeAplicacion = odAplicacion.obtenerPK(sCountry, smodul);
+            }
+            catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine("Error:" + ex.Message.ToString());
+            }
             return oeAplicacion;
         }
     }

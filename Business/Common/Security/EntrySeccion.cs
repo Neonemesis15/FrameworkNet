@@ -16,6 +16,16 @@ namespace Lucky.Business.Common.Security
     /// </summary>
     public class EntrySeccion
     {
+        // Variable para almacenar los mensajes de Error
+        String messages = "";
+        
+        /// <summary>
+        /// Retornar los mensajes de Error
+        /// </summary>
+        /// <returns></returns>
+        public String getMessages() {
+            return messages;
+        }
         public EntrySeccion() { 
         //Define el constructor por defecto
         
@@ -25,17 +35,19 @@ namespace Lucky.Business.Common.Security
         /// <summary>
         /// Metodo para verificar el primer acceso de usuario
         /// </summary>
-      
         public EEntrySeccion PrimerAcceso(string sUser) {
 
             DUsuario odacces = new DUsuario();
-            EEntrySeccion oeacces = odacces.PrimerAcceso(sUser);
-            odacces = null;
+            EEntrySeccion oeacces = new EEntrySeccion();
+            try{
+                oeacces = odacces.PrimerAcceso(sUser);
+                if (!odacces.getMessages().Equals("")) {
+                    messages = odacces.getMessages();
+                }
+            }catch (Exception ex) {
+                messages = "Error: " + ex.Message.ToString();
+            }
             return oeacces;
-        
-        
-        
-        
         }
         /// <summary>
         /// Metodo para Registrar la primera seccion de usuario en SIGE

@@ -130,6 +130,8 @@ namespace Lucky.Data.Common.Application
             oeaNivelesModulo.Person_Modulo_DateModiBy = tPerson_Modulo_DateModiBy;
             return oeaNivelesModulo;
         }
+    
+        
     }
 }
 

@@ -60,14 +60,24 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\Mi Carpeta Personal\Fuentes Lucky\Framework_Lucky 1.0\Framework_Lucky 1.0\Lucky FrameWork\Business\bin\Debug\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucky.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Data\obj\Debug\Lucky.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucky.Entity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Entity\obj\Debug\Lucky.Entity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -108,11 +118,14 @@
     <Compile Include="Common\Application\Country.cs" />
     <Compile Include="Common\Application\Departamento.cs" />
     <Compile Include="Common\Application\Distrito.cs" />
+    <Compile Include="Common\Application\Impl\BL_ModuloImpl.cs" />
     <Compile Include="Common\Application\Indicadores.cs" />
     <Compile Include="Common\Application\InfoaUsuario.cs" />
     <Compile Include="Common\Application\info_Planning.cs" />
     <Compile Include="Common\Application\Info_Planning_City.cs" />
     <Compile Include="Common\Application\ItemsPoint.cs" />
+    <Compile Include="Common\Application\I_BL_Modulo.cs" />
+    <Compile Include="Common\Application\I_BL_PersonLevel.cs" />
     <Compile Include="Common\Application\MPop.cs" />
     <Compile Include="Common\Application\Enviomail.cs" />
     <Compile Include="Common\Application\Estrategy.cs" />
@@ -218,6 +231,7 @@
     <Compile Include="Common\Servicio\BL_GES_MapsService.cs" />
     <Compile Include="Common\Servicio\BL_GES_Operativa.cs" />
     <Compile Include="Common\Servicio\BL_GES_ReportesCliente.cs" />
+    <Compile Include="Common\Util\BL_Util.cs" />
     <Compile Include="Malla.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\Application\ReportChannel.cs" />
@@ -243,16 +257,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{967C6F83-C755-4128-AF9E-D4D3EB23890A}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entity\Entity.csproj">
-      <Project>{98AAE6AC-12E2-46B7-976C-9A643DC0E77B}</Project>
-      <Name>Entity</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

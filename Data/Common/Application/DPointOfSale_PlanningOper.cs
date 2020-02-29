@@ -25,7 +25,7 @@ namespace Lucky.Data.Common.Application
         }
 
         // Variable para almacenar los Mensajes de Error de la Aplicación
-        public String message;
+        public String message = "";
 
         // Variable para almacenar el Resultado de las consultas a la Base de Datos por Store Procedure
         public DataTable dt;
@@ -126,10 +126,27 @@ namespace Lucky.Data.Common.Application
         /// <param name="tPOSPlanningOpe_Fechainicio"></param>
         /// <param name="tPOSPlanningOpe_Fechafin"></param>
         /// <returns></returns>
-        public DataTable RegistrarTBL_EQUIPO_PTO_VENTA(int iid_MPOSPlanning, string sid_Planning, int iPerson_id, DateTime tPOSPlanningOpe_Fechainicio, DateTime tPOSPlanningOpe_Fechafin)
+        public DataTable RegistrarTBL_EQUIPO_PTO_VENTA(
+            int iid_MPOSPlanning, 
+            string sid_Planning, 
+            int iPerson_id, 
+            DateTime tPOSPlanningOpe_Fechainicio, 
+            DateTime tPOSPlanningOpe_Fechafin)
         {
-            DataTable dtRegistraTBL_EQUIPO_PTO_VENTA = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_REGISTRAR_TBL_EQUIPO_PTO_VENTA", iid_MPOSPlanning, sid_Planning, iPerson_id, tPOSPlanningOpe_Fechainicio, tPOSPlanningOpe_Fechafin);
-            return dtRegistraTBL_EQUIPO_PTO_VENTA;
+            try
+            {
+                dt = oConn.ejecutarDataTable(
+                     "UP_WEBXPLORA_PLA_REGISTRAR_TBL_EQUIPO_PTO_VENTA",
+                     iid_MPOSPlanning,
+                     sid_Planning,
+                     iPerson_id,
+                     tPOSPlanningOpe_Fechainicio,
+                     tPOSPlanningOpe_Fechafin);
+            }catch (Exception ex)
+            {
+                message = "Ocurrio un Error: " + ex.ToString();
+            }
+            return dt;
         }
 
         ///// <summary>
@@ -145,21 +162,37 @@ namespace Lucky.Data.Common.Application
         /// <param name="sPOSPlanningOpe_ModiBy"></param>
         /// <param name="tPOSPlanningOpe_DateModiBy"></param>
         /// <returns></returns>
-        public EPointOfSale_PlanningOper ActualizarAsignPDVaOperativo(int iid_POSPlanningOpe, DateTime tPOSPlanningOpe_Fechainicio,
-            DateTime tPOSPlanningOpe_Fechafin, string sPOSPlanningOpe_ModiBy, DateTime tPOSPlanningOpe_DateModiBy)
-        {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBSIGE_SUPERVISOR_UPDATEASIGNARPDVAOPERATIVO", iid_POSPlanningOpe, tPOSPlanningOpe_Fechainicio,
-                tPOSPlanningOpe_Fechafin, sPOSPlanningOpe_ModiBy, tPOSPlanningOpe_DateModiBy);
+        public EPointOfSale_PlanningOper ActualizarAsignPDVaOperativo(
+            int iid_POSPlanningOpe, 
+            DateTime tPOSPlanningOpe_Fechainicio,
+            DateTime tPOSPlanningOpe_Fechafin, 
+            string sPOSPlanningOpe_ModiBy, 
+            DateTime tPOSPlanningOpe_DateModiBy){
+            
+            try{
+                dt = oConn.ejecutarDataTable("UP_WEBSIGE_SUPERVISOR_UPDATEASIGNARPDVAOPERATIVO",
+                    iid_POSPlanningOpe,
+                    tPOSPlanningOpe_Fechainicio,
+                    tPOSPlanningOpe_Fechafin,
+                    sPOSPlanningOpe_ModiBy,
+                    tPOSPlanningOpe_DateModiBy);
+            }catch (Exception ex) {
+                    message = "Ocurrio un Error: " + ex.ToString();
+            }
 
-            EPointOfSale_PlanningOper oeaPointOfSale_PlanningOper = new EPointOfSale_PlanningOper();
+            // Si no Hubo Errores que Devuelva el mismo Objeto, caso contrario devolverá un Objeto vacio
+            if (message.Equals("")) {
 
-            oeaPointOfSale_PlanningOper.id_POSPlanningOpe = iid_POSPlanningOpe;
-            oeaPointOfSale_PlanningOper.POSPlanningOpe_Fechainicio = tPOSPlanningOpe_Fechainicio;
-            oeaPointOfSale_PlanningOper.POSPlanningOpe_Fechafin = tPOSPlanningOpe_Fechafin;
-            oeaPointOfSale_PlanningOper.POSPlanningOpe_ModiBy = sPOSPlanningOpe_ModiBy;
-            oeaPointOfSale_PlanningOper.POSPlanningOpe_DateModiBy = tPOSPlanningOpe_DateModiBy;
+                oerPointOfSale_PlanningOper = new EPointOfSale_PlanningOper();
 
-            return oeaPointOfSale_PlanningOper;
+                oerPointOfSale_PlanningOper.id_POSPlanningOpe = iid_POSPlanningOpe;
+                oerPointOfSale_PlanningOper.POSPlanningOpe_Fechainicio = tPOSPlanningOpe_Fechainicio;
+                oerPointOfSale_PlanningOper.POSPlanningOpe_Fechafin = tPOSPlanningOpe_Fechafin;
+                oerPointOfSale_PlanningOper.POSPlanningOpe_ModiBy = sPOSPlanningOpe_ModiBy;
+                oerPointOfSale_PlanningOper.POSPlanningOpe_DateModiBy = tPOSPlanningOpe_DateModiBy;
+            }
+            
+            return oerPointOfSale_PlanningOper;
         }
 
         /// <summary>
@@ -173,9 +206,26 @@ namespace Lucky.Data.Common.Application
         /// <param name="tPOSPlanningOpe_Fechainicio"></param>
         /// <param name="tPOSPlanningOpe_Fechafin"></param>
         /// <returns></returns>
-        public DataTable ActualizarTBL_EQUIPO_PTO_VENTA(string sClientPDV_Code, string sid_Planning, int iPerson_id, DateTime tPOSPlanningOpe_Fechainicio, DateTime tPOSPlanningOpe_Fechafin)
-        {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ACTUALIZAR_TBL_EQUIPO_PTO_VENTA", sClientPDV_Code, sid_Planning, iPerson_id, tPOSPlanningOpe_Fechainicio, tPOSPlanningOpe_Fechafin);
+        public DataTable ActualizarTBL_EQUIPO_PTO_VENTA(
+            string sClientPDV_Code, 
+            string sid_Planning, 
+            int iPerson_id, 
+            DateTime tPOSPlanningOpe_Fechainicio, 
+            DateTime tPOSPlanningOpe_Fechafin){
+
+            try{
+                
+                dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ACTUALIZAR_TBL_EQUIPO_PTO_VENTA",
+                    sClientPDV_Code,
+                    sid_Planning,
+                    iPerson_id,
+                    tPOSPlanningOpe_Fechainicio,
+                    tPOSPlanningOpe_Fechafin);
+
+            }catch (Exception ex) {
+                message = "Ocurrio un Error: " + ex.ToString(); 
+            }
+            
             return dt;
         }
 
@@ -184,21 +234,35 @@ namespace Lucky.Data.Common.Application
         /// Ing. Mauricio Ortiz
         /// 27/10/2010
         /// </summary>
+        /// DataTable[0] Retornar listado de Puntos de Venta asignados a un Mercaderista por idPlanning
+        /// - No            .- Número de Orden del Punto de Venta
+        /// - Código        .- Identificador del Punto de Venta Asignado al Mercaderista.
+        /// - Nombre        .- Nombre del Punto de Venta Asignado al Mercadersita.
+        /// - Región        .- Nombre de la Región del Punto de Venta Asignado al Mercaderista.
+        /// - Zona          .- Nombre de la Zona del Punto de Venta asignado al Mercaderista.
+        /// - Fecha inicio  .- Fecha de Inicio para recolectar información del Punto de Venta asignado al Mercaderista.
+        /// - Fecha fin     .- Fecha de Fin para recolectar información del Punto de Venta asignado al Mercaderista.
         /// <param name="sid_planning"></param>
         /// <param name="iidperson"></param>
         /// <returns></returns>
-        public DataTable ObtenerPuntosVentaXoperativo(string sid_planning, int iidperson)
+        public DataTable ObtenerPuntosVentaXoperativo(
+            string sid_planning, int iidperson)
         {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_OBTENERPDVXOPERATIVO", sid_planning, iidperson);
-            EPointOfSale_PlanningOper oeEPointOfSale_PlanningOper = new EPointOfSale_PlanningOper();
+            DataTable dt = 
+                oConn.ejecutarDataTable(
+                "UP_WEBXPLORA_PLA_OBTENERPDVXOPERATIVO", 
+                sid_planning, iidperson);
+
+            EPointOfSale_PlanningOper oeEPointOfSale_PlanningOper = 
+                new EPointOfSale_PlanningOper();
             EPuntosDV oeEPuntosDV = new EPuntosDV();
             EMalla oeEMalla = new EMalla();
             ESector oeESector = new ESector();
 
-            if (dt != null)
-            {
-                if (dt.Rows.Count > 0)
-                {
+            //if (dt != null)
+            //{
+                //if (dt.Rows.Count > 0)
+                //{
                     for (int i = 0; i <= dt.Rows.Count - 1; i++)
                     {
                         oeEPointOfSale_PlanningOper.id_POSPlanningOpe = Convert.ToInt32(dt.Rows[i]["No"].ToString().Trim());
@@ -209,13 +273,13 @@ namespace Lucky.Data.Common.Application
                         oeEPointOfSale_PlanningOper.POSPlanningOpe_Fechainicio = Convert.ToDateTime(dt.Rows[i]["Fecha inicio"].ToString().Trim());
                         oeEPointOfSale_PlanningOper.POSPlanningOpe_Fechafin = Convert.ToDateTime(dt.Rows[i]["Fecha fin"].ToString().Trim());
                     }
-                }
+                //}
                 return dt;
-            }
-            else
-            {
-                return null;
-            }
+            //}
+            //else
+            //{
+            //    return null;
+            //}
         }
 
 
@@ -226,9 +290,14 @@ namespace Lucky.Data.Common.Application
         /// </summary>
         /// <param name="iid_POSPlanningOpe"></param>
         /// <returns></returns>
-        public DataTable EliminarPuntosVentaXoperativo(int iid_POSPlanningOpe)
-        {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ELIMINARPDVXOPERATIVO", iid_POSPlanningOpe);
+        public DataTable EliminarPuntosVentaXoperativo(int iid_POSPlanningOpe){
+            
+            try{
+                dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ELIMINARPDVXOPERATIVO", iid_POSPlanningOpe);
+            }catch (Exception ex) {
+                message = "Ocurrio un Error: " + ex.ToString();
+            }
+
             return dt;
         }
 
@@ -241,9 +310,15 @@ namespace Lucky.Data.Common.Application
         /// <param name="iPerson_id"></param>
         /// <param name="iid_POSPlanningOpe"></param>
         /// <returns></returns>
-        public DataTable EliminarPuntosVentaXoperativo_TBL_EQUIPO_PTO_VENTA(string sid_Planning, int iPerson_id, int iid_POSPlanningOpe)
-        {
-            DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ELIMINARPDVXOPERATIVO_TBL_EQUIPO_PTO_VENTA", sid_Planning, iPerson_id, iid_POSPlanningOpe);
+        public DataTable EliminarPuntosVentaXoperativo_TBL_EQUIPO_PTO_VENTA(
+            string sid_Planning, int iPerson_id, int iid_POSPlanningOpe){
+                try{
+                    dt = oConn.ejecutarDataTable("UP_WEBXPLORA_PLA_ELIMINARPDVXOPERATIVO_TBL_EQUIPO_PTO_VENTA",
+                        sid_Planning, iPerson_id, iid_POSPlanningOpe);
+                }catch (Exception ex) {
+                    message = "Ocurrio un Error: " + ex.ToString();
+                }
+
             return dt;
         }
     }

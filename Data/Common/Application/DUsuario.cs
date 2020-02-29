@@ -7,6 +7,7 @@ using Lucky.Entity.Common.Application.Security;
 
 namespace Lucky.Data.Common.Application
 {
+
     /// <summary>
     /// Descripción breve de DUsuario.
     /// CreateBy: Ing. Carlos Alberto Hernandez RIncón
@@ -15,6 +16,8 @@ namespace Lucky.Data.Common.Application
     /// </summary>
     public class DUsuario
     {
+        // Variable para almacenar los mensajes de Error.
+        String messages = "";
         private Conexion oConn;
         /// <summary>
         /// Define en el constructor la inicialización de la interfaz de la Clase y el objeto de conexión a usar en la
@@ -36,21 +39,20 @@ namespace Lucky.Data.Common.Application
         /// <returns>retorna un objeto tipo EUsuario</returns>
         /// Modificación: se agrega al retornoo del la consulta  oeUsuario.fotocompany 
         /// Modificado por: Ing. Carlos Hernandez 01/09/2010
-        
         public EUsuario obtenerPK(string  sUser, string  sPassw)
         {
-            oConn = new Conexion(1);
-            DataTable dt = oConn.ejecutarDataTable("UP_WEB_ACEDER_USER", sUser, sPassw);
-            if (dt != null)
+            EUsuario oeUsuario = new EUsuario();
+            try
             {
-                if (dt.Rows.Count > 0)
-                {
-
-                    EUsuario oeUsuario = new EUsuario();
+                oConn = new Conexion(1);
+                DataTable dt = oConn.ejecutarDataTable("UP_WEB_ACEDER_USER",
+                    sUser, sPassw);
+                
+                if (dt.Rows.Count > 0){
                     oeUsuario.nameuser = sUser;
                     oeUsuario.UserPassword = sPassw;
                     oeUsuario.Personid = Convert.ToInt32(dt.Rows[0]["Person_id"].ToString().Trim());
-                     oeUsuario.idtypeDocument = dt.Rows[0]["id_typeDocument"].ToString().Trim();
+                    oeUsuario.idtypeDocument = dt.Rows[0]["id_typeDocument"].ToString().Trim();
                     oeUsuario.Personnd = dt.Rows[0]["Person_nd"].ToString().Trim();
                     oeUsuario.PersonFirtsname = dt.Rows[0]["Person_Firtsname"].ToString().Trim();
                     oeUsuario.PersonLastName = dt.Rows[0]["Person_LastName"].ToString().Trim();
@@ -71,17 +73,14 @@ namespace Lucky.Data.Common.Application
                     oeUsuario.leveldescription = dt.Rows[0]["namelevel"].ToString().Trim();
                     oeUsuario.coddepartam = dt.Rows[0]["cod_dpto"].ToString().Trim();
                     oeUsuario.codcity = dt.Rows[0]["cod_city"].ToString().Trim();
-                    return oeUsuario;
                 }
-                else
-                {
-                    return null;
-                }
+                
             }
-            else
-            {
-                return null;
+            catch (Exception ex) {
+                messages = "Ocurrio un Error: " + ex.Message.ToString();
             }
+
+            return oeUsuario;
         }
          
         /// <summary>
@@ -142,11 +141,14 @@ namespace Lucky.Data.Common.Application
         /// ----Parametros de Salida----
         /// <returns>Retorna un Objeto tipo EUsuario</returns>
 
-        public EUsuario RegistrarPK(string sidtypeDocument, string sPersonnd,string sPersonFirtsname,string sPersonLastName,string sPersonSurname, string sPersonSeconName, 
+        public EUsuario RegistrarPK(string sidtypeDocument, string sPersonnd,string sPersonFirtsname,
+            string sPersonLastName,string sPersonSurname, string sPersonSeconName, 
             string sPersonEmail, string sPersonPhone, string sPersonAddres,string scodCountry,
-         string snameuser, string sUserPassword, string iPerfilid,string sModuloid, string suserrecall, int icompanyid,  bool bPersonStatus, string sPersonCreateBy, DateTime tPersonDateBy, string sPersonModiBy, DateTime tPersonDateModiBy)
+            string snameuser, string sUserPassword, string iPerfilid,string sModuloid, 
+            string suserrecall, int icompanyid,  bool bPersonStatus, string sPersonCreateBy, 
+            DateTime tPersonDateBy, string sPersonModiBy, DateTime tPersonDateModiBy)
         {
-            oConn = new Conexion(1);
+           oConn = new Conexion(1);
            DataTable dt = oConn.ejecutarDataTable("UP_WEBSIGE_REGISTER", sidtypeDocument, sPersonnd, sPersonFirtsname, sPersonLastName, sPersonSurname, sPersonSeconName, sPersonEmail, sPersonPhone, sPersonAddres, scodCountry,
                    snameuser, sUserPassword, iPerfilid, sModuloid, suserrecall, icompanyid, bPersonStatus, sPersonCreateBy, tPersonDateBy, sPersonModiBy, tPersonDateModiBy);
             EUsuario oerUsuario = new EUsuario();
@@ -175,13 +177,14 @@ namespace Lucky.Data.Common.Application
 
             return oerUsuario;
        
-           
-        
          }
 
-        public EUsuario RegistrarUsuarioMovil(string sidtypeDocument, string sPersonnd, string sPersonFirtsname, string sPersonLastName, string sPersonSurname, string sPersonSeconName,
-            string sPersonEmail, string sPersonPhone, string sPersonAddres, string scodCountry,
-         string snameuser, string sUserPassword, string iPerfilid, string sModuloid, string suserrecall, int icompanyid, bool bPersonStatus, string sPersonCreateBy, DateTime tPersonDateBy, string sPersonModiBy, DateTime tPersonDateModiBy)
+        public EUsuario RegistrarUsuarioMovil(string sidtypeDocument, string sPersonnd, string sPersonFirtsname, 
+         string sPersonLastName, string sPersonSurname, string sPersonSeconName,
+         string sPersonEmail, string sPersonPhone, string sPersonAddres, string scodCountry,
+         string snameuser, string sUserPassword, string iPerfilid, string sModuloid, string suserrecall, 
+         int icompanyid, bool bPersonStatus, string sPersonCreateBy, DateTime tPersonDateBy, string sPersonModiBy, 
+         DateTime tPersonDateModiBy)
         {
             oConn = new Conexion(1);
             DataTable dt = oConn.ejecutarDataTable("UP_WEB_REGISTERUSER", sidtypeDocument, sPersonnd, sPersonFirtsname, sPersonLastName, sPersonSurname, sPersonSeconName, sPersonEmail, sPersonPhone, sPersonAddres, scodCountry,
@@ -239,9 +242,12 @@ namespace Lucky.Data.Common.Application
         /// <param name="sPersonModiBy"></param>
         /// <param name="tPersonDateModiBy"></param>
         /// <returns>oerUsuarioMovil</returns>
-        public EUsuario RegistrarUsuarioMovilDBTMP(int iperson_id, string sidtypeDocument, string sPersonnd, string sPersonFirtsname, string sPersonLastName, string sPersonSurname, string sPersonSeconName,
-           string sPersonEmail, string sPersonPhone, string sPersonAddres, string scodCountry,
-        string snameuser, string sUserPassword, string iPerfilid, string sModuloid, string suserrecall, int icompanyid, bool bPersonStatus, string sPersonCreateBy, DateTime tPersonDateBy, string sPersonModiBy, DateTime tPersonDateModiBy)
+        public EUsuario RegistrarUsuarioMovilDBTMP(int iperson_id, string sidtypeDocument, string sPersonnd, 
+        string sPersonFirtsname, string sPersonLastName, string sPersonSurname, string sPersonSeconName,
+        string sPersonEmail, string sPersonPhone, string sPersonAddres, string scodCountry,
+        string snameuser, string sUserPassword, string iPerfilid, string sModuloid, string suserrecall, 
+        int icompanyid, bool bPersonStatus, string sPersonCreateBy, DateTime tPersonDateBy, string sPersonModiBy, 
+        DateTime tPersonDateModiBy)
         {
             oConn = new Conexion(2);
             DataTable dt = oConn.ejecutarDataTable("UP_WEBXPLORA_AD_REGISTERUSERMOVIL", iperson_id, sidtypeDocument, sPersonnd, sPersonFirtsname, sPersonLastName, sPersonSurname, sPersonSeconName, sPersonEmail, sPersonPhone, sPersonAddres, scodCountry,
@@ -300,9 +306,11 @@ namespace Lucky.Data.Common.Application
         /// <param name="tPersonDateModiBy"></param>
         /// ---Parametros de Salida
         /// <returns>Retorna un </returns>
-        public EUsuario ActualizarUser(int iPersonid,string sidtypeDocument, string sPersonnd, string sPersonFirtsname, string sPersonLastName, string sPersonSurname, string sPersonSeconName,
+        public EUsuario ActualizarUser(int iPersonid,string sidtypeDocument, string sPersonnd, 
+          string sPersonFirtsname, string sPersonLastName, string sPersonSurname, string sPersonSeconName,
           string sPersonEmail, string sPersonPhone, string sPersonAddres, string scodCountry,
-       string snameuser, string sUserPassword, string iPerfilid, string sModuloid, string suserrecall, int icompanyid, bool bPersonStatus, string sPersonModiBy, DateTime tPersonDateModiBy)
+          string snameuser, string sUserPassword, string iPerfilid, string sModuloid, string suserrecall, 
+          int icompanyid, bool bPersonStatus, string sPersonModiBy, DateTime tPersonDateModiBy)
         {
             oConn = new Conexion(1);
             DataTable dt = null;
@@ -359,9 +367,16 @@ namespace Lucky.Data.Common.Application
         /// <param name="sPersonModiBy"></param>
         /// <param name="tPersonDateModiBy"></param>
         /// <returns></returns>
-        public EUsuario ActualizarUserTMP(int iPersonid, string sidtypeDocument, string sPersonnd, string sPersonFirtsname, string sPersonLastName, string sPersonSurname, string sPersonSeconName,
-  string sPersonEmail, string sPersonPhone, string sPersonAddres, string scodCountry,
-string snameuser, string sUserPassword, string iPerfilid, string sModuloid, string suserrecall, int icompanyid, bool bPersonStatus, string sPersonModiBy, DateTime tPersonDateModiBy)
+        public EUsuario ActualizarUserTMP(
+            int iPersonid, string sidtypeDocument, string sPersonnd, 
+            string sPersonFirtsname, string sPersonLastName, 
+            string sPersonSurname, string sPersonSeconName,
+            string sPersonEmail, string sPersonPhone, 
+            string sPersonAddres, string scodCountry,
+            string snameuser, string sUserPassword, string iPerfilid, 
+            string sModuloid, string suserrecall, int icompanyid, 
+            bool bPersonStatus, string sPersonModiBy, 
+            DateTime tPersonDateModiBy)
         {
             oConn = new Conexion(1);
             DataTable dt = null;
@@ -393,35 +408,34 @@ string snameuser, string sUserPassword, string iPerfilid, string sModuloid, stri
         }
     
         /// <summary>
-        /// 
+        /// Verificar si el el primer acceso del Usuario
         /// </summary>
         /// <param name="sUser"></param>
         /// <returns></returns>
-       
         public EEntrySeccion PrimerAcceso(string sUser)
         {
-            oConn = new Conexion(1);
-            DataTable dt = null;
-            dt = oConn.ejecutarDataTable("UP_WEB_GEN_VERIFICA_PRM_INGRESO",sUser);
+            EEntrySeccion oeseccion = new EEntrySeccion();
+            try{
+                oConn = new Conexion(1);
+                DataTable dt = oConn.ejecutarDataTable(
+                    "UP_WEB_GEN_VERIFICA_PRM_INGRESO", sUser);
 
-            if (dt != null)
-            {
-                if (dt.Rows.Count > 0)
-                {
-                    EEntrySeccion oeseccion = new EEntrySeccion();
+                if (dt.Rows.Count > 0){
                     oeseccion.seccionname = sUser;
-                    oeseccion.seccionname = dt.Rows[0]["seccion_name"].ToString().Trim();
-                    return oeseccion;
+                    oeseccion.seccionname =
+                        dt.Rows[0]["seccion_name"].ToString().Trim();
                 }
-                else
-                {
-                    return null;
+                else {
+                    messages = "Error: No se Encontraron registros para " +
+                    "La consulta solicitada, ¡por favor verificar!";
                 }
+                
             }
-            else
-            {
-                return null;
+            catch (Exception ex) {
+                messages = "Error: " + ex.Message.ToString();
             }
+
+            return oeseccion;
         }
         /// <summary>
         /// Metodo para rregistrar la primera session de Usuario en SIGE
@@ -439,7 +453,8 @@ string snameuser, string sUserPassword, string iPerfilid, string sModuloid, stri
         }
        //Metodo para controlar el registro de la primera session de usuario
 
-        public EEntrySeccion Register_PrimerSeccion(string sSeccionname, string sentryCreateBy,string sentryDateBy, string sentryModiBy, string sentryDatemod)
+        public EEntrySeccion Register_PrimerSeccion(string sSeccionname, string sentryCreateBy,string sentryDateBy, 
+            string sentryModiBy, string sentryDatemod)
         {
             oConn = new Conexion(1);
             DataTable dt = oConn.ejecutarDataTable("UP_WEB_REGISTER_SECCIONUSER_SIGE", sSeccionname, sentryCreateBy, sentryDateBy, sentryModiBy, sentryDatemod);
@@ -484,7 +499,8 @@ string snameuser, string sUserPassword, string iPerfilid, string sModuloid, stri
             int st = 0;
             try
             {
-                st = Convert.ToInt32(oConn.ejecutarEscalar("UP_WEBXPLORA_ACTUALIZAR_CLIENTE_X_USUARIO", codusuario, codcliente, nodoxcanal_estado, username));
+                st = Convert.ToInt32(oConn.ejecutarEscalar(
+                    "UP_WEBXPLORA_ACTUALIZAR_CLIENTE_X_USUARIO", codusuario, codcliente, nodoxcanal_estado, username));
             }
             catch (Exception ex) { }
             return st;
@@ -498,9 +514,146 @@ string snameuser, string sUserPassword, string iPerfilid, string sModuloid, stri
             try {
                 ds = oConn.ejecutarDataSet("UP_WEBXPLORA_AD_LISTA_CLIENTE_X_USUARIO", iPerson_id, iCompany_id);
             }
-            catch (Exception ex) { }
+            catch (Exception ex) {
+                throw ex;
+            }
 
             return ds;
         }
+        /// <summary>
+        /// Devolver el mensaje de Error, en caso haya ocurrido errores
+        /// durante la ejecución de alguno de los métodos.
+        /// </summary>
+        /// <returns></returns>
+        public String getMessages() {
+            return messages;
+        }
+
+        /// <summary>
+        /// Función para Encriptar Passwords
+        /// </summary>
+        /// <param name="password"></param>
+        public String fncEncriptar(String password)
+        {
+            String tamperProofKey = "YourUglyRandomKeyLike-lkj54923c478";
+            String result = "";
+            try
+            {
+                result = Lucky.CFG.Util.Encriptacion.Codificar(password, tamperProofKey);
+            }
+            catch (Exception ex)
+            {
+                messages = "Ocurrio un Error: " + ex.Message.ToString();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Función para obtener el Password de la Base de Datos,
+        /// por userName.
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        public DataTable fncGetPassword(String userName){
+            DataTable dt = new DataTable();
+            try{
+                
+                oConn = new Conexion(1);
+                dt = oConn.ejecutarDataTable("UP_WEBXPLORAGEN_PASSUSER", userName);
+
+            }catch (Exception ex){
+                
+                messages = "Ocurrio un Error: " + ex.Message.ToString();
+
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// Función para Actualizar la Encriptación del Password en Base de Datos
+        /// En caso el password no se haya almacenado Encriptado.
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="idUser"></param>
+        public void fncUpdatePasswordEncriptado(String password, String idUser)
+        {
+            try
+            {
+                oConn = new Conexion(1);
+                oConn.ejecutarDataReader("UP_WEBXPLORA_UPDATEPSWENCRIPTA", password, idUser);
+            }
+            catch (Exception ex)
+            {
+                messages = "Error: " + ex.Message.ToString();
+            }
+        }
+
+
+        /// <summary>
+        /// Retorna la Pagina a la que debe ser redireccionado el usuario despues de loguearse.
+        /// </summary>
+        public String fncGetDataAplication(String idCountry, 
+        String idModule){
+
+            String pagina = "";
+
+            EAplicacion oeAplicacion = new EAplicacion();
+            DAplicacion oAplicacionWeb = new DAplicacion();
+
+            try{
+                oeAplicacion = oAplicacionWeb.obtenerPK(
+                    idCountry == null ? "0" : idCountry,
+                    idModule == null ? "0" : idModule);
+                // Verifica que no haya Errores
+                if (oAplicacionWeb.getMessage().Equals("")){
+                    pagina = oeAplicacion.appurl;
+
+                }else{
+                    messages = "Error: " + oAplicacionWeb.getMessage();
+                }
+            }catch (Exception ex){
+                messages = "Error: " + ex.Message.ToString();
+            }
+            return pagina;
+        }
+
+        /// <summary>
+        /// Retornar el Url a Direccionar por usuario y Perfil
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="idCompany"></param>
+        /// <param name="idPerfil"></param>
+        /// <param name="pUrlPagina">UrlPaginaParametro</param>
+        public String fncVerifyFirstAccess(String userName, 
+            String idCompany, String idPerfil, String pUrlPagina) {
+            String urlPagina = "";
+            EEntrySeccion oeSeccion = new EEntrySeccion();
+            try{
+                oeSeccion = PrimerAcceso(userName);
+                if (getMessages().Equals("")) {
+                    if (oeSeccion.seccionname == "1") {
+                        urlPagina = "Cambio_pswd.aspx";
+                    }
+                    else if (idCompany.Equals("1562")
+                           && (idPerfil.Equals("6001") 
+                           || idPerfil.Equals("4512"))){
+                        urlPagina = "http://sige.lucky.com.pe:8081/";
+                    }
+                    else if (idCompany.Equals("1561")
+                      && idPerfil.Equals("4512"))
+                    {
+                        urlPagina = "http://sige.lucky.com.pe:8282";
+                    }
+                    else {
+                        urlPagina = "~/" + pUrlPagina;
+                    }
+                }
+            }catch (Exception ex) {
+                messages = ex.Message.ToString();
+            }
+            return urlPagina;
+        }
+
+  
     }
 }

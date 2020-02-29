@@ -11,10 +11,23 @@ namespace Lucky.Data.Common.Maestros.Producto
     public class DAO_Producto
     {
         private Conexion oCoon;
+        private String message;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public DAO_Producto()
         {
             oCoon = new Conexion();
+            this.message = "";
+        }
+
+        /// <summary>
+        /// Obtener mensajes de Error no controlados.
+        /// </summary>
+        /// <returns></returns>
+        public String getMessages() {
+            return message;
         }
 
         //public List<SR_Producto> Get_Productos(string codCategoria, string codMarca)
@@ -66,15 +79,25 @@ namespace Lucky.Data.Common.Maestros.Producto
         //    }
         //}
         
+        /// <summary>
+        /// Obtener el Listado de Productso por idCategoría y idMarca
+        /// </summary>
+        /// <param name="codCategoria"></param>
+        /// <param name="codMarca"></param>
+        /// <returns></returns>
         public List<MA_Producto> Get_Productos(string codCategoria, string codMarca)
         {
             /*
              * v.1.0 -  22 Oct. 2016    -   PSALAS  - Obtiene todas las Productos  
              */
+            List<MA_Producto> oListMA_Producto = new List<MA_Producto>();
             try
             {
-                List<MA_Producto> oListMA_Producto = new List<MA_Producto>();
-                IDataReader readerObj = oCoon.ejecutarDataReader("PA_GET_Productos", (codCategoria == null) ? "%" : codCategoria, (codMarca == null) ? "%" : codMarca);
+                IDataReader readerObj = oCoon.ejecutarDataReader(
+                    "PA_GET_Productos", 
+                    (codCategoria == null) ? "%" : codCategoria, 
+                    (codMarca == null) ? "%" : codMarca);
+
                 while (readerObj.Read())
                 {
                     MA_Producto oMA_Producto = new MA_Producto();
@@ -104,22 +127,25 @@ namespace Lucky.Data.Common.Maestros.Producto
                     oMA_Producto.modificado_por = readerObj.GetValue(readerObj.GetOrdinal("modificado_por")).ToString().Trim();
                     oListMA_Producto.Add(oMA_Producto);
                 }
+                
                 readerObj.Close();
-                if (oListMA_Producto.Count > 0)
+                
+                if (oListMA_Producto.Count <= 0)
                 {
-                    return oListMA_Producto;
-                }
-                else
-                {
-                    return null;
+                    message = "No se encontraron resultados para la búsqueda solicitada.";
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                message = "Ocurrió un error interno: " + ex.Message.ToString();
             }
+
+            return oListMA_Producto;
         }
+
+
+
         public string Insert_Producto(MA_Producto oMA_Producto) {
             
             /*
